@@ -7,7 +7,7 @@
 </head>
 <body>
     <div style="color:red;">
-        Hola Mundo
+        Prueba 
     </div>
 </body>
 </html>
