@@ -16,6 +16,7 @@ return new class extends Migration
 
             $table->string('firstName');
             $table->string('lastName')->nullable();
+            $table->string('document_number')->unique();
             $table->string('email')->unique();
             $table->string('userName')->unique();
             $table->string('password');

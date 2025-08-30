@@ -27,7 +27,7 @@
               with font-awesome or any other icon font library -->
           <li class="nav-item">
             <a href="../calendar.html" class="nav-link">
-              <i class="nav-icon fa fa-bolt"></i>
+              <i class="fa-solid fa-table-columns"></i>
               <p>
                 DashBoard
               </p>
