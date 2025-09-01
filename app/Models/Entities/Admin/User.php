@@ -12,15 +12,26 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    protected $table = "users";
+
+    protected $primaryKey = "id";
+
     /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'id',
+        'first_name',
+        'last_name',
+        'document_number',
         'email',
+        'username',
         'password',
+        'start_date',
+        'end_date',
+
     ];
 
     /**
@@ -50,4 +61,21 @@ class User extends Authenticatable
         {
             return \Database\Factories\UserFactory::new();
         }
+
+
+    public function get_users() {
+        $resultado = self::select(
+                'id',
+                'first_name',
+                'last_name',
+                'document_number',
+                'email',
+                'username',
+                'password',
+                'start_date',
+                'end_date',
+            );
+
+        return $resultado;
+    }
 }

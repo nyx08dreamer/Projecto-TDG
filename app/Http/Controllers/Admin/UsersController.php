@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Entities\Admin\User;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class UsersController extends Controller
 {
@@ -13,6 +15,24 @@ class UsersController extends Controller
     public function index()
     {
         return view('admin.user.index');
+    }
+
+     public function UserList (Request $request)
+    {
+        
+
+        if ($request->ajax()) {
+ 
+            $user_model = new User;
+            $users = $user_model->get_users();
+
+            $datatables = DataTables::of($users)
+                ->addIndexColumn()
+                ->make(true);
+
+            return $datatables;
+        }
+        
     }
 
     /**

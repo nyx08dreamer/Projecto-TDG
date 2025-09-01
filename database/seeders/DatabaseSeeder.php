@@ -32,7 +32,6 @@ class DatabaseSeeder extends Seeder
         } catch (\Throwable $th) {
             return $th->getMessage();
         }
-
         
     }
 }
