@@ -16,9 +16,6 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('assets/dist/css/adminlte.min.css')}}">
   @stack('css')
-  
-  
-
 
 </head>
 <body class="hold-transition sidebar-mini layout-navbar-fixed">
@@ -53,13 +50,7 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-
-            @yield('content')
-            
-          </div>
-        </div>
+        @yield('content')
       </div>
     </section>
     <!-- /.content -->

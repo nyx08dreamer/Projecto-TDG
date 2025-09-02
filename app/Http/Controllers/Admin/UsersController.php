@@ -17,18 +17,24 @@ class UsersController extends Controller
         return view('admin.user.index');
     }
 
-     public function UserList (Request $request)
+    public function UserList (Request $request)
     {
         
 
         if ($request->ajax()) {
- 
+
             $user_model = new User;
             $users = $user_model->get_users();
 
             $datatables = DataTables::of($users)
                 ->addIndexColumn()
-                ->make(true);
+                ->editColumn('first_name', function($user) {
+                
+                $url = route('users.show', $user->id);
+                return '<a href="' . $url . '">' . e($user->first_name) . '</a>';
+            })
+            ->rawColumns(['first_name']) 
+            ->make(true);
 
             return $datatables;
         }
@@ -54,9 +60,13 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $user = User::where('id', $id)->first();
+
+        return view('admin.user.show', [
+            'user' => $user,
+        ]);
     }
 
     /**

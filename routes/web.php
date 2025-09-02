@@ -27,6 +27,8 @@ Route::get('/', function () {
 
     Route::get('administracion/usuarios/obtener', [UsersController::class, 'UserList'])->name('listado-usuarios');
 
+    Route::get('administracion/usuarios/{id}', [UsersController::class, 'show'])->name('users.show');
+
 
 
     // roles

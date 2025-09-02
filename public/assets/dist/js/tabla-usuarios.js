@@ -8,6 +8,7 @@ $(document).ready(function() {
             iDisplayLength: 25,
             retrieve: true,
             ajax: route_registros,
+            responsive: true,
             columns: [
 
                 {data: "id", name: 'id'},
@@ -17,7 +18,12 @@ $(document).ready(function() {
                 {data: 'username', name: 'username'},
                 {data:'start_date', name:'start_date'},
             ],
-        });
-        
+
+            language: {
+                url: "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+            }  
+        });        
     });
+
+    
 });

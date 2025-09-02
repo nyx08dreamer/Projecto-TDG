@@ -29,7 +29,7 @@ class UsersTableSeeder extends Seeder
 
         $admin = new User();
         
-        $admin->first_name = 'Adiministrador';
+        $admin->first_name = 'Administrador';
         $admin->document_number = '11222333';
         $admin->email = 'admin@sentinel.com';
         $admin->username = 'Admin';
