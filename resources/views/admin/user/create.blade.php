@@ -75,12 +75,74 @@
                 </form>
             </div>
             <!-- /.card -->
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
         </div>
     </div>
 
 @endsection
 
+    
+
 @push('js')
+    <script>
+        $(function () {
+            
+            $('#user-create').validate({
+                rules: {
+                first_name: {
+                    required: true
+                },
+                document_number: {
+                    required: true,
+                    minlength: 7
+                },
+                email: {
+                    required: true,
+                    email: true,
+                },
+                username: {
+                    required: true
+                },
 
+                },
+                messages: {
+                first_name: {
+                required: "Por favor ingrese los nombres",
+                },
+                document_number: {
+                    required: "Por favor ingrese el documento de identidad del usuario",
+                    minlength: "El documento de identidad debe ser de 7 digitos minimo"
+                },
+                email: {
+                    required: "Por favor ingrese un correo electrónico",
+                    email: "Por favor ingrese un correo electrónico válido"
+                },
+                username: {
+                    required: "Por favor ingrese el usuario",
+                    email: "Please enter a valid email address"
+                },
 
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+                }
+            });
+        });
+    </script>
 @endpush
