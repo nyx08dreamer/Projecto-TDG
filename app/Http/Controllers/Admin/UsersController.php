@@ -95,9 +95,24 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
-        //
+
+        $user->first_name = $request->input('first_name');
+        $user->last_name = $request->input('last_name');
+        $user->document_number = $request->input('document_number');
+        $user->email = $request->input('email');
+        $user->username = $request->input('username');
+        $user->start_date = $request->input('start_date');
+
+        //dd($request->all());
+
+        $user->save();
+        
+
+
+        return redirect()->route('admin.user.show', $user->id);
+
     }
 
     /**

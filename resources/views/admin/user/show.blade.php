@@ -278,43 +278,44 @@
                     <!-- /.tab-pane -->
 
                     <div class="tab-pane" id="settings">
-                        <form class="form-horizontal">
-                            <div class="form-group row">
-                                <label for="inputFistName" class="col-sm-2 col-form-label">Nombres</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="inputFistName" placeholder="Nombres">
+                        <form class="form-horizontal" id="user-update" method="post" action="{{ route('admin.user.update', $user->id)}}">
+                        @csrf
+                        @method('PATCH')
+                            <div class="row">
+                                <div class="form-group col-12 col-md-6">
+                                    <label for="first_name">Nombres</label>
+                                    <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Nombres" value="{{$user->first_name}}">
                                 </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="inputLastName" class="col-sm-2 col-form-label">Apellidos</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="inputLastName" placeholder="Apellidos">
+                                <div class="form-group col-12 col-md-6">
+                                    <label for="last_name">Apellidos</label>
+                                    <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Apellidos" value="{{$user->last_name}}">
                                 </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="inputName2" class="col-sm-2 col-form-label">Cedula de Identidad</label>
-                                <div class="col-sm-10">
-                                    <input type="number" class="form-control" id="inputName2" placeholder="Cedula de Identidad">
+                                <div class="form-group col-12 col-md-6">
+                                    <label for="document_number">Cédula de Identidad</label>
+                                    <input type="number" class="form-control" id="document_number" name="document_number" placeholder="Cédula de Identidad" value="{{$user->document_number}}">
                                 </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="inputEmail" class="col-sm-2 col-form-label">Correo Electrónico</label>
-                                <div class="col-sm-10">
-                                    <input type="email" class="form-control" id="inputEmail" placeholder="Correo Electrónico">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="inputLastName" class="col-sm-2 col-form-label">Usuario</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="inputLastName" placeholder="Usuario">
-                                </div>
-                            </div>
 
-                            <div class="form-group row">
-                                <div class="offset-sm-2 col-sm-10">
-                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                <div class="form-group col-12 col-md-6">
+                                    <label for="email">Correo Electrónico</label>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Correo Electrónico" value="{{$user->email}}">
                                 </div>
+
+                                <div class="form-group col-12 col-md-6">
+                                    <label for="username">Nombre de Usuario</label>
+                                    <input type="text" class="form-control" id="username" name="username" placeholder="Nombre de Usuario" value="{{$user->username}}">
+                                </div>
+
+                                <div class="form-group col-12 col-md-6">
+                                    <label for="start_date">Fecha de Activación</label>
+                                    <input type="date" class="form-control" id="start_date" name="start_date" value="{{ \Carbon\Carbon::parse($user->start_date)->format('Y-m-d') }}">
+                                </div>
+
+                                
                             </div>
+                            <div class="float-right">
+                                <a href="{{ route('admin.user.index') }}" class="btn btn-outline-danger">Cancelar</a>
+                                <button type="submit" class="ml-2 btn btn-success">Guardar</button>
+                            </div>                            
                         </form>
                     </div>
                     <!-- /.tab-pane -->
