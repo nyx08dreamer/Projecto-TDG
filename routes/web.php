@@ -23,11 +23,25 @@ Route::get('/', function () {
 // Administracion
     // usuarios
 
-    Route::get('administracion/usuarios', [UsersController::class, 'index']);
 
-    Route::get('administracion/usuarios/obtener', [UsersController::class, 'UserList'])->name('listado-usuarios');
+    Route::controller(UsersController::class)->group(function () {
 
-    Route::get('administracion/usuarios/{id}', [UsersController::class, 'show'])->name('users.show');
+        Route::get('administracion/usuarios', 'index')->name('admin.user.index');
+
+        Route::get('administracion/usuarios/listado', 'UserList')->name('admin.user.get');
+
+        Route::get('administracion/usuarios/crear', 'create')->name('admin.user.create');
+        
+        Route::post('administracion/usuarios/guardar', 'store')->name('admin.user.store');
+
+
+        Route::get('administracion/usuarios/{user}', 'show')->name('admin.user.show');
+
+
+
+    });
+
+
 
 
 

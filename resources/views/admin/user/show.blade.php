@@ -3,7 +3,7 @@
 @section('web_title', 'Visualización de Usuarios')
 
 @section('title')
-    <i class="fa-solid fa-fw fa-users"></i> Visualización de Usuarios
+    <i class="fa-solid fa-fw fa-user"></i> Visualización de Usuarios
 @endsection
 
 @push('css')

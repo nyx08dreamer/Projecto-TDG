@@ -30,7 +30,7 @@ class UsersController extends Controller
                 ->addIndexColumn()
                 ->editColumn('first_name', function($user) {
                 
-                $url = route('users.show', $user->id);
+                $url = route('admin.user.show', $user->id);
                 return '<a href="' . $url . '">' . e($user->first_name) . '</a>';
             })
             ->rawColumns(['first_name']) 
@@ -46,7 +46,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.user.create');
     }
 
     /**
@@ -54,15 +54,30 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = new User();
+
+        $user->first_name = $request->input('first_name');
+        $user->last_name = $request->input('last_name');
+        $user->document_number = $request->input('document_number');
+        $user->email = $request->input('email');
+        $user->username = $request->input('username');
+        $user->start_date = $request->input('start_date');
+
+        $user->password = bcrypt($request->input('username'));
+
+        $user->created_by = 1;
+        $user->updated_by = 1;
+
+        $user->save();
+
+        return redirect()->route('admin.user.show', $user->id);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(User $user)
     {
-        $user = User::where('id', $id)->first();
 
         return view('admin.user.show', [
             'user' => $user,

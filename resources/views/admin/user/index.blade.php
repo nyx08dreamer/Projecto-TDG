@@ -26,7 +26,7 @@
                         <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remover">
                         <i class="fas fa-times"></i>
                         </button>
-                        <a href="#" class="btn btn-tool" data-card-widget="add" title="Crear Usuario">
+                        <a href="{{ route('admin.user.create') }}" class="btn btn-tool" data-card-widget="add" title="Crear Usuario">
                         <i class="fa-solid fa-plus"></i>
                         </a>
                     </div>
@@ -64,7 +64,7 @@
 @push('js')
 
     <script>
-        var route_registros = '{{ route("listado-usuarios") }}'
+        var route_registros = '{{ route("admin.user.get") }}'
     </script>
 
     <script src="{{asset('assets/dist/js/tabla-usuarios.js')}}"></script>
