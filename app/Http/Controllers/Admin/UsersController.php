@@ -65,11 +65,23 @@ class UsersController extends Controller
 
         $user = new User();
 
-        $user->first_name = $request->input('first_name');
-        $user->last_name = $request->input('last_name');
+        $firstName = $request->input('first_name');
+        $verifiedFirstName = ucwords(strtolower(trim(preg_replace('/\s+/', ' ', $firstName))));
+        $user->first_name = $verifiedFirstName;
+
+        $lastName = $request->input('last_name');
+        $verifiedLastName = ucwords(strtolower(trim(preg_replace('/\s+/', ' ', $lastName))));
+        $user->last_name = $verifiedLastName;
+
         $user->document_number = $request->input('document_number');
-        $user->email = $request->input('email');
-        $user->username = $request->input('username');
+
+        $verifiedEmail = $request->input('email');
+        $user->email = trim($verifiedEmail);
+
+        $verifiedUser = $request->input('username');
+        $user->username= trim($verifiedUser);
+
+        
         $user->start_date = $request->input('start_date');
 
         $user->password = bcrypt($request->input('username'));
@@ -107,11 +119,22 @@ class UsersController extends Controller
     public function update(UpdateUserRequest $request, User $user)
     {
 
-        $user->first_name = $request->input('first_name');
-        $user->last_name = $request->input('last_name');
+        $firstName = $request->input('first_name');
+        $verifiedFirstName = ucwords(strtolower(trim(preg_replace('/\s+/', ' ', $firstName))));
+        $user->first_name = $verifiedFirstName;
+
+        $lastName = $request->input('last_name');
+        $verifiedLastName = ucwords(strtolower(trim(preg_replace('/\s+/', ' ', $lastName))));
+        $user->last_name = $verifiedLastName;
+        
         $user->document_number = $request->input('document_number');
-        $user->email = $request->input('email');
-        $user->username = $request->input('username');
+        
+        $verifiedEmail = $request->input('email');
+        $user->email = trim($verifiedEmail);
+
+        $verifiedUser = $request->input('username');
+        $user->username= trim($verifiedUser);
+
         $user->start_date = $request->input('start_date');
 
         //dd($request->all());
