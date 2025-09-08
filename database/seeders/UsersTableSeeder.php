@@ -33,7 +33,7 @@ class UsersTableSeeder extends Seeder
         $admin->document_number = '11222333';
         $admin->email = 'admin@sentinel.com';
         $admin->username = 'Admin';
-        $admin->password = '$2a$12$W2NjJAwQkEmCznI2KirAY.JXvuVxCUmibHFpn/sCcCQjsTuUznqXq';
+        $admin->password = bcrypt('password');
         $admin->email_verified_at = now();
         $admin->created_by = 1;
         $admin->updated_by = 1;

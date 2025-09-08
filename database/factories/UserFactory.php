@@ -45,7 +45,7 @@ class UserFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
 
             'username' => fake()->word(),
-            'password' => '$2a$12$W2NjJAwQkEmCznI2KirAY.JXvuVxCUmibHFpn/sCcCQjsTuUznqXq',
+            'password' => bcrypt('password'),
 
             'start_date' => ($start = fake()->dateTimeBetween('-1 year','now')) ,
             'email_verified_at' => fake()->randomElement([null, ($validated = fake()->dateTimeBetween($start,'now'))]),
