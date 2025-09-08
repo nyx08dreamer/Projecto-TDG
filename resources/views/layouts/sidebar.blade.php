@@ -26,7 +26,7 @@
           <!-- Add icons to the links using the .nav-icon class
               with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="../calendar.html" class="nav-link">
+            <a href="{{ route('home') }}" class="nav-link {{isRouteActive('home')}}">
               <i class="fa-solid fa-table-columns"></i>
               <p>
                 DashBoard
@@ -97,7 +97,7 @@
           <li class="nav-header pt-4">ADMINISTRACIÓN</li>
 
           <li class="nav-item">
-            <a href="../calendar.html" class="nav-link">
+            <a href="{{ route('admin.user.index') }}" class="nav-link {{isRouteActive('admin.user')}}">
               <i class="fa-solid fa-users"></i>
               <p>
                 Usuarios

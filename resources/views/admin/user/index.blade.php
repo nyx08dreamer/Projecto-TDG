@@ -6,8 +6,12 @@
     <i class="fa-solid fa-fw fa-users"></i> Listado de Usuarios
 @endsection
 
-@push('css')
 
+@section('breadcrumbs')
+    <li class="breadcrumb-item active"><a href="{{ route('admin.user.index') }}">Usuarios</a></li>
+@endsection
+
+@push('css')
 
 @endpush
 
