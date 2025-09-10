@@ -24,7 +24,7 @@
             <div class="card-body box-profile">
                 <div class="text-center">
                     <img class="profile-user-img img-fluid img-circle"
-                        src="{{asset('assets/dist/img/user4-128x128.jpg')}}"
+                        src="{{asset('storage/image_profiles/'.$user->image_path)}}"
                         alt="User profile picture" id="image">
                         
                 </div>
@@ -357,11 +357,11 @@
         })
     </script>
 
-    <script>
+    {{-- <script>
         $('input[type=file]').each(function(){
             filepond.create({id : $(this).attr("id") });
         })
-    </script>
+    </script> --}}
 
 
     <script>

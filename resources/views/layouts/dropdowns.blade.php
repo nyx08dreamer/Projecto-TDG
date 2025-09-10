@@ -97,7 +97,7 @@
       <!--begin::User Menu Dropdown-->
       <li class="nav-item dropdown user-menu">
         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-          <img src="{{asset('assets/dist/img/user2-160x160.jpg')}}" class="user-image img-circle elevation-2" alt="User Image">
+          <img src="{{asset('storage/image_profiles/'.$user->image_path)}}" class="user-image img-circle elevation-2" alt="User Image">
           @if(auth()->user())
               <span class="d-none d-md-inline">{{ auth()->user()->first_name }}</span>
               @else
@@ -107,7 +107,7 @@
         <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <!-- User image -->
           <li class="user-header bg-primary">
-            <img src="{{asset('assets/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
+            <img src="{{asset('storage/image_profiles/'.$user->image_path)}}" class="img-circle elevation-2" alt="User Image">
             @if(auth()->user())
                 <p>
                   {{ auth()->user()->first_name }}

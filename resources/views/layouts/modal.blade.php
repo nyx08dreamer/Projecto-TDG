@@ -7,16 +7,17 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="" method="post">
+            <form method="post" action="{{ route('admin.user.image', $user->id) }}" enctype="multipart/form-data" >
             @csrf
+            @method('PATCH')
                 <div class="modal-body">
                     <p class="card-text">Los archivos a subir deben estar en formato PNG, JPEG, JPG...</p>
-                    <input type="file" id="archivos" name="archivos" class="basic-filepond">
+                    <input type="file" id="image" name="image">
 
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary">Subir Imagen</button>
+                    <button type="submit" class="btn btn-primary">Subir Imagen</button>
                 </div>
             </form>
             

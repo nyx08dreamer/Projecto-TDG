@@ -6,12 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreUserRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
 use App\Models\Entities\Admin\User;
+use App\Traits\Controllers\ChangeImageTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
 class UsersController extends Controller
 {
+
+    use ChangeImageTrait; 
     /**
      * Display a listing of the resource.
      */

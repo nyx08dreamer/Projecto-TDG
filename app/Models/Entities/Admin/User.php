@@ -31,6 +31,7 @@ class User extends Authenticatable
         'password',
         'start_date',
         'end_date',
+        'image_path',
 
     ];
 

@@ -21,7 +21,7 @@ Route::controller(LoginController::class)->group(function () {
 
 Route::controller(Controller::class)->group(function () {
     Route::post('/base/cargar_archivo_temporal', 'cargar_archivo_temporal')->name('cargar.archivo');
-    
+
     Route::delete('/base/eliminar_archivo_temporal','eliminar_archivo_temporal')->name('eliminar.archivo');
 });
 
@@ -57,9 +57,14 @@ Route::controller(Controller::class)->group(function () {
 
                 Route::get('administracion/usuarios/prueba', 'prueba')->name('admin.user.prueba');
 
+                Route::patch('administracion/usuarios/{user}/imagen', 'image')->name('admin.user.image');
+
+
                 Route::get('administracion/usuarios/{user}', 'show')->name('admin.user.show');
 
                 Route::patch('administracion/usuarios/{user}', 'update')->name('admin.user.update');
+
+
                 
             });
 
