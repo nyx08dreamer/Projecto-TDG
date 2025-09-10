@@ -13,6 +13,12 @@
   <link rel="stylesheet" href="{{asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
   <link rel="stylesheet" href="{{asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
   <link rel="stylesheet" href="{{asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
+
+  <!-- FilePond styles -->
+<link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+<!-- Plugin de previsualización -->
+<link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
+
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('assets/dist/css/adminlte.min.css')}}">
   @stack('css')
@@ -51,6 +57,7 @@
     <section class="content">
       <div class="container-fluid">
         @yield('content')
+        @include('layouts.modal')
       </div>
     </section>
     <!-- /.content -->
@@ -88,10 +95,51 @@
 <script src="{{asset('assets/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
 <script src="{{asset('assets/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
 
+
+<!-- Plugins -->
+<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+<!-- FilePond scripts -->
+<script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
+
+<script>
+    var filepond = {
+        create: function(field) {
+            const inputElement = document.getElementById(field.id);
+            const pond = FilePond.create(inputElement, {
+                allowMultiple: false, 
+                allowReorder: true,
+                labelIdle: 'Arrastra y suelta tu foto o <span class="filepond--label-action">Explora</span>',
+                acceptedFileTypes: ['image/png', 'image/jpg', 'image/jpeg'],
+                server: {
+                    process: {
+                        url: '{{ url("/base/cargar_archivo_temporal") }}',
+                        method: 'POST',
+                        headers: {
+                            'x-CSRF-TOKEN': '{{ csrf_token() }}',
+                        },
+                    },
+                    revert: {
+                        url: '{{ url("/base/eliminar_archivo_temporal") }}',
+                        method: 'DELETE',
+                        headers: {
+                            'x-CSRF-TOKEN': '{{ csrf_token() }}',
+                        },
+                    }
+                },
+            });
+        }
+    };
+</script>
+
 <!-- AdminLTE App -->
 <script src="{{asset('assets/dist/js/adminlte.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('assets/dist/js/demo.js')}}"></script>
+
+
+
 
 <script>
   $(function () {

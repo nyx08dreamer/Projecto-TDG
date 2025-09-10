@@ -2,11 +2,11 @@
 
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use OpenSpout\Common\Entity\Row;
 
-Route::get('/', HomeController::class)->name('home');
 
 
 Route::controller(LoginController::class)->group(function () {
@@ -19,7 +19,11 @@ Route::controller(LoginController::class)->group(function () {
         
     });
 
-
+Route::controller(Controller::class)->group(function () {
+    Route::post('/base/cargar_archivo_temporal', 'cargar_archivo_temporal')->name('cargar.archivo');
+    
+    Route::delete('/base/eliminar_archivo_temporal','eliminar_archivo_temporal')->name('eliminar.archivo');
+});
 
 // Gestion
     // tickets
@@ -33,36 +37,37 @@ Route::controller(LoginController::class)->group(function () {
     // nuevos
     // recientes
 
-// Administracion
-    // usuarios
 
     Route::middleware('auth')->group( function () {
 
-        Route::controller(UsersController::class)->group(function () {
+        Route::get('/', HomeController::class)->name('home');
 
-            Route::get('administracion/usuarios', 'index')->name('admin.user.index');
+        // Administracion
+        // usuarios
 
-            Route::get('administracion/usuarios/listado', 'UserList')->name('admin.user.get');
+            Route::controller(UsersController::class)->group(function () {
 
-            Route::get('administracion/usuarios/crear', 'create')->name('admin.user.create');
+                Route::get('administracion/usuarios', 'index')->name('admin.user.index');
 
-            Route::post('administracion/usuarios/guardar', 'store')->name('admin.user.store');
+                Route::get('administracion/usuarios/listado', 'UserList')->name('admin.user.get');
 
-            Route::get('administracion/usuarios/prueba', 'prueba')->name('admin.user.prueba');
+                Route::get('administracion/usuarios/crear', 'create')->name('admin.user.create');
 
-            Route::get('administracion/usuarios/{user}', 'show')->name('admin.user.show');
+                Route::post('administracion/usuarios/guardar', 'store')->name('admin.user.store');
 
-            Route::patch('administracion/usuarios/{user}', 'update')->name('admin.user.update');
-            
-        });
+                Route::get('administracion/usuarios/prueba', 'prueba')->name('admin.user.prueba');
+
+                Route::get('administracion/usuarios/{user}', 'show')->name('admin.user.show');
+
+                Route::patch('administracion/usuarios/{user}', 'update')->name('admin.user.update');
+                
+            });
+
+        // roles
+        // permisos (solo lectura)
+
     });
 
 
+
     
-
-
-
-
-
-    // roles
-    // permisos (solo lectura)

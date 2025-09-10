@@ -25,7 +25,8 @@
                 <div class="text-center">
                     <img class="profile-user-img img-fluid img-circle"
                         src="{{asset('assets/dist/img/user4-128x128.jpg')}}"
-                        alt="User profile picture">
+                        alt="User profile picture" id="image">
+                        
                 </div>
 
                 <h3 class="profile-username text-center">{{$user->first_name}}</h3>
@@ -345,6 +346,24 @@
 @endsection
 
 @push('js')
+
+
+    
+    <script>
+        $('#image').on('click', function () {
+            var mbody = $('#modal-userImage').find('.modal-body');
+            
+            $('#modal-userImage').modal('show');
+        })
+    </script>
+
+    <script>
+        $('input[type=file]').each(function(){
+            filepond.create({id : $(this).attr("id") });
+        })
+    </script>
+
+
     <script>
         $(function () {
             
