@@ -19,11 +19,6 @@ Route::controller(LoginController::class)->group(function () {
         
     });
 
-Route::controller(Controller::class)->group(function () {
-    Route::post('/base/cargar_archivo_temporal', 'cargar_archivo_temporal')->name('cargar.archivo');
-
-    Route::delete('/base/eliminar_archivo_temporal','eliminar_archivo_temporal')->name('eliminar.archivo');
-});
 
 // Gestion
     // tickets

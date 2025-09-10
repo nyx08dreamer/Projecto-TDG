@@ -76,7 +76,7 @@
                         <!-- Post -->
                         <div class="post">
                             <div class="user-block">
-                            <img class="img-circle img-bordered-sm" src="../../dist/img/user1-128x128.jpg" alt="user image">
+                            <img class="img-circle img-bordered-sm" src="{{asset('storage/image_profiles/default_profile.png')}}" alt="user image">
                             <span class="username">
                                 <a href="#">Jonathan Burke Jr.</a>
                                 <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
@@ -109,7 +109,7 @@
                         <!-- Post -->
                         <div class="post clearfix">
                             <div class="user-block">
-                            <img class="img-circle img-bordered-sm" src="../../dist/img/user7-128x128.jpg" alt="User Image">
+                            <img class="img-circle img-bordered-sm" src="{{asset('storage/image_profiles/default_profile.png')}}" alt="User Image">
                             <span class="username">
                                 <a href="#">Sarah Ross</a>
                                 <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
@@ -139,7 +139,7 @@
                         <!-- Post -->
                         <div class="post">
                             <div class="user-block">
-                            <img class="img-circle img-bordered-sm" src="../../dist/img/user6-128x128.jpg" alt="User Image">
+                            <img class="img-circle img-bordered-sm" src="{{asset('storage/image_profiles/default_profile.png')}}" alt="User Image">
                             <span class="username">
                                 <a href="#">Adam Jones</a>
                                 <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
@@ -149,19 +149,19 @@
                             <!-- /.user-block -->
                             <div class="row mb-3">
                             <div class="col-sm-6">
-                                <img class="img-fluid" src="../../dist/img/photo1.png" alt="Photo">
+                                <img class="img-fluid" src="#" alt="Photo">
                             </div>
                             <!-- /.col -->
                             <div class="col-sm-6">
                                 <div class="row">
                                 <div class="col-sm-6">
-                                    <img class="img-fluid mb-3" src="../../dist/img/photo2.png" alt="Photo">
-                                    <img class="img-fluid" src="../../dist/img/photo3.jpg" alt="Photo">
+                                    <img class="img-fluid mb-3" src="{{asset('storage/image_profiles/default_profile.png')}}" alt="Photo">
+                                    <img class="img-fluid" src="{{asset('storage/image_profiles/default_profile.png')}}" alt="Photo">
                                 </div>
                                 <!-- /.col -->
                                 <div class="col-sm-6">
-                                    <img class="img-fluid mb-3" src="../../dist/img/photo4.jpg" alt="Photo">
-                                    <img class="img-fluid" src="../../dist/img/photo1.png" alt="Photo">
+                                    <img class="img-fluid mb-3" src="{{asset('storage/image_profiles/default_profile.png')}}" alt="Photo">
+                                    <img class="img-fluid" src="{{asset('storage/image_profiles/default_profile.png')}}" alt="Photo">
                                 </div>
                                 <!-- /.col -->
                                 </div>
@@ -267,10 +267,7 @@
                                 <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
 
                                 <div class="timeline-body">
-                                <img src="https://placehold.it/150x100" alt="...">
-                                <img src="https://placehold.it/150x100" alt="...">
-                                <img src="https://placehold.it/150x100" alt="...">
-                                <img src="https://placehold.it/150x100" alt="...">
+                                <img src="#" alt="...">
                                 </div>
                             </div>
                             </div>
@@ -357,11 +354,7 @@
         })
     </script>
 
-    {{-- <script>
-        $('input[type=file]').each(function(){
-            filepond.create({id : $(this).attr("id") });
-        })
-    </script> --}}
+    
 
 
     <script>

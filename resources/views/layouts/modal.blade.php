@@ -7,7 +7,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="post" action="{{ route('admin.user.image', $user->id) }}" enctype="multipart/form-data" >
+            <form method="post" action="{{ route('admin.user.image', auth()->user()->id) }}" enctype="multipart/form-data" >
             @csrf
             @method('PATCH')
                 <div class="modal-body">

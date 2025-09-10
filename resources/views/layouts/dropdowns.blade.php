@@ -97,7 +97,7 @@
       <!--begin::User Menu Dropdown-->
       <li class="nav-item dropdown user-menu">
         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-          <img src="{{asset('storage/image_profiles/'.$user->image_path)}}" class="user-image img-circle elevation-2" alt="User Image">
+          <img src="{{asset('storage/image_profiles/'.auth()->user()->image_path)}}" class="user-image img-circle elevation-2" alt="User Image">
           @if(auth()->user())
               <span class="d-none d-md-inline">{{ auth()->user()->first_name }}</span>
               @else
@@ -107,7 +107,7 @@
         <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <!-- User image -->
           <li class="user-header bg-primary">
-            <img src="{{asset('storage/image_profiles/'.$user->image_path)}}" class="img-circle elevation-2" alt="User Image">
+            <img src="{{asset('storage/image_profiles/'.auth()->user()->image_path)}}" class="img-circle elevation-2" alt="User Image">
             @if(auth()->user())
                 <p>
                   {{ auth()->user()->first_name }}
@@ -137,7 +137,7 @@
           </li>
           <!-- Menu Footer-->
           <li class="user-footer">
-            <a href="#" class="btn btn-default btn-flat">Profile</a>
+            <a href="{{ route('admin.user.show', auth()->user()->id) }}" class="btn btn-default btn-flat">Perfil</a>
             <a href="#" class="btn btn-default btn-flat float-right" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar Sesión</a>
             <form id="logout-form" action="{{ route('auth.logout') }}" method="post" style="display: none;">
                 @csrf
