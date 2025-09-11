@@ -10,4 +10,6 @@
 @section('content')
 
     Pagina de Inicio
+
+    {{-- {{ dd(auth()->user()->roles) }} --}}
 @endsection
