@@ -115,7 +115,8 @@
           </li>
 
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{ route('admin.permission.index') }}" 
+            class="nav-link {{isRouteActive('admin.permission')}}">
               <i class="fa-solid fa-key"></i>
               <p>
                 Permisos

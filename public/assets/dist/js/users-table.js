@@ -1,7 +1,7 @@
 $(document).ready(function() {
     $(function () {
         
-        var table = $('#tabla').DataTable({
+        var table = $('#users-table').DataTable({
             processing: true,
             serverSide: true,
             /*ordering: false,*/

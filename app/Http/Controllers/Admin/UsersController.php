@@ -29,11 +29,10 @@ class UsersController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            // 'auth',
-            // new Middleware('role_or_permission:demo|show', only: ['index']),
-            new Middleware('permission:'.self::PERMISSIONS['create'], only: ['create', 'store']),
-            new Middleware('permission:'.self::PERMISSIONS['show'], only: [ 'index','show']),
-            new Middleware('permission:'.self::PERMISSIONS['edit'], only: ['edit', 'update']),
+
+            // new Middleware('permission:'.self::PERMISSIONS['create'], only: ['create', 'store']),
+            // new Middleware('permission:'.self::PERMISSIONS['show'], only: [ 'index','show']),
+            // new Middleware('permission:'.self::PERMISSIONS['edit'], only: ['edit', 'update']),
 
             
         ];

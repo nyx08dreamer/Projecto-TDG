@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\PermissionsController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Controller;
@@ -37,33 +38,31 @@ Route::controller(LoginController::class)->group(function () {
 
         Route::get('/', HomeController::class)->name('home');
 
-        // Administracion
+    // Administracion
+        Route::prefix('administracion')->name('admin.')->group(function () {
+
         // usuarios
-
             Route::controller(UsersController::class)->group(function () {
-
-                Route::get('administracion/usuarios', 'index')->name('admin.user.index');
-
-                Route::get('administracion/usuarios/listado', 'UserList')->name('admin.user.get');
-
-                Route::get('administracion/usuarios/crear', 'create')->name('admin.user.create');
-
-                Route::post('administracion/usuarios/guardar', 'store')->name('admin.user.store');
-
-                Route::patch('administracion/usuarios/{user}/imagen', 'image')->name('admin.user.image');
-
-
-                Route::get('administracion/usuarios/{user}', 'show')->name('admin.user.show');
-
-                Route::patch('administracion/usuarios/{user}', 'update')->name('admin.user.update');
-
-
-                
+                Route::get('/usuarios/listado', 'UserList')->name('user.get');
+                Route::patch('/usuarios/{user}/imagen', 'image')->name('user.image');
             });
 
-        // roles
-        // permisos (solo lectura)
+            Route::resource('usuarios', UsersController::class)
+                ->names('user') 
+                ->parameters(['usuarios' => 'user']);
 
+        // roles
+        
+        // permisos (solo lectura)
+            Route::controller(PermissionsController::class)->group(function () {
+                Route::get('/permisos/listado', 'PermissionList')->name('permission.get');
+            });
+
+            Route::resource('permisos', PermissionsController::class)
+                ->names('permission')
+                ->parameters(['permisos' => 'permission'])
+                ->only(['index', 'show']);
+        });
     });
 
 
