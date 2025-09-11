@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Entities\Admin\Permission as AdminPermission;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 use Yajra\DataTables\DataTables;
@@ -21,7 +20,7 @@ class PermissionsController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            // new Middleware('permission:'.self::PERMISSIONS['show'], only: [ 'index','show']),
+            //new Middleware('permission:'.self::PERMISSIONS['show'], only: [ 'index','show']),
 
         ];
     }
@@ -36,8 +35,7 @@ class PermissionsController extends Controller implements HasMiddleware
 
         if ($request->ajax()) {
 
-            $permission_model = new AdminPermission;
-            $permissions = $permission_model->get_permissions();
+            $permissions = Permission::query();
 
             $datatables = DataTables::of($permissions)
                 ->addIndexColumn()

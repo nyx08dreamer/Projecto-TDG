@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\PermissionsController;
+use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Controller;
@@ -51,7 +52,16 @@ Route::controller(LoginController::class)->group(function () {
                 ->names('user') 
                 ->parameters(['usuarios' => 'user']);
 
+        
         // roles
+        Route::controller(RolesController::class)->group(function () {
+                Route::get('/roles/listado', 'RoleList')->name('role.get');
+            });
+
+            Route::resource('roles', RolesController::class)
+                ->names('role')
+                ->parameters(['roles' => 'role']);
+        
         
         // permisos (solo lectura)
             Route::controller(PermissionsController::class)->group(function () {

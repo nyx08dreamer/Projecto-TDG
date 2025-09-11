@@ -106,7 +106,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{ route('admin.role.index') }}" class="nav-link {{isRouteActive('admin.role')}}" >
               <i class="fa-solid fa-unlock"></i>
               <p>
                 Roles
