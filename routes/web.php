@@ -50,8 +50,6 @@ Route::controller(LoginController::class)->group(function () {
 
                 Route::post('administracion/usuarios/guardar', 'store')->name('admin.user.store');
 
-                Route::get('administracion/usuarios/prueba', 'prueba')->name('admin.user.prueba');
-
                 Route::patch('administracion/usuarios/{user}/imagen', 'image')->name('admin.user.image');
 
 

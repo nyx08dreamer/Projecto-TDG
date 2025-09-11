@@ -2,30 +2,50 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+use App\Models\Entities\Admin\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use App\Traits\Controllers\ChangeImageTrait;
 use App\Http\Requests\Admin\StoreUserRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
-use App\Models\Entities\Admin\User;
-use App\Traits\Controllers\ChangeImageTrait;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Yajra\DataTables\DataTables;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class UsersController extends Controller
+class UsersController extends Controller implements HasMiddleware
 {
 
     use ChangeImageTrait; 
+
+    const PERMISSIONS = [
+        'create' => 'admin-user-create',
+        'show' => 'admin-user-show',
+        'edit' => 'admin-user-edit',
+        'delete' => 'admin-user-delete',
+
+    ];
+    
+    public static function middleware(): array
+    {
+        return [
+            // 'auth',
+            // new Middleware('role_or_permission:demo|show', only: ['index']),
+            new Middleware('permission:'.self::PERMISSIONS['create'], only: ['create', 'store']),
+            new Middleware('permission:'.self::PERMISSIONS['show'], only: [ 'index','show']),
+            new Middleware('permission:'.self::PERMISSIONS['edit'], only: ['edit', 'update']),
+
+            
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
         return view('admin.user.index');
-    }
-
-    public function prueba()
-    {
-        return view('admin.user.prueba');
     }
 
     public function UserList (Request $request)
