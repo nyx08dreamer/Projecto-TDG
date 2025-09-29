@@ -46,6 +46,9 @@ Route::controller(LoginController::class)->group(function () {
             Route::controller(UsersController::class)->group(function () {
                 Route::get('/usuarios/listado', 'UserList')->name('user.get');
                 Route::patch('/usuarios/{user}/imagen', 'image')->name('user.image');
+                Route::patch('/usuarios/{user}/roles', 'role')->name('user.role');
+                Route::patch('/usuarios/{user}/permisos', 'permission')->name('user.permission');
+
             });
 
             Route::resource('usuarios', UsersController::class)

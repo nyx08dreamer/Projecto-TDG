@@ -19,31 +19,43 @@ class PermissionsTableSeeder extends Seeder
         // Admin User
 
         Permission::updateOrCreate(['name' => UsersController::PERMISSIONS['create']], [
-            'description' => 'Creacion de usuarios'
+            'description' => 'Creación de usuarios'
         ]);
 
         Permission::updateOrCreate(['name' => UsersController::PERMISSIONS['show']], [
-            'description' => 'Listado y detalle de usuario'
+            'description' => 'Listado y detalles del usuario'
         ]);
 
         Permission::updateOrCreate(['name' => UsersController::PERMISSIONS['edit']], [
-            'description' => 'Edicion de usuario'
+            'description' => 'Edición de usuario'
+        ]);
+
+        Permission::updateOrCreate(['name' => UsersController::PERMISSIONS['assign-roles']], [
+            'description' => 'Asignación o Eliminación de Roles'
+        ]);
+
+        Permission::updateOrCreate(['name' => UsersController::PERMISSIONS['assign-permissions']], [
+            'description' => 'Asignación o Eliminación de Permisos'
         ]);
 
 
         // Admin Role
 
-        // Permission::updateOrCreate(['name' => RolesController::PERMISSIONS['create']], [
-        //     'description' => 'Creacion de roles'
-        // ]);
+        Permission::updateOrCreate(['name' => RolesController::PERMISSIONS['create']], [
+            'description' => 'Creación de roles'
+        ]);
 
-        // Permission::updateOrCreate(['name' => RolesController::PERMISSIONS['show']], [
-        //     'description' => 'Listado y detalle de rol'
-        // ]);
+        Permission::updateOrCreate(['name' => RolesController::PERMISSIONS['show']], [
+            'description' => 'Listado y detalles de rol'
+        ]);
 
-        // Permission::updateOrCreate(['name' => RolesController::PERMISSIONS['edit']], [
-        //     'description' => 'Edicion de rol'
-        // ]);
+        Permission::updateOrCreate(['name' => RolesController::PERMISSIONS['edit']], [
+            'description' => 'Edición de roles'
+        ]);
+
+        Permission::updateOrCreate(['name' => RolesController::PERMISSIONS['delete']], [
+            'description' => 'Eliminación de roles'
+        ]);
 
         // Admin Permission
 

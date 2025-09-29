@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 use Yajra\DataTables\DataTables;
 use App\Models\Entities\Admin\User;
 use App\Http\Controllers\Controller;
@@ -10,8 +12,10 @@ use Illuminate\Support\Facades\Validator;
 use App\Traits\Controllers\ChangeImageTrait;
 use App\Http\Requests\Admin\StoreUserRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
+use App\Models\Entities\Admin\Permission;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
+use Spatie\Permission\Models\Role;
 
 class UsersController extends Controller implements HasMiddleware
 {
@@ -22,7 +26,11 @@ class UsersController extends Controller implements HasMiddleware
         'create' => 'admin-user-create',
         'show' => 'admin-user-show',
         'edit' => 'admin-user-edit',
+        
         'delete' => 'admin-user-delete',
+
+        'assign-roles' => 'admin-user-role',
+        'assign-permissions' => 'admin-user-permission',
 
     ];
     
@@ -30,11 +38,13 @@ class UsersController extends Controller implements HasMiddleware
     {
         return [
 
-            // new Middleware('permission:'.self::PERMISSIONS['create'], only: ['create', 'store']),
-            // new Middleware('permission:'.self::PERMISSIONS['show'], only: [ 'index','show']),
-            // new Middleware('permission:'.self::PERMISSIONS['edit'], only: ['edit', 'update']),
+            new Middleware('permission:'.self::PERMISSIONS['create'], only: ['create', 'store']),
+            new Middleware('permission:'.self::PERMISSIONS['show'], only: [ 'index','show']),
+            new Middleware('permission:'.self::PERMISSIONS['edit'], only: ['edit', 'update']),
+            new Middleware('permission:'.self::PERMISSIONS['assign-roles'], only: ['role']),
+            new Middleware('permission:'.self::PERMISSIONS['assign-permissions'], only: ['permission']),
 
-            
+
         ];
     }
 
@@ -76,7 +86,10 @@ class UsersController extends Controller implements HasMiddleware
      */
     public function create()
     {
-        return view('admin.user.create');
+        return view('admin.user.create', [
+            'roles' => Role::all(),
+            'permissions' => Permission::all(),
+        ]);
     }
 
     /**
@@ -108,10 +121,13 @@ class UsersController extends Controller implements HasMiddleware
 
         $user->password = bcrypt($request->input('username'));
 
-        $user->created_by = 1;
-        $user->updated_by = 1;
+        $user->created_by = Auth::id();
+        $user->updated_by = Auth::id();
 
         $user->save();
+
+        $user->roles()->sync($request->role);
+        $user->permissions()->sync($request->permission);
 
         return redirect()->route('admin.user.show', $user->id);
     }
@@ -124,6 +140,8 @@ class UsersController extends Controller implements HasMiddleware
 
         return view('admin.user.show', [
             'user' => $user,
+            'roles' => Role::all(),
+            'permissions' => Permission::all(),
         ]);
     }
 
@@ -159,12 +177,28 @@ class UsersController extends Controller implements HasMiddleware
 
         $user->start_date = $request->input('start_date');
 
-        //dd($request->all());
+        $user->updated_by = Auth::id();
 
         $user->save();
+
+        
         
         return redirect()->route('admin.user.show', $user->id);
 
+    }
+
+    public function role(Request $request, User $user) 
+    {
+        $user->roles()->sync($request->role);
+
+        return redirect()->route('admin.user.show', $user->id);
+    }
+
+    public function permission(Request $request, User $user) 
+    {
+        $user->permissions()->sync($request->permission);
+
+        return redirect()->route('admin.user.show', $user->id);
     }
 
     /**

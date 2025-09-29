@@ -68,6 +68,8 @@
                 <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Actividad</a></li>
                 <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Historial</a></li>
                 <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Información</a></li>
+                <li class="nav-item"><a class="nav-link" href="#roles" data-toggle="tab">Roles</a></li>
+                <li class="nav-item"><a class="nav-link" href="#permissions" data-toggle="tab">Permisos</a></li>
             </ul>
             </div><!-- /.card-header -->
             <div class="card-body">
@@ -315,10 +317,92 @@
                                 
                             </div>
                             <div class="float-right">
-                                <a href="{{ route('admin.user.index') }}" class="btn btn-outline-danger">Cancelar</a>
                                 <button type="submit" class="ml-2 btn btn-success">Guardar</button>
                             </div>                            
                         </form>
+                    </div>
+
+                    <div class="tab-pane" id="roles">
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Asignar Rol</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <!-- form start -->
+                            <div class="card-body">
+
+                                <form id="user-update" method="post" action="{{ route('admin.user.role', $user->id)}}">
+                                    @csrf
+                                    @method('PATCH')
+                                    @php
+                                        // IDs de permisos asignados al rol (vacío si es creación)
+                                        $userRoleIds = isset($user) ? $user->roles->pluck('id')->toArray() : [];
+                                    @endphp
+
+                                    @foreach ($roles as $role)
+                                        <div class="row">
+                                            <div class="form-check col-12">
+                                                    <input type="checkbox" 
+                                                    class="form-check-input" 
+                                                    name="role[]" 
+                                                    id="role_{{ $role->id }}" 
+                                                    value="{{ $role->id }}"
+                                                    {{ in_array($role->id, old('role', $userRoleIds)) ? 'checked' : '' }}
+                                                    >
+                                                    <label class="form-check-label" for="role_{{ $role->id }}">{{$role->description}}</label>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                    <div class="float-right">
+                                        <button type="submit" class="ml-2 btn btn-success">Guardar</button>
+                                    </div>
+                                </form>
+                            </div>
+                                <!-- /.card-body -->
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="permissions">
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Asignar Permisos</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <!-- form start -->
+                            <div class="card-body">
+
+                                <form id="user-update" method="post" action="{{ route('admin.user.permission', $user->id)}}">
+                                    @csrf
+                                    @method('PATCH')
+                                    @php
+                                        // Obtener IDs de permisos asignados al usuario (vacío si es creación o no hay usuario)
+                                        $userPermissionIds = isset($user) ? $user->permissions->pluck('id')->toArray() : [];
+                                    @endphp
+
+                                    @foreach ($permissions as $permission)
+                                        <div class="row">
+                                            <div class="form-check col-12">
+                                                <input 
+                                                    type="checkbox" 
+                                                    class="form-check-input" 
+                                                    name="permission[]" 
+                                                    id="permission_{{ $permission->id }}" 
+                                                    value="{{ $permission->id }}"
+                                                    {{ in_array($permission->id, old('permission', $userPermissionIds)) ? 'checked' : '' }}
+                                                >
+                                                <label class="form-check-label" for="permission_{{ $permission->id }}">
+                                                    {{ $permission->description }}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                    <div class="float-right">
+                                        <button type="submit" class="ml-2 btn btn-success">Guardar</button>
+                                    </div>
+                                </form>
+                            </div>
+                                <!-- /.card-body -->
+                        </div>
                     </div>
                     <!-- /.tab-pane -->
                 </div>
