@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Entities\Admin\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -11,6 +12,7 @@ use Yajra\DataTables\DataTables;
 
 class RolesController extends Controller implements HasMiddleware
 {
+    
     const PERMISSIONS = [
         'create' => 'admin-role-create',
         'show' => 'admin-role-show',
@@ -63,7 +65,9 @@ class RolesController extends Controller implements HasMiddleware
      */
     public function create()
     {
-        return view('admin.role.create');
+        return view('admin.role.create', [
+            'permissions' => Permission::all(),
+        ]);
     }
 
     /**
@@ -74,8 +78,12 @@ class RolesController extends Controller implements HasMiddleware
         
         try {
 
-            $role= new Role($request->all());
+            $role= new Role;
+            $role->name = $request->name;
+            $role->description = $request->description;
             $role->save();
+
+            $role->permissions()->sync($request->permission);
             
             $status = 'success';
             $content = 'El rol se ha creado correctamente';
@@ -86,8 +94,9 @@ class RolesController extends Controller implements HasMiddleware
             $content = 'Ha ocurrido un error al crear el rol';
         }
 
+
         return redirect()
-                ->route('admin.role.show', $role->id)
+                ->route('admin.role.show', ['role' => $role->id])
                 ->with('process_result', [
                     'status' => $status,
                     'content' => $content,
@@ -111,6 +120,7 @@ class RolesController extends Controller implements HasMiddleware
     {
         return view('admin.role.edit', [
             'role' => $role,
+            'permissions' => Permission::all(),
         ]);
     }
 
@@ -121,7 +131,9 @@ class RolesController extends Controller implements HasMiddleware
     {
         try {
 
-            $role->update($request->all());
+            $role->update($request->only(['name', 'description']));
+
+            $role->permissions()->sync($request->permission);
             
             $status = 'success';
             $content = 'El rol se ha actualizado correctamente';

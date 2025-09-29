@@ -55,9 +55,32 @@
                         </div>
                     </div>
                     <!-- /.card-body -->
-                    <div class="card-footer">
-                        
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Permisos Asignados</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                    <div class="card-body">
+                        @foreach ($role->permissions as $permission)
+                            <div class="row">
+                                <div class="form-group col-12 col-md-4">
+                                    <label for="name">Nombre</label>
+                                    <p class="pb-0 mb-0">{{$permission->name}}</p>
+                                    
+                                </div>
+                                <div class="form-group col-12 col-md-8">
+                                    <label for="description">Descripción</label>
+                                    <p class="pb-0 mb-0">{{$permission->description}}</p>
+                                    
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
+                    <!-- /.card-body -->
+
             </div>
 
             <div class="card">
@@ -77,7 +100,6 @@
                     <div class="card-footer">
                         
                     </div>
-                </form>
             </div>
             <!-- /.card -->
             @if ($errors->any())
