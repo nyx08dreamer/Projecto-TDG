@@ -98,11 +98,11 @@
 
 @push('js')
 
-    {{-- <script>
+    <script>
         var permissionUsers_registros = '{{ route('admin.permissionDetails.get', $permission->id) }}'
     </script>
 
-    <script src="{{asset('assets/dist/js/permissionUsers-table.js')}}"></script> --}}
+    <script src="{{asset('assets/dist/js/permissionUsers-table.js')}}"></script>
 
     <script>
         var permissionRoles_registros = '{{ route('admin.permissionDetails.get', $permission->id) }}'

@@ -65,30 +65,27 @@ class PermissionsController extends Controller implements HasMiddleware
 
             // Verificar qué datos se solicitan: permisos o usuarios
             $type = $request->get('type');
+            
+            //App\Models\Entities\Admin\User
 
-            // if ($type === 'users') {
-            //     // Obtener usuarios que tienen el permiso directamente
-            //     $directUsers = $permission->users();
-            //     // Obtener usuarios que tienen un rol que tiene este permiso
-            //     $roleUsers = \App\Models\Entities\Admin\User::whereHas('roles.permissions', function($query) use ($permission) {
-            //         $query->where('id', $permission->id);
-            //     });
-            //     // Unir ambas consultas con union (sin duplicados)
-            //     $usersQuery = $directUsers->union($roleUsers->getQuery());
-            //     // Ejecutar la consulta y mapear full_name
-            //     $permissionUsers = $usersQuery->get()->map(function($user) {
-            //         $user->full_name = $user->first_name . ' ' . $user->last_name;
-            //         return $user;
-            //     });
-            //     return DataTables::of($permissionUsers)
-            //         ->addIndexColumn()
-            //         ->editColumn('full_name', function($user) {
-            //             $url = route('admin.user.show', $user->id);
-            //             return '<a href="' . $url . '">' . e($user->full_name) . '</a>';
-            //         })
-            //         ->rawColumns(['full_name'])
-            //         ->make(true);
-            // }
+            if ($type === 'users') {
+                $directUsers = $permission->users()->get();
+                $roleUsers = \App\Models\Entities\Admin\User::whereHas('roles.permissions', function($query) use ($permission) {
+                    $query->where('id', $permission->id);
+                })->get();
+                $allUsers = $directUsers->merge($roleUsers)->unique('id')->map(function($user) {
+                    $user->full_name = $user->first_name . ' ' . $user->last_name;
+                    return $user;
+                });
+                return DataTables::of($allUsers)
+                    ->addIndexColumn()
+                    ->editColumn('full_name', function($user) {
+                        $url = route('admin.user.show', $user->id);
+                        return '<a href="' . $url . '">' . e($user->full_name) . '</a>';
+                    })
+                    ->rawColumns(['full_name'])
+                    ->make(true);
+            }
 
             if ($type === 'roles') {
                 $permissionRoles = $permission->roles()->get();
