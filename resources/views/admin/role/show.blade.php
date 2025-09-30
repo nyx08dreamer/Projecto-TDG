@@ -64,42 +64,47 @@
                 <!-- /.card-header -->
                 <!-- form start -->
                     <div class="card-body">
-                        @foreach ($role->permissions as $permission)
-                            <div class="row">
-                                <div class="form-group col-12 col-md-4">
-                                    <label for="name">Nombre</label>
-                                    <p class="pb-0 mb-0">{{$permission->name}}</p>
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="rolePermissions-table" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Descripción</th> 
+                                    </tr>
+                                </thead>
+                                <tbody>
                                     
-                                </div>
-                                <div class="form-group col-12 col-md-8">
-                                    <label for="description">Descripción</label>
-                                    <p class="pb-0 mb-0">{{$permission->description}}</p>
-                                    
-                                </div>
-                            </div>
-                        @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <!-- /.card-body -->
-
             </div>
 
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Usuarios asignados al Rol</h3>
+                    <h3 class="card-title">Usuarios Asignados</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
                 
-                    <div class="card-body">
-                        <div class="row">
-                        
+                    <div class="card-body pb-1 mb-1">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="roleUsers-table" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Nombres y Apellidos</th>
+                                        <th>Login</th>
+                                        <th>Correo Electronico</th> 
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                     <!-- /.card-body -->
-
-                    <div class="card-footer">
-                        
-                    </div>
             </div>
             <!-- /.card -->
             @if ($errors->any())
@@ -118,6 +123,21 @@
 @endsection
 
 @push('js')
+
+    <script>
+        var rolePermissions_registros = '{{ route('admin.roleUser.get', $role->id) }}'
+    </script>
+
+    <script src="{{asset('assets/dist/js/rolePermissions-table.js')}}"></script>
+
+
+    <script>
+        var roleUsers_registros = '{{ route('admin.roleUser.get', $role->id) }}'
+    </script>
+
+    <script src="{{asset('assets/dist/js/roleUsers-table.js')}}"></script>
+
+
     <script>
         $(function () {
             $('#role-update').validate({

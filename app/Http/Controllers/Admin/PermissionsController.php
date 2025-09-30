@@ -8,6 +8,8 @@ use Spatie\Permission\Models\Permission;
 use Yajra\DataTables\DataTables;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Entities\Admin\User;
 
 
 class PermissionsController extends Controller implements HasMiddleware
@@ -55,5 +57,64 @@ class PermissionsController extends Controller implements HasMiddleware
         return view('admin.permission.show', [
             'permission' => $permission,
         ]);
+    }
+
+    public function PermissionDetails (Permission $permission, Request $request)
+    {
+        if ($request->ajax()) {
+
+            // Verificar qué datos se solicitan: permisos o usuarios
+            $type = $request->get('type');
+
+            // if ($type === 'users') {
+            //     // Obtener usuarios que tienen el permiso directamente
+            //     $directUsers = $permission->users();
+            //     // Obtener usuarios que tienen un rol que tiene este permiso
+            //     $roleUsers = \App\Models\Entities\Admin\User::whereHas('roles.permissions', function($query) use ($permission) {
+            //         $query->where('id', $permission->id);
+            //     });
+            //     // Unir ambas consultas con union (sin duplicados)
+            //     $usersQuery = $directUsers->union($roleUsers->getQuery());
+            //     // Ejecutar la consulta y mapear full_name
+            //     $permissionUsers = $usersQuery->get()->map(function($user) {
+            //         $user->full_name = $user->first_name . ' ' . $user->last_name;
+            //         return $user;
+            //     });
+            //     return DataTables::of($permissionUsers)
+            //         ->addIndexColumn()
+            //         ->editColumn('full_name', function($user) {
+            //             $url = route('admin.user.show', $user->id);
+            //             return '<a href="' . $url . '">' . e($user->full_name) . '</a>';
+            //         })
+            //         ->rawColumns(['full_name'])
+            //         ->make(true);
+            // }
+
+            if ($type === 'roles') {
+                $permissionRoles = $permission->roles()->get();
+                return DataTables::of($permissionRoles)
+                ->addIndexColumn()
+                ->editColumn('name', function($role) {
+                    /** @var User|null $user */
+                    $user = Auth::user();
+
+                    // Ignorar "Error", el metodo funciona
+                    if ($user->can('admin-role-show')) {
+                        $url = route('admin.role.show', $role->id);
+                        return '<a href="' . $url . '">' . e($role->name) . '</a>';
+                    } else {
+                        // Usuario no tiene permiso, solo mostrar el nombre sin enlace
+                        return e($role->name);
+                    }
+                })
+                ->rawColumns(['name'])
+                ->make(true);
+            }
+
+            
+        // Si no se especifica tipo o es inválido, puedes devolver un error o vacío
+        return response()->json(['error' => 'Tipo de datos no especificado o inválido'], 400);
+        }
+        
     }
 }

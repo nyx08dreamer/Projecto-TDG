@@ -371,12 +371,22 @@
                             <!-- form start -->
                             <div class="card-body">
 
-                                <form id="user-update" method="post" action="{{ route('admin.user.permission', $user->id)}}">
+                                <form id="user-update" method="post" action="{{ route('admin.user.permission', $user->id) }}">
                                     @csrf
                                     @method('PATCH')
+
                                     @php
-                                        // Obtener IDs de permisos asignados al usuario (vacío si es creación o no hay usuario)
-                                        $userPermissionIds = isset($user) ? $user->permissions->pluck('id')->toArray() : [];
+                                        $userPermissionIds = [];
+
+                                        if (isset($user)) {
+                                            $directPermissions = $user->permissions->pluck('id')->toArray();
+
+                                            $rolePermissions = $user->roles->flatMap(function($role) {
+                                                return $role->permissions->pluck('id');
+                                            })->unique()->toArray();
+
+                                            $userPermissionIds = array_unique(array_merge($directPermissions, $rolePermissions));
+                                        }
                                     @endphp
 
                                     @foreach ($permissions as $permission)
@@ -396,6 +406,7 @@
                                             </div>
                                         </div>
                                     @endforeach
+
                                     <div class="float-right">
                                         <button type="submit" class="ml-2 btn btn-success">Guardar</button>
                                     </div>

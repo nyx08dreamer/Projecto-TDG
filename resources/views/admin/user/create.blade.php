@@ -60,61 +60,65 @@
                         </div>
                         <!-- /.card-body -->
                 </div>
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">Asignar Rol</h3>
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Colapsar">
-                            <i class="fas fa-minus"></i>
-                            </button>
-                            </a>
+                @can('admin-user-role')
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Asignar Rol</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Colapsar">
+                                <i class="fas fa-minus"></i>
+                                </button>
+                                </a>
+                            </div>
                         </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <div class="card-body">
+                                @foreach ($roles as $role)
+                                    <div class="row">
+                                        <div class="form-check col-12">
+                                                <input type="checkbox" 
+                                                class="form-check-input" 
+                                                name="role[]" 
+                                                id="role_{{ $role->id }}" 
+                                                value="{{ $role->id }}"
+                                                >
+                                                <label class="form-check-label" for="role_{{ $role->id }}">{{$role->description}}</label>
+                                        </div>
+                                    </div>
+                                @endforeach
+                        </div>
+                            <!-- /.card-body -->
                     </div>
-                    <!-- /.card-header -->
-                    <!-- form start -->
-                    <div class="card-body">
-                            @foreach ($roles as $role)
+                @endcan
+
+                @can('admin-user-permission')
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Asignar Permisos</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Colapsar">
+                                <i class="fas fa-minus"></i>
+                                </button>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                            <div class="card-body">
+                            @foreach ($permissions as $permission)
                                 <div class="row">
                                     <div class="form-check col-12">
-                                            <input type="checkbox" 
-                                            class="form-check-input" 
-                                            name="role[]" 
-                                            id="role_{{ $role->id }}" 
-                                            value="{{ $role->id }}"
-                                            >
-                                            <label class="form-check-label" for="role_{{ $role->id }}">{{$role->description}}</label>
+                                            <input type="checkbox" class="form-check-input" name="permission[{{ $permission->id }}]" id="permission_{{ $permission->id }}" value="{{ $permission->id }}">
+                                            <label class="form-check-label" for="permission_{{ $permission->id }}">{{$permission->description}}</label>
                                     </div>
+                                    
                                 </div>
                             @endforeach
-                    </div>
-                        <!-- /.card-body -->
-                </div>
-
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">Asignar Permisos</h3>
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Colapsar">
-                            <i class="fas fa-minus"></i>
-                            </button>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- /.card-header -->
-                    <!-- form start -->
-                        <div class="card-body">
-                        @foreach ($permissions as $permission)
-                            <div class="row">
-                                <div class="form-check col-12">
-                                        <input type="checkbox" class="form-check-input" name="permission[{{ $permission->id }}]" id="permission_{{ $permission->id }}" value="{{ $permission->id }}">
-                                        <label class="form-check-label" for="permission_{{ $permission->id }}">{{$permission->description}}</label>
-                                </div>
-                                
                             </div>
-                        @endforeach
-                        </div>
-                        <!-- /.card-body -->
-                </div>
+                            <!-- /.card-body -->
+                    </div>
+                @endcan
 
 
                 <div class="float-right pb-3">

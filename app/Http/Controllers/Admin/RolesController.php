@@ -9,6 +9,9 @@ use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Entities\Admin\User;
+
 
 class RolesController extends Controller implements HasMiddleware
 {
@@ -103,11 +106,63 @@ class RolesController extends Controller implements HasMiddleware
                 ]);;
     }
 
+    public function RolePermissionsAndUsersList (Role $role, Request $request)
+    {
+        if ($request->ajax()) {
+
+            // Verificar qué datos se solicitan: permisos o usuarios
+            $type = $request->get('type');
+
+            if ($type === 'permissions') {
+                $rolePermissions = $role->permissions()->get();
+                return DataTables::of($rolePermissions)
+                ->addIndexColumn()
+                ->editColumn('name', function($permission) {
+                    /** @var User|null $user */
+                    $user = Auth::user();
+
+                    // Ignorar "Error", el metodo funciona
+                    if ($user->can('admin-permission-show')) {
+                        $url = route('admin.permission.show', $permission->id);
+                        return '<a href="' . $url . '">' . e($permission->name) . '</a>';
+                    } else {
+                        // Usuario no tiene permiso, solo mostrar el nombre sin enlace
+                        return e($permission->name);
+                    }
+                })
+                ->rawColumns(['name'])
+                ->make(true);
+            }
+
+            if ($type === 'users') {
+
+                $roleUsers = $role->users()->get()->map(function($user) {
+                    $user->full_name = $user->first_name . ' ' . $user->last_name;
+                    return $user;
+                });
+
+                return DataTables::of($roleUsers)
+                    ->addIndexColumn()
+                    ->editColumn('full_name', function($user) {
+                        
+                        $url = route('admin.user.show', $user->id);
+                        return '<a href="' . $url . '">' . e($user->full_name) . '</a>';
+                    })
+                    ->rawColumns(['full_name']) 
+                    ->make(true);
+            }
+        // Si no se especifica tipo o es inválido, puedes devolver un error o vacío
+        return response()->json(['error' => 'Tipo de datos no especificado o inválido'], 400);
+        }
+        
+    }
+
     /**
      * Display the specified resource.
      */
-    public function show(Role $role)
+    public function show(Role $role, Request $request)
     {
+
         return view('admin.role.show', [
             'role' => $role,
         ]);

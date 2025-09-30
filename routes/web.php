@@ -59,6 +59,8 @@ Route::controller(LoginController::class)->group(function () {
         // roles
         Route::controller(RolesController::class)->group(function () {
                 Route::get('/roles/listado', 'RoleList')->name('role.get');
+                Route::get('/roles/{role}/listado', 'RolePermissionsAndUsersList')->name('roleUser.get');
+
             });
 
             Route::resource('roles', RolesController::class)
@@ -69,6 +71,8 @@ Route::controller(LoginController::class)->group(function () {
         // permisos (solo lectura)
             Route::controller(PermissionsController::class)->group(function () {
                 Route::get('/permisos/listado', 'PermissionList')->name('permission.get');
+                Route::get('/permisos/{permission}/listado', 'PermissionDetails')->name('permissionDetails.get');
+
             });
 
             Route::resource('permisos', PermissionsController::class)
