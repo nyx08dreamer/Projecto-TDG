@@ -17,7 +17,6 @@ return new class extends Migration
             $table->unsignedSmallInteger('type_id')->nullable();
             $table->unsignedSmallInteger('priority_id')->required();
             $table->unsignedBigInteger('requester_user_id')->required();
-            $table->unsignedBigInteger('assigened_user_id')->nullable();
             $table->string('name')->required();
 
             // id del complamentario para la descripcion
@@ -30,7 +29,6 @@ return new class extends Migration
             $table->foreign('type_id')->references('id')->on('types')->onDelete('set null');
             $table->foreign('priority_id')->references('id')->on('priorities');
             $table->foreign('requester_user_id')->references('id')->on('users');
-            $table->foreign('assigened_user_id')->references('id')->on('users');
 
         });
     }

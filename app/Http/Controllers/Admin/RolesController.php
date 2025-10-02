@@ -28,10 +28,10 @@ class RolesController extends Controller implements HasMiddleware
     {
         return [
 
-            new Middleware('permission:'.self::PERMISSIONS['create'], only: ['create', 'store']),
-            new Middleware('permission:'.self::PERMISSIONS['show'], only: [ 'index','show']),
-            new Middleware('permission:'.self::PERMISSIONS['edit'], only: ['edit', 'update']),
-            new Middleware('permission:'.self::PERMISSIONS['delete'], only: ['destroy']),
+            // new Middleware('permission:'.self::PERMISSIONS['create'], only: ['create', 'store']),
+            // new Middleware('permission:'.self::PERMISSIONS['show'], only: [ 'index','show']),
+            // new Middleware('permission:'.self::PERMISSIONS['edit'], only: ['edit', 'update']),
+            // new Middleware('permission:'.self::PERMISSIONS['delete'], only: ['destroy']),
             
         ];
     }
