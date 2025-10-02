@@ -18,7 +18,6 @@
 
     <div class="row">
         <div class="col-12">
-            <!-- general form elements -->
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Información de Rol</h3>
@@ -37,76 +36,68 @@
                         </form>
                     </div>
                 </div>
-                    
-                <!-- /.card-header -->
-                <!-- form start -->
-                    <div class="card-body pb-0 mb-0">
-                        <div class="row">
-                            <div class="form-group col-12 col-md-4">
-                                <label for="name">Nombre</label>
-                                <p class="pb-0 mb-0">{{$role->name}}</p>
-                                
-                            </div>
-                            <div class="form-group col-12 col-md-8">
-                                <label for="description">Descripción</label>
-                                <p class="pb-0 mb-0">{{$role->description}}</p>
-                                
-                            </div>
+
+                <div class="card-body pb-0 mb-0">
+                    <div class="row">
+                        <div class="form-group col-12 col-md-4">
+                            <label for="name">Nombre</label>
+                            <p class="pb-0 mb-0">{{$role->name}}</p>
+                            
+                        </div>
+                        <div class="form-group col-12 col-md-8">
+                            <label for="description">Descripción</label>
+                            <p class="pb-0 mb-0">{{$role->description}}</p>
+                            
                         </div>
                     </div>
-                    <!-- /.card-body -->
+                </div>
             </div>
 
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Permisos Asignados</h3>
                 </div>
-                <!-- /.card-header -->
-                <!-- form start -->
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-hover" id="rolePermissions-table" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>Nombre</th>
-                                        <th>Descripción</th> 
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    
-                                </tbody>
-                            </table>
-                        </div>
+
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="rolePermissions-table" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Descripción</th> 
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
                     </div>
-                    <!-- /.card-body -->
+                </div>
             </div>
 
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Usuarios Asignados</h3>
                 </div>
-                <!-- /.card-header -->
-                <!-- form start -->
-                
-                    <div class="card-body pb-1 mb-1">
-                        <div class="table-responsive">
-                            <table class="table table-hover" id="roleUsers-table" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>Nombres y Apellidos</th>
-                                        <th>Login</th>
-                                        <th>Correo Electronico</th> 
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    
-                                </tbody>
-                            </table>
-                        </div>
+
+                <div class="card-body pb-1 mb-1">
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="roleUsers-table" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Nombres y Apellidos</th>
+                                    <th>Login</th>
+                                    <th>Correo Electronico</th> 
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
                     </div>
-                    <!-- /.card-body -->
+                </div>
             </div>
-            <!-- /.card -->
+
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -118,25 +109,20 @@
             @endif
         </div>
     </div>
-    <!-- /.row -->
-
 @endsection
 
 @push('js')
-
     <script>
         var rolePermissions_registros = '{{ route('admin.roleUser.get', $role->id) }}'
     </script>
 
     <script src="{{asset('assets/dist/js/rolePermissions-table.js')}}"></script>
 
-
     <script>
         var roleUsers_registros = '{{ route('admin.roleUser.get', $role->id) }}'
     </script>
 
     <script src="{{asset('assets/dist/js/roleUsers-table.js')}}"></script>
-
 
     <script>
         $(function () {

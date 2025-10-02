@@ -11,19 +11,15 @@
 @endpush
 
 @section('content')
-
     <div class="row">
         <div class="col-12">
             <form id="user-create" method="post" action="{{ route('admin.user.store')}}">
                 @csrf
-            <!-- general form elements -->
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">Crear Usuario</h3>
-                    </div>
-                    <!-- /.card-header -->
-                    <!-- form start -->
-                    
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Crear Usuario</h3>
+                        </div>
+                        
                         <div class="card-body">
                             <div class="row">
                                 <div class="form-group col-12 col-md-6">
@@ -38,42 +34,35 @@
                                     <label for="document_number">Cédula de Identidad</label>
                                     <input type="number" class="form-control" id="document_number" name="document_number" placeholder="Cédula de Identidad">
                                 </div>
-
                                 <div class="form-group col-12 col-md-6">
                                     <label for="email">Correo Electrónico</label>
                                     <input type="email" class="form-control" id="email" name="email" placeholder="Correo Electrónico">
                                 </div>
-
                                 <div class="form-group col-12 col-md-6">
                                     <label for="username">Nombre de Usuario</label>
                                     <input type="text" class="form-control" id="username" name="username" placeholder="Nombre de Usuario">
                                 </div>
-
                                 <div class="form-group col-12 col-md-6">
                                     <label for="start_date">Fecha de Activación</label>
                                     <input type="date" class="form-control" id="start_date" name="start_date">
                                 </div>
+                            </div>
+                        </div>
+                    </div>
 
-                                
-                                
+                    @can('admin-user-role')
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Asignar Rol</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Colapsar">
+                                    <i class="fas fa-minus"></i>
+                                    </button>
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                        <!-- /.card-body -->
-                </div>
-                @can('admin-user-role')
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h3 class="card-title">Asignar Rol</h3>
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Colapsar">
-                                <i class="fas fa-minus"></i>
-                                </button>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- /.card-header -->
-                        <!-- form start -->
-                        <div class="card-body">
+
+                            <div class="card-body">
                                 @foreach ($roles as $role)
                                     <div class="row">
                                         <div class="form-check col-12">
@@ -87,46 +76,41 @@
                                         </div>
                                     </div>
                                 @endforeach
-                        </div>
-                            <!-- /.card-body -->
-                    </div>
-                @endcan
-
-                @can('admin-user-permission')
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h3 class="card-title">Asignar Permisos</h3>
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Colapsar">
-                                <i class="fas fa-minus"></i>
-                                </button>
-                                </a>
                             </div>
                         </div>
-                        <!-- /.card-header -->
-                        <!-- form start -->
-                            <div class="card-body">
-                            @foreach ($permissions as $permission)
-                                <div class="row">
-                                    <div class="form-check col-12">
-                                            <input type="checkbox" class="form-check-input" name="permission[{{ $permission->id }}]" id="permission_{{ $permission->id }}" value="{{ $permission->id }}">
-                                            <label class="form-check-label" for="permission_{{ $permission->id }}">{{$permission->description}}</label>
-                                    </div>
-                                    
+                    @endcan
+
+                    @can('admin-user-permission')
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Asignar Permisos</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Colapsar">
+                                    <i class="fas fa-minus"></i>
+                                    </button>
+                                    </a>
                                 </div>
-                            @endforeach
                             </div>
-                            <!-- /.card-body -->
+
+                            <div class="card-body">
+                                @foreach ($permissions as $permission)
+                                    <div class="row">
+                                        <div class="form-check col-12">
+                                                <input type="checkbox" class="form-check-input" name="permission[{{ $permission->id }}]" id="permission_{{ $permission->id }}" value="{{ $permission->id }}">
+                                                <label class="form-check-label" for="permission_{{ $permission->id }}">{{$permission->description}}</label>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endcan
+
+                    <div class="float-right pb-3">
+                        <a href="{{ route('admin.user.index') }}" class="btn btn-outline-danger">Cancelar</a>
+                        <button type="submit" class="ml-2 btn btn-success">Guardar</button>
                     </div>
-                @endcan
-
-
-                <div class="float-right pb-3">
-                    <a href="{{ route('admin.user.index') }}" class="btn btn-outline-danger">Cancelar</a>
-                    <button type="submit" class="ml-2 btn btn-success">Guardar</button>
-                </div>
             </form>
-            <!-- /.card -->
+
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -138,15 +122,11 @@
             @endif
         </div>
     </div>
-
 @endsection
-
-    
 
 @push('js')
     <script>
         $(function () {
-            
             $('#user-create').validate({
                 rules: {
                 first_name: {

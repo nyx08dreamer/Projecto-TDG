@@ -15,19 +15,15 @@
 @endpush
 
 @section('content')
-
     <div class="row">
         <div class="col-12">
             <form id="role-create" method="post" action="{{ route('admin.role.store')}}">
                 @csrf
-                <!-- general form elements -->
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">Crear Rol</h3>
-                    </div>
-                    <!-- /.card-header -->
-                    <!-- form start -->
-                
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Crear Rol</h3>
+                        </div>
+                        
                         <div class="card-body">
                             <div class="row">
                                 <div class="form-group col-12 col-md-4">
@@ -40,33 +36,30 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- /.card-body -->
-                </div>
-
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">Asignar Permisos</h3>
                     </div>
-                    <!-- /.card-header -->
-                    <!-- form start -->
-                        <div class="card-body">
-                        @foreach ($permissions as $permission)
-                            <div class="row">
-                                <div class="form-check col-12">
-                                        <input type="checkbox" class="form-check-input" name="permission[{{ $permission->id }}]" id="permission_{{ $permission->id }}" value="{{ $permission->id }}">
-                                        <label class="form-check-label" for="permission_{{ $permission->id }}">{{$permission->description}}</label>
-                                </div>
-                                
-                            </div>
-                        @endforeach
-                        </div>
-                        <!-- /.card-body -->
-                </div>
 
-                <div class="float-right">
-                    <a href="{{ route('admin.role.index') }}" class="btn btn-outline-danger">Cancelar</a>
-                    <button type="submit" class="ml-2 btn btn-success">Guardar</button>
-                </div>
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Asignar Permisos</h3>
+                        </div>
+
+                        <div class="card-body">
+                            @foreach ($permissions as $permission)
+                                <div class="row">
+                                    <div class="form-check col-12">
+                                            <input type="checkbox" class="form-check-input" name="permission[{{ $permission->id }}]" id="permission_{{ $permission->id }}" value="{{ $permission->id }}">
+                                            <label class="form-check-label" for="permission_{{ $permission->id }}">{{$permission->description}}</label>
+                                    </div>
+                                    
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <div class="float-right">
+                        <a href="{{ route('admin.role.index') }}" class="btn btn-outline-danger">Cancelar</a>
+                        <button type="submit" class="ml-2 btn btn-success">Guardar</button>
+                    </div>
             </form> 
 
             @if ($errors->any())
@@ -78,12 +71,10 @@
                     </ul>
                 </div>
             @endif
+
         </div>
     </div>
-
 @endsection
-
-    
 
 @push('js')
     <script>

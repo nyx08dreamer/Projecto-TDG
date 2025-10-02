@@ -16,12 +16,11 @@
 @endpush
 
 @section('content')
-
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                <h3 class="card-title">Listado de Roles</h3>
+                    <h3 class="card-title">Listado de Roles</h3>
                 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Colapsar">
@@ -35,6 +34,7 @@
                         </a>
                     </div>
                 </div>
+                
                 <div class="card-body">
                     <div class="table-responsive">
                         <table  class="table table-hover" id="role-table" style="width:100%">
@@ -50,24 +50,16 @@
                         </table>
                     </div>
                 </div>
-
-                {{-- <div class="card-footer">
-                    Footer
-                </div> --}}
-                
             </div>
         </div>
     </div>
-
 @endsection
 
 @push('js')
-
     <script>
         var route_registros = '{{ route("admin.role.get") }}'
     </script>
 
     <script src="{{asset('assets/dist/js/role-table.js')}}"></script>
-
 @endpush
 
