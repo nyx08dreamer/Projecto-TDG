@@ -37,7 +37,7 @@
             @endforeach
 
             <div class="float-right">
-                <button type="submit" class="ml-2 btn btn-success">Guardar</button>
+                <button type="submit" class="ml-2 btn btn-success">Guardar cambios</button>
             </div>
         </form>
     </div>

@@ -15,8 +15,9 @@ trait ChangeImageTrait {
         $status = 'success';
         $content = 'La imagen ha sido cargada correctamente';
 
+        DB::beginTransaction(); 
+
         try {
-            DB::beginTransaction(); 
 
             $user->image_path = $image_name;
 

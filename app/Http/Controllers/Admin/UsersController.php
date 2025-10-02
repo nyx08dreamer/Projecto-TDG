@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 use App\Models\Entities\Admin\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
 use App\Traits\Controllers\ChangeImageTrait;
 use App\Http\Requests\Admin\StoreUserRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
@@ -16,6 +15,8 @@ use App\Models\Entities\Admin\Permission;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\DB;
+
 
 class UsersController extends Controller implements HasMiddleware
 {
@@ -98,38 +99,66 @@ class UsersController extends Controller implements HasMiddleware
     public function store(StoreUserRequest $request)
     {
 
-        $user = new User();
+        $status = 'success';
+        $content = 'El usuario ha sido creado correctamente';
 
-        $firstName = $request->input('first_name');
-        $verifiedFirstName = ucwords(strtolower(trim(preg_replace('/\s+/', ' ', $firstName))));
-        $user->first_name = $verifiedFirstName;
+        DB::beginTransaction(); 
 
-        $lastName = $request->input('last_name');
-        $verifiedLastName = ucwords(strtolower(trim(preg_replace('/\s+/', ' ', $lastName))));
-        $user->last_name = $verifiedLastName;
+        try {
 
-        $user->document_number = $request->input('document_number');
+            $user = new User();
 
-        $verifiedEmail = $request->input('email');
-        $user->email = trim($verifiedEmail);
+            $firstName = $request->input('first_name');
+            $verifiedFirstName = ucwords(strtolower(trim(preg_replace('/\s+/', ' ', $firstName))));
+            $user->first_name = $verifiedFirstName;
 
-        $verifiedUser = $request->input('username');
-        $user->username= trim($verifiedUser);
+            $lastName = $request->input('last_name');
+            $verifiedLastName = ucwords(strtolower(trim(preg_replace('/\s+/', ' ', $lastName))));
+            $user->last_name = $verifiedLastName;
 
-        
-        $user->start_date = $request->input('start_date');
+            $user->document_number = $request->input('document_number');
 
-        $user->password = bcrypt($request->input('username'));
+            $verifiedEmail = $request->input('email');
+            $user->email = trim($verifiedEmail);
 
-        $user->created_by = Auth::id();
-        $user->updated_by = Auth::id();
+            $verifiedUser = $request->input('username');
+            $user->username= trim($verifiedUser);
 
-        $user->save();
+            $user->start_date = $request->input('start_date');
 
-        $user->roles()->sync($request->role);
-        $user->permissions()->sync($request->permission);
+            $user->password = bcrypt($request->input('username'));
 
-        return redirect()->route('admin.user.show', $user->id);
+            $user->created_by = Auth::id();
+            $user->updated_by = Auth::id();
+
+            $user->save();
+
+            $user->roles()->sync($request->role);
+            $user->permissions()->sync($request->permission);
+
+            DB::commit();
+
+            return redirect()
+                ->route('admin.user.show', $user->id)
+                ->with('process_result', [
+                    'status' => $status,
+                    'content' => $content,
+                ]);
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            $status = 'error';
+            $content = 'Ha ocurrido un error al crear el usuario';
+
+            return redirect()
+                ->route('admin.user.create')
+                ->withInput()
+                ->with('process_result', [
+                    'status' => $status,
+                    'content' => $content,
+                ]);
+        }
     }
 
     /**
@@ -159,46 +188,110 @@ class UsersController extends Controller implements HasMiddleware
     public function update(UpdateUserRequest $request, User $user)
     {
 
-        $firstName = $request->input('first_name');
-        $verifiedFirstName = ucwords(strtolower(trim(preg_replace('/\s+/', ' ', $firstName))));
-        $user->first_name = $verifiedFirstName;
+        $status = 'success';
+        $content = 'La información ha sido actualizada correctamente';
 
-        $lastName = $request->input('last_name');
-        $verifiedLastName = ucwords(strtolower(trim(preg_replace('/\s+/', ' ', $lastName))));
-        $user->last_name = $verifiedLastName;
-        
-        $user->document_number = $request->input('document_number');
-        
-        $verifiedEmail = $request->input('email');
-        $user->email = trim($verifiedEmail);
+        DB::beginTransaction();
 
-        $verifiedUser = $request->input('username');
-        $user->username= trim($verifiedUser);
+        try {
 
-        $user->start_date = $request->input('start_date');
+            $firstName = $request->input('first_name');
+            $verifiedFirstName = ucwords(strtolower(trim(preg_replace('/\s+/', ' ', $firstName))));
+            $user->first_name = $verifiedFirstName;
 
-        $user->updated_by = Auth::id();
+            $lastName = $request->input('last_name');
+            $verifiedLastName = ucwords(strtolower(trim(preg_replace('/\s+/', ' ', $lastName))));
+            $user->last_name = $verifiedLastName;
+            
+            $user->document_number = $request->input('document_number');
+            
+            $verifiedEmail = $request->input('email');
+            $user->email = trim($verifiedEmail);
 
-        $user->save();
+            $verifiedUser = $request->input('username');
+            $user->username= trim($verifiedUser);
 
-        
-        
-        return redirect()->route('admin.user.show', $user->id);
+            $user->start_date = $request->input('start_date');
+
+            $user->updated_by = Auth::id();
+
+            $user->save();
+
+            DB::commit();
+
+        } catch (\Throwable $th) {
+            
+            DB::rollBack();
+
+            $status = 'error';
+            $content = 'Ha ocurrido un error al actualizar la información';
+        }
+
+            return redirect()
+                ->route('admin.user.show', $user->id)
+                ->with('process_result', [
+                    'status' => $status,
+                    'content' => $content,
+                ]);
 
     }
 
     public function role(Request $request, User $user) 
     {
-        $user->roles()->sync($request->role);
 
-        return redirect()->route('admin.user.show', $user->id);
+        $status = 'success';
+        $content = 'Se asignaron corretamente los roles al usuario';
+
+        DB::beginTransaction();
+
+        try {
+
+            $user->roles()->sync($request->role);
+
+            DB::commit();
+
+        } catch (\Throwable $th) {
+            
+            DB::rollBack();
+
+            $status = 'error';
+            $content = 'Ha ocurrido un error al asignar los roles al usuario';
+        }
+
+        return redirect()
+                ->route('admin.user.show', $user->id)
+                ->with('process_result', [
+                    'status' => $status,
+                    'content' => $content,
+                ]);
     }
 
+    
     public function permission(Request $request, User $user) 
     {
-        $user->permissions()->sync($request->permission);
+        $status = 'success';
+        $content = 'Se asignaron correctamente los permisos al usuario';
 
-        return redirect()->route('admin.user.show', $user->id);
+        DB::beginTransaction();
+
+        try {
+            $user->permissions()->sync($request->permission);
+            DB::commit();
+
+        } catch (\Throwable $th) {
+            
+            DB::rollBack();
+
+            $status = 'error';
+            $content = 'Ha ocurrido un error al asignar los permisos al usuario';
+        }
+
+        return redirect()
+                ->route('admin.user.show', $user->id)
+                ->with('process_result', [
+                    'status' => $status,
+                    'content' => $content,
+                ]);
     }
 
     /**
