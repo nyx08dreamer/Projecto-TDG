@@ -13,7 +13,14 @@ return new class extends Migration
         $tableName = config('laravel_ticket.table_names.tickets', 'tickets');
 
         Schema::table($tableName, function (Blueprint $table) {
-            $table->unsignedBigInteger('assigned_to')->nullable()->references('id')->on('users');
+            $table->unsignedBigInteger('assigned_to')->nullable()->references('id')->on('users')->after('is_locked');
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::table('tickets', function (Blueprint $table) {
+            $table->dropColumn('assigned_to');
         });
     }
 };

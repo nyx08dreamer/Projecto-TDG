@@ -22,7 +22,7 @@ class PermissionsController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            // new Middleware('permission:'.self::PERMISSIONS['show'], only: [ 'index','show']),
+            new Middleware('permission:'.self::PERMISSIONS['show'], only: [ 'index','show']),
 
         ];
     }

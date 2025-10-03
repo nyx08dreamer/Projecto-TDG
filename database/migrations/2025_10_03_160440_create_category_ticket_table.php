@@ -5,25 +5,25 @@ namespace Coderflex\LaravelTicket\Database\Factories;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Str;
 
 return new class extends Migration
 {
     public function up()
     {
-        $tableName = config('laravel_ticket.table_names.messages', 'messages');
+        $tableName = config('laravel_ticket.table_names.category_ticket', 'category_ticket');
 
         Schema::create($tableName['table'], function (Blueprint $table) use ($tableName) {
-            $table->id();
-            $table->foreignId($tableName['columns']['user_foreign_id']);
-            $table->foreignId($tableName['columns']['ticket_foreign_id']);
-            $table->text('message');
-            $table->timestamps();
+            collect($tableName['columns'])->each(function ($column, $key) use ($table) {
+                $table->foreignId($column);
+            });
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
-        Schema::dropIfExists('messages');
+        Schema::dropIfExists('category_ticket');
     }
 };
