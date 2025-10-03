@@ -18,11 +18,17 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->string('title');
             $table->string('message')->nullable();
-            $table->string('priority')->default('low');
+            
+            $table->unsignedSmallInteger('type_id')->nullable();
+            $table->unsignedSmallInteger('priority_id')->required();
+            
             $table->string('status')->default('open');
             $table->boolean('is_resolved')->default(false);
             $table->boolean('is_locked')->default(false);
             $table->timestamps();
+
+            $table->foreign('type_id')->references('id')->on('types')->onDelete('set null');
+            $table->foreign('priority_id')->references('id')->on('priorities');
         });
     }
 

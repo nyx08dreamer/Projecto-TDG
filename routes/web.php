@@ -4,8 +4,11 @@ use App\Http\Controllers\Admin\PermissionsController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Configure\PrioritiesController;
+use App\Http\Controllers\Configure\TypesController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Tickets\TicketsController;
 use Illuminate\Support\Facades\Route;
 use OpenSpout\Common\Entity\Row;
 
@@ -22,13 +25,6 @@ Route::controller(LoginController::class)->group(function () {
     });
 
 
-// Gestion
-    // tickets
-    //asignacion
-
-// Configuracion
-    // tipos
-    // prioridad
 
 // Reportes
     // nuevos
@@ -38,6 +34,45 @@ Route::controller(LoginController::class)->group(function () {
     Route::middleware('auth')->group( function () {
 
         Route::get('/', HomeController::class)->name('home');
+
+    // Gestion
+        // tickets
+            Route::controller(TicketsController::class)->group(function () {
+                
+            });
+
+            Route::resource('solicitudes', TicketsController::class)
+                ->names('ticket') 
+                ->parameters(['solicitudes' => 'ticket']);
+
+
+        //asignacion
+
+
+
+    // Configuracion
+        Route::prefix('configuraciones')->name('config.')->group(function () {
+
+            // tipos
+            Route::controller(TypesController::class)->group(function () {
+                
+            });
+
+            Route::resource('tipos', TypesController::class)
+                ->names('types') 
+                ->parameters(['tipos' => 'types']);
+
+
+            // prioridad
+            Route::controller(PrioritiesController::class)->group(function () {
+                
+            });
+
+            Route::resource('prioridades', PrioritiesController::class)
+                ->names('priority') 
+                ->parameters(['prioridades' => 'priority']);
+
+        });
 
     // Administracion
         Route::prefix('administracion')->name('admin.')->group(function () {

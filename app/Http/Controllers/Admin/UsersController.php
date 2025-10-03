@@ -45,7 +45,6 @@ class UsersController extends Controller implements HasMiddleware
             new Middleware('permission:'.self::PERMISSIONS['assign-roles'], only: ['role']),
             new Middleware('permission:'.self::PERMISSIONS['assign-permissions'], only: ['permission']),
 
-
         ];
     }
 

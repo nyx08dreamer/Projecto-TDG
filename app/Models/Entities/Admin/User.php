@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Coderflex\LaravelTicket\Concerns\HasTickets;
+use Coderflex\LaravelTicket\Contracts\CanUseTickets;
 
-class User extends Authenticatable
+class User extends Authenticatable implements CanUseTickets
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasRoles, HasFactory, Notifiable; 
+    use HasRoles, HasFactory, Notifiable, HasTickets;
 
     protected $table = "users";
 

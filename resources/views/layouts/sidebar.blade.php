@@ -44,10 +44,10 @@
         </li>
 
         <li class="nav-item">
-          <a href="../calendar.html" class="nav-link">
+          <a href="{{ route('ticket.index') }}" class="nav-link {{isRouteActive('ticket.')}}">
             <i class="nav-icon fa fa-ticket"></i>
             <p>
-              Tickets
+              Solicitudes
             </p>
           </a>
         </li>
@@ -55,20 +55,34 @@
         <li class="nav-header pt-4">CONFIGURACIÓN</li>
 
         <li class="nav-item">
-          <a href="../calendar.html" class="nav-link">
+          <a href="#" class="nav-link {{isRouteActive('config.')}}">
             <i class="fa-solid fa-signs-post"></i>
             <p>
-              Tipos
-              <span class="badge badge-info right">2</span>
+              Incidencias
+              <i class="right fas fa-angle-left"></i>
             </p>
           </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{ route('config.types.index') }}" class="nav-link {{isRouteActive('config.types.')}}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Tipos</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="./index2.html" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Categorias</p>
+              </a>
+            </li>
+          </ul>
         </li>
 
         <li class="nav-item">
-          <a href="#" class="nav-link">
+          <a href="{{ route('config.priority.index') }}" class="nav-link {{isRouteActive('config.priority.')}}">
             <i class="fa-solid fa-temperature-half"></i>
             <p>
-              Prioridad
+              Prioridades
             </p>
           </a>
         </li>
