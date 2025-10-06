@@ -53,14 +53,21 @@ Route::controller(LoginController::class)->group(function () {
     // Configuracion
         Route::prefix('configuraciones')->name('config.')->group(function () {
 
+
+            Route::prefix('incidencias')->name('incidents.')->group(function () {
+
             // tipos
             Route::controller(TypesController::class)->group(function () {
-                
+                Route::get('/tipos/listado', 'TypeList')->name('type.get');
             });
 
             Route::resource('tipos', TypesController::class)
-                ->names('types') 
-                ->parameters(['tipos' => 'types']);
+                ->names('type') 
+                ->parameters(['tipos' => 'type']);
+
+
+        });
+            
 
 
             // prioridad

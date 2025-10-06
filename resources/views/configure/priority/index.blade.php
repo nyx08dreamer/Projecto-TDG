@@ -35,7 +35,6 @@
                             <thead>
                                 <tr>
                                     <th>Acciones</th>
-
                                     <th>Nombre de Prioridad</th>
                                     <th>Fecha de Creación</th>
                                     <th>Creado Por</th>
