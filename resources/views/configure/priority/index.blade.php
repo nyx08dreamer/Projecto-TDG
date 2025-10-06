@@ -3,7 +3,7 @@
 @section('web_title', 'Listado de Prioridades')
 
 @section('title')
-    <i class="fa-solid fa-ticket"></i> Listado de Prioridades
+    <i class="fa-solid fa-circle-exclamation"></i> Listado de Prioridades
 @endsection
 
 @section('breadcrumbs')
@@ -20,7 +20,7 @@
             <div class="card">
                 <div class="card-header">
                     
-                    <a href="{{ route('ticket.create') }}" class="btn btn-success">Crear prioridad</a>
+                    <a href="{{ route('config.priority.create') }}" class="btn btn-success">Crear prioridad</a>
                 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Colapsar">
@@ -31,14 +31,17 @@
 
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table  class="table table-hover" id="ticket-table" style="width:100%">
+                        <table  class="table table-hover" id="priority-table" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Título</th>
-                                    <th>Prioridad</th>
-                                    <th>Personal Asignado</th>
-                                    <th>Fecha de Creación</th>
                                     <th>Acciones</th>
+
+                                    <th>Nombre de Prioridad</th>
+                                    <th>Fecha de Creación</th>
+                                    <th>Creado Por</th>
+                                    <th>Fecha de Actualización</th>
+                                    <th>Actualizado Por</th>
+                                    <th>Estado</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -54,9 +57,9 @@
 
 @push('js')
     <script>
-        var route_registros = '{{ route("admin.user.get") }}'
+        var route_registros = '{{ route("config.priority.get") }}'
     </script>
 
-    <script src="{{asset('assets/dist/js/users-table.js')}}"></script>
-    
+    <script src="{{asset('assets/dist/js/priority-table.js')}}"></script>
+
 @endpush

@@ -54,8 +54,8 @@
 
         <li class="nav-header pt-4">CONFIGURACIÓN</li>
 
-        <li class="nav-item">
-          <a href="#" class="nav-link {{isRouteActive('config.')}}">
+        <li class="nav-item {{isMenuOpen('config.types.')}}">
+          <a href="#" class="nav-link {{isRouteActive('config.types.')}}">
             <i class="fa-solid fa-signs-post"></i>
             <p>
               Incidencias

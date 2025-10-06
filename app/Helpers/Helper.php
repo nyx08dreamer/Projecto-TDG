@@ -16,4 +16,11 @@ function isRouteActive($route, $class = 'active') {
     }
 
     return null;
+};
+
+function isMenuOpen($route, $class = 'menu-open') {
+    
+    if ( Str::contains(Route::currentRouteName(), $route)  ) {
+            return $class;
+        }
 }

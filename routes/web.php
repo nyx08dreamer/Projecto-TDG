@@ -65,7 +65,7 @@ Route::controller(LoginController::class)->group(function () {
 
             // prioridad
             Route::controller(PrioritiesController::class)->group(function () {
-                
+                Route::get('/prioridades/listado', 'PriorityList')->name('priority.get');
             });
 
             Route::resource('prioridades', PrioritiesController::class)
