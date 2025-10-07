@@ -34,14 +34,15 @@
                         <table  class="table table-hover" id="ticket-table" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Título</th>
-                                    <th>Prioridad</th>
-                                    <th>Personal Asignado</th>
-                                    <th>Fecha de Creación</th>
-                                    <th>Acciones</th>
+                                    <th class="text-center">Acciones</th>
+                                    <th class="text-center">Título</th>
+                                    <th class="text-center">Solicitante</th>
+                                    <th class="text-center">Prioridad</th>
+                                    <th class="text-center">Tipo</th>
+                                    <th class="text-center">Fecha de Creación</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="text-center">
                                 
                             </tbody>
                         </table>
@@ -54,9 +55,9 @@
 
 @push('js')
     <script>
-        var route_registros = '{{ route("admin.user.get") }}'
+        var route_registros = '{{ route("ticket.get") }}'
     </script>
 
-    <script src="{{asset('assets/dist/js/users-table.js')}}"></script>
+    <script src="{{asset('assets/dist/js/ticket-table.js')}}"></script>
     
 @endpush

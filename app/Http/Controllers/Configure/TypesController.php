@@ -79,7 +79,7 @@ class TypesController extends Controller
                     $url_edit = route('config.incidents.type.edit', $row->id);
                     $url_delete = route('config.incidents.type.destroy', $row->id);
 
-                    $button_edit = '<a class="btn btn-sm btn-info icon"  
+                    $button_edit = '<a class="btn btn-sm btn-primary icon"  
                                     href="' . $url_edit . '"
                                     title="Clic para editar">
                                         <i class="fas fa-edit"></i>
@@ -88,7 +88,7 @@ class TypesController extends Controller
                                         ' . csrf_field() . '  <!-- Token CSRF -->
                                         <input type="hidden" name="_method" value="DELETE">
                                         
-                                    <button type="submit" class="btn btn-sm btn-danger icon ml-1" title="Clic para borrar">
+                                    <button type="submit" class="btn btn-sm btn-danger icon" title="Clic para borrar">
                                             <i class="fas fa-trash"></i>  
                                         </button>
                                       </form>';

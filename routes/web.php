@@ -38,7 +38,7 @@ Route::controller(LoginController::class)->group(function () {
     // Gestion
         // tickets
             Route::controller(TicketsController::class)->group(function () {
-                
+                Route::get('/solicitudes/listado', 'TicketsList')->name('ticket.get');
             });
 
             Route::resource('solicitudes', TicketsController::class)

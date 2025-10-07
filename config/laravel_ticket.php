@@ -77,7 +77,7 @@ return [
      * Models for Eloquent relationships
      */
     'models' => [
-        'ticket' => \Coderflex\LaravelTicket\Models\Ticket::class,
+        'ticket' =>  \App\Models\Entities\Tickets\Ticket::class,
         'message' => \Coderflex\LaravelTicket\Models\Message::class,
         'category' => \Coderflex\LaravelTicket\Models\Category::class,
         'label' => \Coderflex\LaravelTicket\Models\Label::class,
