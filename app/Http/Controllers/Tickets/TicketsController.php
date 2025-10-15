@@ -5,12 +5,13 @@ namespace App\Http\Controllers\Tickets;
 use App\Helpers\PriorityHelper;
 use App\Helpers\TypeHelper;
 use App\Http\Controllers\Controller;
+use App\Models\Entities\Admin\User;
 use App\Models\Entities\Configure\Department;
 use App\Models\Entities\Configure\Priority;
 use App\Models\Entities\Configure\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
-use Coderflex\LaravelTicket\Models\Ticket;
 use App\Models\Entities\Tickets\Ticket as CustomTicket;
 
 use Illuminate\Support\Facades\Auth;
@@ -60,8 +61,10 @@ class TicketsController extends Controller
 
         //dd($request->all());
 
+
         $ticket = CustomTicket::create([
             'title' => $request->title,
+            'uuid' => (string) Str::uuid(),
             'user_id' => Auth::id(),
             'message' => $request->message,
             'department_id' => $request->department,
@@ -81,11 +84,6 @@ class TicketsController extends Controller
     public function TicketsList (Request $request)
     {
         if ($request->ajax()) {
-
-            // $ticket_model = new CustomTicket;
-            // $tickets = $ticket_model->get_tickets();
-
-            // $tickets = Ticket::orderBy('id', 'asc');
 
             $tickets = CustomTicket::get_tickets();
 
@@ -143,11 +141,33 @@ class TicketsController extends Controller
      */
     public function show(CustomTicket $ticket)
     {
+        $department_model = new Department;
+        $department = $department_model->get_department_by_id($ticket->department_id);
+
+        $priority_model = new Priority;
+        $priority = $priority_model->get_priority_by_id($ticket->priority_id);
+
+        $type_model = new Type;
+        $type = $type_model->get_type_by_id($ticket->type_id);
+
+        $solicitor_model = new User;
+        $solicitor = $solicitor_model->get_solicitor_by_id($ticket->user_id);
+
+        $support_model = new User;
+        $support = $support_model->get_support_by_id($ticket->assigned_to);
+
+        $document = '';
+
         return view('ticket.show', [
             'ticket' => $ticket,
+            'department' => $department,
+            'priority' => $priority,
+            'type' => $type,
+            'solicitor' => $solicitor,
+            'support' => $support,
+            'document' => $document,
         ]);
     }
-
 
 
     /**

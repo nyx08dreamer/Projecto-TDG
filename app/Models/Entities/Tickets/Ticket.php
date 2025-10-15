@@ -71,4 +71,36 @@ class Ticket extends BaseTicket
 
         return $resultado;
     }
+
+
+    public function get_ticket_by_id($id) {
+
+        $resultado = self::select(
+                'tickets.id',
+                'tickets.uuid',
+                'tickets.user_id',
+                'tickets.title',
+                'tickets.message', 
+                'tickets.type_id',
+                'tickets.priority_id',
+                'tickets.status',
+                'tickets.is_resolved',
+                'tickets.is_locked',
+                'tickets.assigned_to',
+                'tickets.created_at',
+                'tickets.updated_at',
+                'tickets.department_id',
+
+                'creator.first_name as creator_name',
+                'priorities.name as priority_name',
+                'types.name as type_name',
+
+        )->join('users as creator', 'tickets.user_id', '=', 'creator.id')  
+        ->join('priorities', 'tickets.priority_id', '=', 'priorities.id') 
+        ->join('types', 'tickets.type_id', '=', 'types.id')  
+        ->where('tickets.id', $id)
+        ->first();
+
+        return $resultado;
+    }
 }

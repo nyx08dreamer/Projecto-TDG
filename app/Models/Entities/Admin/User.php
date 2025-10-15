@@ -82,4 +82,33 @@ class User extends Authenticatable implements CanUseTickets
 
         return $resultado;
     }
+
+
+    public function get_solicitor_by_id($id) {
+        $resultado = self::select(
+                'id',
+                'first_name',
+                'last_name',
+                'document_number',
+                'email',
+            )
+            ->where('id', $id)
+            ->first();
+
+        return $resultado;
+    }
+
+    public function get_support_by_id($id) {
+        $resultado = self::select(
+                'id',
+                'first_name',
+                'last_name',
+                'document_number',
+                'email',
+            )
+            ->where('id', $id)
+            ->first();
+
+        return $resultado;
+    }
 }

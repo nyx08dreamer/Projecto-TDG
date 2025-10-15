@@ -49,4 +49,14 @@ class Type extends Model
 
         return $resultado;
     }
+
+    public function get_type_by_id($id) {
+        $resultado = self::select(
+                'types.id',
+                'types.name', 
+        )->where('types.id', $id)
+        ->first();
+
+        return $resultado;
+    }
 }

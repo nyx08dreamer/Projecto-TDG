@@ -49,4 +49,14 @@ class Department extends Model
 
         return $resultado;
     }
+
+    public function get_department_by_id($id) {
+        $resultado = self::select(
+                'departments.id',
+                'departments.name',
+        )->where('departments.id', $id)
+        ->first();
+
+        return $resultado;
+    }
 }

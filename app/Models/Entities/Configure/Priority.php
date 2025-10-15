@@ -49,4 +49,14 @@ class Priority extends Model
 
         return $resultado;
     }
+
+    public function get_priority_by_id($id) {
+        $resultado = self::select(
+                'priorities.id',
+                'priorities.name',
+        )->where('priorities.id', $id)
+        ->first();
+
+        return $resultado;
+    }
 }
