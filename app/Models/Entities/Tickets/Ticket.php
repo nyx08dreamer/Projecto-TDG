@@ -40,7 +40,7 @@ class Ticket extends BaseTicket
         'department_id',
     ];
 
-    public static function get_tickets() {
+    public static function get_tickets($priority_id) {
 
         $resultado = self::select(
                 'tickets.id',
@@ -65,9 +65,13 @@ class Ticket extends BaseTicket
 
         )->join('users as creator', 'tickets.user_id', '=', 'creator.id')  
         ->join('priorities', 'tickets.priority_id', '=', 'priorities.id') 
-        ->join('types', 'tickets.type_id', '=', 'types.id')  
-        ->orderBy('tickets.id', 'asc')
-        ->get();
+        ->join('types', 'tickets.type_id', '=', 'types.id');
+
+        if($priority_id != null){
+            $resultado->where('tickets.priority_id', $priority_id);
+        }
+
+        $resultado->orderBy('tickets.id', 'desc')->get();
 
         return $resultado;
     }

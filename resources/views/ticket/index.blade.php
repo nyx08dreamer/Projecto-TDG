@@ -15,6 +15,41 @@
 @endpush
 
 @section('content')
+
+    <section class="section">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title text-center">Registros para Editar Solicitudes</h3>
+            </div>
+            <div class="card-body pb-0">
+                
+                <form class="mb-4">
+                    <div class="row">
+
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label class="form-label" for="status_solicitud">Prioridad</label>
+                                    <select class="custom-select rounded-0" name="priority_id" id="priority_id">
+                                        <option value="">Seleccionar</option>
+                                        @foreach ($priorities as $priority)
+                                            <option value="{{$priority->id}}">{{$priority->name}}</option>
+                                        @endforeach
+                                    </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-sm-12 d-flex justify-content-end">
+                            <button type="button" class="btn btn-primary me-1" id="search">Buscar</button>
+                            <a href="" class="btn btn-secondary">Limpiar</a>
+                        </div>
+                    </div>
+                
+            </div>
+        </div>
+    </section>
+    
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -49,6 +84,7 @@
                     </div>
                 </div>
             </div>
+            </form>
         </div>
     </div>
 @endsection

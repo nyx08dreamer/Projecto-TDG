@@ -27,7 +27,20 @@ class TicketsController extends Controller
      */
     public function index()
     {
-        return view('ticket.index');
+        $department_model = new Department;
+        $departments = $department_model->get_departments();
+
+        $priority_model = new Priority;
+        $priorities = $priority_model->get_priorities();
+
+        $type_model = new Type;
+        $types = $type_model->get_types();
+
+        return view('ticket.index', [
+            'departments' => $departments,
+            'priorities' => $priorities,
+            'types' => $types,
+        ]);
     }
 
     /**
@@ -89,7 +102,7 @@ class TicketsController extends Controller
     {
         if ($request->ajax()) {
 
-            $tickets = CustomTicket::get_tickets();
+            $tickets = CustomTicket::get_tickets($request->priority_id);
 
             $datatables = DataTables::of($tickets)
                 ->addIndexColumn()

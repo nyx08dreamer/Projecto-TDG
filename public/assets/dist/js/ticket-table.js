@@ -7,8 +7,17 @@ $(document).ready(function() {
             /*ordering: false,*/
             iDisplayLength: 25,
             retrieve: true,
-            ajax: route_registros,
             responsive: true,
+            searching: true,
+
+            ajax: {
+                url: route_registros,
+
+                data: function (d) {
+                    d.priority_id = $('#priority_id').val()
+                },
+            },
+            
             columns: [
 
                 {data: 'actions',
@@ -28,7 +37,11 @@ $(document).ready(function() {
             language: {
                 url: "https://cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
             }  
-        });        
+        }); 
+        
+        $('#search').click(function(){
+            table.draw();
+        });
     });
 
 });
