@@ -37,6 +37,7 @@ class Ticket extends BaseTicket
         'assigned_to',
         'created_at',
         'updated_at',
+        'department_id',
     ];
 
     public static function get_tickets() {
@@ -55,6 +56,7 @@ class Ticket extends BaseTicket
                 'tickets.assigned_to',
                 'tickets.created_at',
                 'tickets.updated_at',
+                'tickets.department_id',
 
                 
                 'creator.first_name as creator_name',

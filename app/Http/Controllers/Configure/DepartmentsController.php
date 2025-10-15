@@ -4,19 +4,19 @@ namespace App\Http\Controllers\Configure;
 
 use App\Helpers\FlagStatusHelper;
 use App\Http\Controllers\Controller;
-use App\Models\Entities\Configure\Priority;
+use App\Models\Entities\Configure\Department;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 
-class PrioritiesController extends Controller
+class DepartmentsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('configure.priority.index');
+        return view('configure.department.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class PrioritiesController extends Controller
      */
     public function create()
     {
-        return view('configure.priority.create');
+        return view('configure.department.create');
     }
 
     /**
@@ -33,58 +33,52 @@ class PrioritiesController extends Controller
     public function store(Request $request)
     {
         $status = 'success';
-        $content = 'La prioridad se ha creado correctamente';
+        $content = 'El departamento se ha creado correctamente';
 
         try {
-            $priority = new Priority;
-            $priority->name = $request->name;
-            $priority->created_by = Auth::id();
-            $priority->updated_by = Auth::id();
-            $priority->save();
+            
+            $department = new Department;
+            $department->name = $request->name;
+            $department->created_by = Auth::id();
+            $department->updated_by = Auth::id();
+            $department->save();
 
         } catch (\Throwable $th) {
-
+            
             $status = 'error';
-            $content = 'Ha ocurrido un error al crear la prioridad';
-
+            $content = 'Ha ocurrido un error al crear el departamento';
         }
 
+            
+        
         return redirect()
-                ->route('config.priority.index')
+                ->route('config.department.index')
                 ->with('process_result', [
                     'status' => $status,
                     'content' => $content,
                 ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    public function PriorityList (Request $request)
+    public function DepartmentList (Request $request)
     {
     
         if ($request->ajax()) {
 
-            $priority_model = new Priority;
-            $priorities = $priority_model->get_priorities();
+            $department_model = new Department;
+            $departments = $department_model->get_departments();
 
-            $datatables = DataTables::of($priorities)
+            $datatables = DataTables::of($departments)
                 ->addIndexColumn()
                 ->addColumn('actions', function($row) {
-                    $url_edit = route('config.priority.edit', $row->id);
-                    $url_delete = route('config.priority.destroy', $row->id);
+                    $url_edit = route('config.department.edit', $row->id);
+                    $url_delete = route('config.department.destroy', $row->id);
 
                     $button_edit = '<a class="btn btn-sm btn-primary icon"  
                                     href="' . $url_edit . '"
                                     title="Clic para editar">
                                         <i class="fas fa-edit"></i>
                                     </a>';
-                    $button_delete =  '<form action="' . $url_delete . '" method="POST" style="display: inline;  " onsubmit="return confirm(\'¿Estás seguro de eliminar esta prioridad?\');">
+                    $button_delete =  '<form action="' . $url_delete . '" method="POST" style="display: inline;  " onsubmit="return confirm(\'¿Estás seguro de eliminar este departamento?\');">
                                         ' . csrf_field() . '  <!-- Token CSRF -->
                                         <input type="hidden" name="_method" value="DELETE">
                                         
@@ -112,38 +106,46 @@ class PrioritiesController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Priority $priority)
+    public function edit(Department $department)
     {
-        return view('configure.priority.edit', [
-            'priority' => $priority,
+        return view('configure.department.edit', [
+            'department' => $department,
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Priority $priority)
+    public function update(Request $request, Department $department)
     {
         $status = 'success';
-        $content = 'Se ha actualizado correctamente la prioridad';
+        $content = 'Se ha actualizado correctamente el departamento';
 
         try {
 
-            $priority->name = $request->name;
-            $priority->flag_status = $request->flag_status;
-            $priority->updated_by = Auth::id();
-            $priority->save();
+            $department->name = $request->name;
+            $department->flag_status = $request->flag_status;
+            $department->updated_by = Auth::id();
+            $department->save();
 
         } catch (\Throwable $th) {
             
             $status = 'error';
-            $content = 'Ha ocurrido un error al actualizar la prioridad';
+            $content = 'Ha ocurrido un error al actualizar el departamento';
         }
 
         return redirect()
-                ->route('config.priority.index')
+                ->route('config.department.index')
                 ->with('process_result', [
                     'status' => $status,
                     'content' => $content,
@@ -153,22 +155,22 @@ class PrioritiesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Priority $priority)
+    public function destroy(Department $department)
     {
         $status = 'success';
-        $content = 'La prioridad se ha eliminado correctamente';
+        $content = 'El departamento se ha eliminado correctamente';
 
         try {
-
-            $priority->delete(); 
-
+            
+            $department->delete(); 
+            
         } catch (\Throwable $th) {
             $status = 'error';
-            $content = 'Ha ocurrido un error al eliminar la prioridad';
+            $content = 'Ha ocurrido un error al eliminar el departamento';
         }
 
         return redirect()
-                ->route('config.priority.index')
+                ->route('config.department.index')
                 ->with('process_result', [
                     'status' => $status,
                     'content' => $content,

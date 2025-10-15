@@ -30,7 +30,16 @@
                                     <label for="title">Título de la Solicitud</label>
                                     <input type="text" class="form-control" id="title" name="title" placeholder="Título de la Solicitud">
                                 </div>
-                                <div class="form-group col-12">
+                                <div class="form-group col-12 col-md-6">
+                                    <label for="department">Departamento</label>
+                                    <select class="custom-select rounded-0" name="department" id="department">
+                                        <option value="">Seleccionar</option>
+                                        @foreach ($departments as $department)
+                                            <option value="{{$department->id}}">{{$department->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group col-12 col-md-6">
                                     <label for="priority">Prioridad</label>
                                     <select class="custom-select rounded-0" name="priority" id="priority">
                                         <option value="">Seleccionar</option>

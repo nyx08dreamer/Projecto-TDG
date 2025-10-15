@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\PermissionsController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Configure\DepartmentsController;
 use App\Http\Controllers\Configure\PrioritiesController;
 use App\Http\Controllers\Configure\TypesController;
 use App\Http\Controllers\Controller;
@@ -78,6 +79,16 @@ Route::controller(LoginController::class)->group(function () {
             Route::resource('prioridades', PrioritiesController::class)
                 ->names('priority') 
                 ->parameters(['prioridades' => 'priority']);
+
+
+            // departamentos
+            Route::controller(DepartmentsController::class)->group(function () {
+                Route::get('/departamentos/listado', 'DepartmentList')->name('department.get');
+            });
+
+            Route::resource('departamentos', DepartmentsController::class)
+                ->names('department') 
+                ->parameters(['departamentos' => 'department']);
 
         });
 

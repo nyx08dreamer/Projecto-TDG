@@ -87,6 +87,15 @@
           </a>
         </li>
 
+        <li class="nav-item">
+          <a href="{{ route('config.department.index') }}" class="nav-link {{isRouteActive('config.department.')}}">
+            <i class="fa-regular fa-building"></i>
+            <p>
+              Departamentos
+            </p>
+          </a>
+        </li>
+
         <li class="nav-header pt-4">REPORTES</li>
 
         <li class="nav-item">

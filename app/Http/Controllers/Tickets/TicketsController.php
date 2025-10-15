@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tickets;
 use App\Helpers\PriorityHelper;
 use App\Helpers\TypeHelper;
 use App\Http\Controllers\Controller;
+use App\Models\Entities\Configure\Department;
 use App\Models\Entities\Configure\Priority;
 use App\Models\Entities\Configure\Type;
 use Illuminate\Http\Request;
@@ -33,6 +34,9 @@ class TicketsController extends Controller
      */
     public function create()
     {
+        $department_model = new Department;
+        $departments = $department_model->get_departments();
+
         $priority_model = new Priority;
         $priorities = $priority_model->get_priorities();
 
@@ -40,6 +44,7 @@ class TicketsController extends Controller
         $types = $type_model->get_types();
 
         return view('ticket.create', [
+            'departments' => $departments,
             'priorities' => $priorities,
             'types' => $types,
         ]);
@@ -53,12 +58,13 @@ class TicketsController extends Controller
         $status = 'success';
         $content = 'El ticket se ha creado correctamente';
 
-        //dd($request);
+        //dd($request->all());
 
         $ticket = CustomTicket::create([
             'title' => $request->title,
             'user_id' => Auth::id(),
-            'message' => $request->message, 
+            'message' => $request->message,
+            'department_id' => $request->department,
             'priority_id' => $request->priority,
             'type_id' => $request->type,
             'status' => 'open', 
