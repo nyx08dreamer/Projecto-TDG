@@ -37,7 +37,7 @@
 
                             <div class="form-group row">
                                 <label for="title">Título de la Solicitud:</label>
-                                <div class="col-1">
+                                <div class="col-6">
                                     <p>{{$ticket->title}}</p>
                                 </div>
                             </div>
@@ -138,7 +138,9 @@
                                     Documentos
                                 </div>
                             @else
-                                Sin documentos adjuntos.
+                                <div class="form-group row">
+                                    Sin documentos adjuntos.
+                                </div>
                             @endif
 
                         

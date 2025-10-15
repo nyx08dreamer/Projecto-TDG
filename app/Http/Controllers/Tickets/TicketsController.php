@@ -59,19 +59,23 @@ class TicketsController extends Controller
         $status = 'success';
         $content = 'El ticket se ha creado correctamente';
 
-        //dd($request->all());
+        try {
+            
+            $ticket = CustomTicket::create([
+                'title' => $request->title,
+                'uuid' => (string) Str::uuid(),
+                'user_id' => Auth::id(),
+                'message' => $request->message,
+                'department_id' => $request->department,
+                'priority_id' => $request->priority,
+                'type_id' => $request->type,
+                'status' => 'open', 
+            ]);
 
-
-        $ticket = CustomTicket::create([
-            'title' => $request->title,
-            'uuid' => (string) Str::uuid(),
-            'user_id' => Auth::id(),
-            'message' => $request->message,
-            'department_id' => $request->department,
-            'priority_id' => $request->priority,
-            'type_id' => $request->type,
-            'status' => 'open', 
-        ]);
+        } catch (\Throwable $th) {
+            $status = 'error';
+            $content = 'Ha ocurrido un error al crear la solicitud';
+        }
 
         return redirect()
                 ->route('ticket.index')
@@ -175,17 +179,68 @@ class TicketsController extends Controller
      */
     public function edit(CustomTicket $ticket)
     {
+        $department_model = new Department;
+        $departments = $department_model->get_departments();
+
+        $priority_model = new Priority;
+        $priorities = $priority_model->get_priorities();
+
+        $type_model = new Type;
+        $types = $type_model->get_types();
+
+
+        $selected_department_model = new Department;
+        $selected_department = $selected_department_model->get_department_by_id($ticket->department_id);
+
+        $selected_priority_model = new Priority;
+        $selected_priority = $selected_priority_model->get_priority_by_id($ticket->priority_id);
+
+        $selected_type_model = new Type;
+        $selected_type = $selected_type_model->get_type_by_id($ticket->type_id);
+
+
         return view('ticket.edit', [
             'ticket' => $ticket,
+            'departments' => $departments,
+            'priorities' => $priorities,
+            'types' => $types,
+
+            'selected_department' => $selected_department,
+            'selected_priority' => $selected_priority,
+            'selected_type' => $selected_type,
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, CustomTicket $ticket)
     {
-        //
+        $status = 'success';
+        $content = 'Se ha actualizado correctamente la solicitud';
+
+        try {
+
+            $ticket->update([
+                'title' => $request->title,
+                'message' => $request->message,
+                'department_id' => $request->department,
+                'priority_id' => $request->priority,
+                'type_id' => $request->type,
+            ]);
+
+        } catch (\Throwable $th) {
+            $status = 'error';
+            $content = 'Ha ocurrido un error al actualizar la solicitud';
+        }
+
+        return redirect()
+                ->route('ticket.index')
+                ->with('process_result', [
+                    'status' => $status,
+                    'content' => $content,
+                ]);
+
     }
 
     /**

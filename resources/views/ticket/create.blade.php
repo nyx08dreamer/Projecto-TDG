@@ -68,7 +68,7 @@
                             <div class="row">
                                 <div class="form-group col-12 col-md-12">
                                     <label for="message">Descripción</label>
-                                    <textarea class="form-control" name="message" id="message" rows="10">Escriba aquí...</textarea>
+                                    <textarea class="form-control" name="message" id="message" rows="10" placeholder="Escriba aquí..."></textarea>
                                 </div>
                             </div>
                         </div>
@@ -96,39 +96,42 @@
 @push('js')
     <script>
         $(function () {
-            $('#user-create').validate({
+            $('#ticket-create').validate({
                 rules: {
-                first_name: {
+                title: {
                     required: true
+                    
                 },
-                document_number: {
+                department: {
                     required: true,
-                    minlength: 7
                 },
-                email: {
+                priority: {
                     required: true,
-                    email: true,
                 },
-                username: {
+                type: {
+                    required: true,
+                },
+                message: {
                     required: true
                 },
 
                 },
                 messages: {
-                first_name: {
-                required: "Por favor ingrese los nombres",
+                title: {
+                    required: "Ingrese el título de la solicitud",
+                    
                 },
-                document_number: {
-                    required: "Por favor ingrese el documento de identidad del usuario",
-                    minlength: "El documento de identidad debe ser de 7 digitos minimo"
+                department: {
+                    required: "Seleccione el departamento correspondiente",
                 },
-                email: {
-                    required: "Por favor ingrese un correo electrónico",
-                    email: "Por favor ingrese un correo electrónico válido"
+                priority: {
+                    required: "Seleccione la prioridad correspondiente",
                 },
-                username: {
-                    required: "Por favor ingrese el usuario",
-                    email: "Please enter a valid email address"
+                type: {
+                    required: "Seleccione el tipo de solicitud correspondiente",
+                },
+                message: {
+                    required: "Ingrese la descripción de la solicitud",
                 },
 
                 },
