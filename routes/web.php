@@ -8,6 +8,7 @@ use App\Http\Controllers\Configure\DepartmentsController;
 use App\Http\Controllers\Configure\PrioritiesController;
 use App\Http\Controllers\Configure\TypesController;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Gestion\TicketAssignmentsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Tickets\TicketsController;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,31 @@ Route::controller(LoginController::class)->group(function () {
         Route::get('/', HomeController::class)->name('home');
 
     // Gestion
+        Route::prefix('gestion')->name('gestion.')->group(function () {
+
+        //asignacion
+            Route::controller(TicketAssignmentsController::class)->group(function () {
+                Route::get('/asignacion-de-solicitudes/listado', 'UnassignedTicketList')->name('assign.get');
+                Route::patch('/asignacion-de-solicitudes/asignar', 'assign')->name('assign.assignation');
+            });
+
+            Route::resource('asignacion-de-solicitudes', TicketAssignmentsController::class)
+                ->names('assign') 
+                ->parameters(['asignacion-de-solicitudes' => 'ticket']);
+
+        //archivar
+
+
+
+        //eliminar
+
+
+
+
+        
+        });
+
+
         // tickets
             Route::controller(TicketsController::class)->group(function () {
                 Route::get('/solicitudes/listado', 'TicketsList')->name('ticket.get');
@@ -45,10 +71,6 @@ Route::controller(LoginController::class)->group(function () {
             Route::resource('solicitudes', TicketsController::class)
                 ->names('ticket') 
                 ->parameters(['solicitudes' => 'ticket']);
-
-
-        //asignacion
-
 
 
     // Configuracion

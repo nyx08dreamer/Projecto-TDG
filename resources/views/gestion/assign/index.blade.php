@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('web_title', 'Listado de Solicitudes')
+@section('web_title', 'Solicitudes Por Asignar')
 
 @section('title')
-    <i class="fa-solid fa-ticket"></i> Listado de Solicitudes
+    <i class="fa-solid fa-ticket"></i> Solicitudes Por Asignar
 @endsection
 
 @section('breadcrumbs')
-    <li class="breadcrumb-item active"><a href="{{ route('ticket.index') }}">Solicitudes</a></li>
+    <li class="breadcrumb-item active"><a href="{{ route('gestion.assign.index') }}">Asignación</a></li>
 @endsection
 
 @push('css')
@@ -83,9 +83,10 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    
-                    <a href="{{ route('ticket.create') }}" class="btn btn-success">Crear solicitud</a>
-                
+
+                    <a href="{{ route('gestion.assign.create') }}" class="btn btn-success">Asignar solicitudes</a>
+
+
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Colapsar">
                         <i class="fas fa-minus"></i>
@@ -95,7 +96,7 @@
 
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table  class="table table-hover" id="ticket-table" style="width:100%">
+                        <table  class="table table-hover" id="assignTickets-table" style="width:100%">
                             <thead>
                                 <tr>
                                     <th class="text-center">Acciones</th>
@@ -120,9 +121,9 @@
 
 @push('js')
     <script>
-        var route_registros = '{{ route("ticket.get") }}'
+        var route_registros = '{{ route("gestion.assign.get") }}'
     </script>
 
-    <script src="{{asset('assets/dist/js/ticket-table.js')}}"></script>
+    <script src="{{asset('assets/dist/js/assignTickets-table.js')}}"></script>
     
 @endpush
