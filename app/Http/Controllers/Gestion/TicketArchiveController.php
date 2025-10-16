@@ -117,35 +117,6 @@ class TicketArchiveController extends Controller
                 ]);
     }
 
-    public function archive_specific_ticket(CustomTicket $ticket)
-    {
-        $status = 'success';
-        $content = 'Se ha archivado correctamente la solicitud';
-
-        try {
-            
-            CustomTicket::whereIn('id', $ticket->id)->update(['is_archived_' => true]);
-
-        } catch (\Throwable $th) {
-            $status = 'error';
-            $content = 'Ha ocurrido un error al archivar la solicitud';
-        }
-
-        return redirect()
-                ->route('gestion.archive.index')
-                ->with('process_result', [
-                    'status' => $status,
-                    'content' => $content,
-                ]);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
@@ -180,27 +151,29 @@ class TicketArchiveController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CustomTicket $ticket)
     {
-        //
+        $status = 'success';
+        $content = 'Se ha archivado correctamente la solicitud';
+
+        try {
+            $ticket->update(['is_archived' => true]);
+
+        } catch (\Throwable $th) {
+            $status = 'error';
+            $content = 'Ha ocurrido un error al archivar la solicitud';
+        }
+
+        return redirect()
+                ->route('gestion.archive.index')
+                ->with('process_result', [
+                    'status' => $status,
+                    'content' => $content,
+                ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

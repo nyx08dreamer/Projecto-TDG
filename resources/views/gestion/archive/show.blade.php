@@ -17,6 +17,7 @@
 @section('content')
     <div class="row">
         <div class="col-12">
+            
             <div class="card card-primary">
                 <div class="card-header">
                     <h3 class="card-title">Datos de la Solicitud</h3>
@@ -26,7 +27,7 @@
                     <div class="form-group row">
                         <label for="title" >ID:</label>
                         <div class="col-4">
-                            <p> {{$ticket->id}}</p>
+                            <p name="id" id="id">{{$ticket->id}}</p>
                         </div>
                         
                         <label for="title">Identificador: </label>
@@ -142,11 +143,13 @@
                             Sin documentos adjuntos.
                         </div>
                     @endif
-
+            
+                    
                 </div>
             </div>
 
-            <form id="ticket-assign" method="post" action="{{ route('gestion.archive.specific.ticket', $ticket->id) }}">
+            
+            <form id="ticket-assign" method="post" action="{{ route('gestion.archive.update', $ticket->id) }}">
                 @csrf
                 @method('PATCH')
 

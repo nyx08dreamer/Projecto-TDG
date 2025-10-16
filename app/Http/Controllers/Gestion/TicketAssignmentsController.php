@@ -65,15 +65,6 @@ class TicketAssignmentsController extends Controller
         }
     } 
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-
     public function UnassignedTicketList (Request $request)
     {
         if ($request->ajax()) {
@@ -150,13 +141,6 @@ class TicketAssignmentsController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -192,11 +176,4 @@ class TicketAssignmentsController extends Controller
                 ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

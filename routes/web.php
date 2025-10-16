@@ -51,19 +51,20 @@ Route::controller(LoginController::class)->group(function () {
 
             Route::resource('asignacion-de-solicitudes', TicketAssignmentsController::class)
                 ->names('assign') 
-                ->parameters(['asignacion-de-solicitudes' => 'ticket']);
+                ->parameters(['asignacion-de-solicitudes' => 'ticket'])
+                ->except(['store', 'edit', 'update','destroy']);
 
         //archivar
             Route::controller(TicketArchiveController::class)->group(function () {
                 Route::get('/archivar-solicitudes/listado', 'UnarchivedTicketList')->name('archive.get');
                 Route::patch('/archivar-solicitudes/archivar', 'archive')->name('archive.ticket');
-                Route::patch('/archivar-solicitudes/archivar-solicitud-especifica', 'archive_specific_ticket')->name('archive.specific.ticket');
 
             });
 
             Route::resource('archivar-solicitudes', TicketArchiveController::class)
                 ->names('archive') 
-                ->parameters(['archivar-solicitudes' => 'ticket']);
+                ->parameters(['archivar-solicitudes' => 'ticket'])
+                ->except(['store', 'edit','destroy']);
 
         //eliminar
 
