@@ -55,9 +55,9 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="./index2.html" class="nav-link">
+              <a href="{{ route('gestion.archived-tickets.index') }}" class="nav-link {{isRouteActive('gestion.archived-tickets.')}}">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Eliminar Solicitudes</p>
+                <p>Solicitudes Archivadas</p>
               </a>
             </li>
           </ul>

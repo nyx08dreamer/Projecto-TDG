@@ -8,6 +8,7 @@ use App\Http\Controllers\Configure\DepartmentsController;
 use App\Http\Controllers\Configure\PrioritiesController;
 use App\Http\Controllers\Configure\TypesController;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Gestion\ArchivedTicketsController;
 use App\Http\Controllers\Gestion\TicketArchiveController;
 use App\Http\Controllers\Gestion\TicketAssignmentsController;
 use App\Http\Controllers\HomeController;
@@ -66,8 +67,16 @@ Route::controller(LoginController::class)->group(function () {
                 ->parameters(['archivar-solicitudes' => 'ticket'])
                 ->except(['store', 'edit','destroy']);
 
-        //eliminar
+        //archivados
+            Route::controller(ArchivedTicketsController::class)->group(function () {
+                Route::get('/solicitudes-archivadas/listado', 'ArchivedTicketList')->name('archived-tickets.get');
+                Route::patch('/solicitudes-archivadas/desarchivar', 'unarchive')->name('archived-tickets.unarchived');
 
+            });
+
+            Route::resource('solicitudes-archivadas', ArchivedTicketsController::class)
+                ->names('archived-tickets') 
+                ->parameters(['solicitudes-archivadas' => 'ticket']);
 
 
 

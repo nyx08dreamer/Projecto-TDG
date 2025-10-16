@@ -193,6 +193,56 @@ class Ticket extends BaseTicket
         return $resultado;
     }
 
+    public static function get_archived_tickets($type_id, $priority_id, $department_id, $from_date, $until_date) {
+
+        $resultado = self::select(
+                'tickets.id',
+                'tickets.uuid',
+                'tickets.user_id',
+                'tickets.title',
+                'tickets.message', 
+                'tickets.type_id',
+                'tickets.priority_id',
+                'tickets.status',
+                'tickets.is_resolved',
+                'tickets.is_locked',
+                'tickets.assigned_to',
+                'tickets.created_at',
+                'tickets.updated_at',
+                'tickets.department_id',
+                'tickets.is_archived',
+
+                
+                'creator.first_name as creator_name',
+                'priorities.name as priority_name',
+                'types.name as type_name',
+                'departments.name as department_name',
+
+        )->join('users as creator', 'tickets.user_id', '=', 'creator.id')  
+        ->join('priorities', 'tickets.priority_id', '=', 'priorities.id') 
+        ->join('types', 'tickets.type_id', '=', 'types.id')
+        ->join('departments', 'tickets.department_id', '=', 'departments.id')
+        ->where('tickets.is_archived', 1);
+
+        
+        if($priority_id != null){
+            $resultado->where('tickets.priority_id', $priority_id);
+        }
+        if($type_id != null){
+            $resultado->where('tickets.type_id', $type_id);
+        }
+        if($department_id != null){
+            $resultado->where('tickets.department_id', $department_id);
+        }
+        if ($from_date != null) {
+            $resultado->whereBetween('tickets.created_at', [$from_date, $until_date]);
+        }
+
+        $resultado->orderBy('tickets.id', 'desc')->get();
+
+        return $resultado;
+    }
+
 
     public function get_unarchive_tickets_list() {
 
@@ -222,6 +272,38 @@ class Ticket extends BaseTicket
         ->join('types', 'tickets.type_id', '=', 'types.id')
         ->join('departments', 'tickets.department_id', '=', 'departments.id')
         ->where('tickets.is_archived', 0)->get();
+
+        return $resultado;
+    }
+
+    public function get_archived_tickets_list() {
+
+        $resultado = self::select(
+                'tickets.id',
+                'tickets.uuid',
+                'tickets.user_id',
+                'tickets.title',
+                'tickets.message', 
+                'tickets.type_id',
+                'tickets.priority_id',
+                'tickets.status',
+                'tickets.is_resolved',
+                'tickets.is_locked',
+                'tickets.assigned_to',
+                'tickets.created_at',
+                'tickets.updated_at',
+                'tickets.department_id',
+
+                'creator.first_name as creator_name',
+                'priorities.name as priority_name',
+                'types.name as type_name',
+                'departments.name as department_name',
+
+        )->join('users as creator', 'tickets.user_id', '=', 'creator.id')  
+        ->join('priorities', 'tickets.priority_id', '=', 'priorities.id') 
+        ->join('types', 'tickets.type_id', '=', 'types.id')
+        ->join('departments', 'tickets.department_id', '=', 'departments.id')
+        ->where('tickets.is_archived', 1)->get();
 
         return $resultado;
     }

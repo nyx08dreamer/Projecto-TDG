@@ -127,19 +127,9 @@ class TicketsController extends Controller
                                         <i class="fas fa-edit"></i>
                                     </a>';
 
-                    $button_delete =  '<form action="' . $url_delete . '" method="POST" style="display: inline;  " onsubmit="return confirm(\'¿Estás seguro de eliminar esta solicitud?\');">
-                                        ' . csrf_field() . '  <!-- Token CSRF -->
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        
-                                    <button type="submit" class="btn btn-sm btn-danger icon" title="Clic para borrar">
-                                            <i class="fas fa-trash"></i>  
-                                        </button>
-                                      </form>';
-
                     return '<div role="group">
                                 ' . $button_show . '
                                 ' . $button_edit . '
-                                ' . $button_delete . '
                             </div>';
                 })
                 ->editColumn('title', function($row) {
