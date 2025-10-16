@@ -18,17 +18,13 @@
 
     <section class="section">
         <div class="card">
-            <div class="card-header">
-                <h3 class="card-title text-center">Registros para Editar Solicitudes</h3>
-            </div>
             <div class="card-body pb-0">
                 
                 <form class="mb-4">
                     <div class="row">
-
                         <div class="col-md-4 col-12">
                             <div class="form-group">
-                                <label class="form-label" for="status_solicitud">Prioridad</label>
+                                <label class="form-label" for="priority_id">Prioridad</label>
                                     <select class="custom-select rounded-0" name="priority_id" id="priority_id">
                                         <option value="">Seleccionar</option>
                                         @foreach ($priorities as $priority)
@@ -37,13 +33,49 @@
                                     </select>
                             </div>
                         </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label class="form-label" for="type_id">Tipo de Solicitud</label>
+                                    <select class="custom-select rounded-0" name="type_id" id="type_id">
+                                        <option value="">Seleccionar</option>
+                                        @foreach ($types as $type)
+                                            <option value="{{$type->id}}">{{$type->name}}</option>
+                                        @endforeach
+                                    </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label class="form-label" for="department_id">Departamento</label>
+                                    <select class="custom-select rounded-0" name="department_id" id="department_id">
+                                        <option value="">Seleccionar</option>
+                                        @foreach ($departments as $department)
+                                            <option value="{{$department->id}}">{{$department->name}}</option>
+                                        @endforeach
+                                    </select>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="row mt-3">
-                        <div class="col-sm-12 d-flex justify-content-end">
-                            <button type="button" class="btn btn-primary me-1" id="search">Buscar</button>
-                            <a href="" class="btn btn-secondary">Limpiar</a>
+                    <div class="row">
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label class="form-label" for="from_date">Fecha desde</label>
+                                <input type="date" class="form-control"  id="from_date" name="from_date">
+                            </div>
                         </div>
+
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label class="form-label" for="until_date">Fecha hasta</label>
+                                <input type="date" class="form-control" id="until_date" name="until_date">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="float-right pb-3">
+                        <a href="" class="btn btn-outline-secondary">Limpiar</a>
+                            <button type="button" class="btn btn-primary ml-2" id="search">Buscar</button>
                     </div>
                 
             </div>
@@ -74,6 +106,7 @@
                                     <th class="text-center">Solicitante</th>
                                     <th class="text-center">Prioridad</th>
                                     <th class="text-center">Tipo</th>
+                                    <th class="text-center">Departamento</th>
                                     <th class="text-center">Fecha de Creación</th>
                                 </tr>
                             </thead>
