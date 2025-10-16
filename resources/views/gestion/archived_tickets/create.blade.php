@@ -62,7 +62,7 @@
 
                     <div class="float-right pb-3">
                         <a href="{{ route('gestion.archived-tickets.index') }}" class="btn btn-outline-danger">Cancelar</a>
-                        <button type="submit" class="ml-2 btn btn-success">Archivar</button>
+                        <button type="submit" class="ml-2 btn btn-success">Desarchivar</button>
                     </div>
             </form>
 
