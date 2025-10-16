@@ -12,6 +12,7 @@ use App\Models\Entities\Configure\Type;
 use Illuminate\Http\Request;
 use App\Models\Entities\Tickets\Ticket as CustomTicket;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Str;
 
 
 class TicketAssignmentsController extends Controller
@@ -56,6 +57,14 @@ class TicketAssignmentsController extends Controller
         ]);
     }
 
+    public function ItSupportUsers (Request $request)
+    {
+        if ($request->ajax()) {
+            $users = User::role('ITsupport')->get(); 
+            return response()->json($users);
+        }
+    } 
+
     /**
      * Store a newly created resource in storage.
      */
@@ -97,6 +106,9 @@ class TicketAssignmentsController extends Controller
                                 ' . $button_show . '
                                 ' . $button_edit . '
                             </div>';
+                })
+                ->editColumn('title', function($row) {
+                    return Str::limit($row->title, 20, '...');
                 })
                 ->addColumn('priority_name', function ($row) {
                     $td = '<span class="badge '.PriorityHelper::get_priority_color($row->priority_id).'">'.$row->priority_name.'</span>';

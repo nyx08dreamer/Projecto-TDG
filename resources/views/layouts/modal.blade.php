@@ -47,3 +47,59 @@
         </div>
     </div>
 </div>
+
+<!-- Modal tecnicos -->
+<div class="modal fade" id="ItSupports" tabindex="-1" aria-labelledby="Label" aria-hidden="true" 
+            data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Listado de Tecnicos de Soporte</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                
+            </div>
+
+            <div id="spinner-ItSupport" class="text-center pb-3">
+                <div class="spinner-border text-primary" style="width: 6rem; height: 6rem;" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                </div>
+                <h4 class="text-primary">Cargando...</h4>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ItSupport">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Listado de Tecnicos de Soporte</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                
+            </div>
+
+            {{-- <div id="spinner-ItSupport" class="text-center pb-3">
+                <div class="spinner-border text-primary" style="width: 6rem; height: 6rem;" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                </div>
+                <h4 class="text-primary">Cargando...</h4>
+            </div> --}}
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -142,6 +142,9 @@ class TicketsController extends Controller
                                 ' . $button_delete . '
                             </div>';
                 })
+                ->editColumn('title', function($row) {
+                    return Str::limit($row->title, 20, '...');
+                })
                 ->addColumn('priority_name', function ($row) {
                     $td = '<span class="badge '.PriorityHelper::get_priority_color($row->priority_id).'">'.$row->priority_name.'</span>';
                     return $td;
@@ -154,7 +157,6 @@ class TicketsController extends Controller
                 ->make(true);
             return $datatables;
         }
-        dd($request);
     }
 
     /**

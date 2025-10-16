@@ -44,6 +44,8 @@ Route::controller(LoginController::class)->group(function () {
             Route::controller(TicketAssignmentsController::class)->group(function () {
                 Route::get('/asignacion-de-solicitudes/listado', 'UnassignedTicketList')->name('assign.get');
                 Route::patch('/asignacion-de-solicitudes/asignar', 'assign')->name('assign.assignation');
+                Route::get('/asignacion-de-solicitudes/tecnicos-listado', 'ItSupportUsers')->name('assign.ItUsers.get');
+
             });
 
             Route::resource('asignacion-de-solicitudes', TicketAssignmentsController::class)
