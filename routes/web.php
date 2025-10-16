@@ -8,6 +8,7 @@ use App\Http\Controllers\Configure\DepartmentsController;
 use App\Http\Controllers\Configure\PrioritiesController;
 use App\Http\Controllers\Configure\TypesController;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Gestion\TicketArchiveController;
 use App\Http\Controllers\Gestion\TicketAssignmentsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Tickets\TicketsController;
@@ -53,8 +54,16 @@ Route::controller(LoginController::class)->group(function () {
                 ->parameters(['asignacion-de-solicitudes' => 'ticket']);
 
         //archivar
+            Route::controller(TicketArchiveController::class)->group(function () {
+                Route::get('/archivar-solicitudes/listado', 'UnarchivedTicketList')->name('archive.get');
+                Route::patch('/archivar-solicitudes/archivar', 'archive')->name('archive.ticket');
+                Route::patch('/archivar-solicitudes/archivar-solicitud-especifica', 'archive_specific_ticket')->name('archive.specific.ticket');
 
+            });
 
+            Route::resource('archivar-solicitudes', TicketArchiveController::class)
+                ->names('archive') 
+                ->parameters(['archivar-solicitudes' => 'ticket']);
 
         //eliminar
 

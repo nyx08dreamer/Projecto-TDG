@@ -49,7 +49,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="./index2.html" class="nav-link">
+              <a href="{{ route('gestion.archive.index') }}" class="nav-link {{isRouteActive('gestion.archive.')}}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Archivar Solicitudes</p>
               </a>

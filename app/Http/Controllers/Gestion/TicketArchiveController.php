@@ -5,17 +5,16 @@ namespace App\Http\Controllers\Gestion;
 use App\Helpers\PriorityHelper;
 use App\Helpers\TypeHelper;
 use App\Http\Controllers\Controller;
-use App\Models\Entities\Admin\User;
+use Illuminate\Http\Request;
 use App\Models\Entities\Configure\Department;
 use App\Models\Entities\Configure\Priority;
 use App\Models\Entities\Configure\Type;
-use Illuminate\Http\Request;
+use App\Models\Entities\Admin\User;
 use App\Models\Entities\Tickets\Ticket as CustomTicket;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Str;
 
-
-class TicketAssignmentsController extends Controller
+class TicketArchiveController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -32,7 +31,7 @@ class TicketAssignmentsController extends Controller
         $types = $type_model->get_types();
 
 
-        return view('gestion.assign.index', [
+        return view('gestion.archive.index', [
             'departments' => $departments,
             'priorities' => $priorities,
             'types' => $types,
@@ -45,40 +44,19 @@ class TicketAssignmentsController extends Controller
     public function create()
     {
         $ticket_model = new CustomTicket;
-        $tickets = $ticket_model->get_unassigned_tickets_list();
+        $tickets = $ticket_model->get_unarchive_tickets_list();
 
-        $users = User::role('ITsupport')->get(); 
 
-        //dd($tickets);
-
-        return view('gestion.assign.create', [
-            'users' => $users,
+        return view('gestion.archive.create', [
             'tickets' => $tickets,
         ]);
     }
 
-    public function ItSupportUsers (Request $request)
-    {
-        if ($request->ajax()) {
-            $users = User::role('ITsupport')->get(); 
-            return response()->json($users);
-        }
-    } 
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-
-    public function UnassignedTicketList (Request $request)
+    public function UnarchivedTicketList (Request $request)
     {
         if ($request->ajax()) {
 
-            $tickets = CustomTicket::get_unassigned_tickets($request->type_id,
+            $tickets = CustomTicket::get_unarchive_tickets($request->type_id,
                                                 $request->priority_id,
                                                 $request->department_id,
                                                 $request->from_date, 
@@ -87,7 +65,7 @@ class TicketAssignmentsController extends Controller
             $datatables = DataTables::of($tickets)
                 ->addIndexColumn()
                 ->addColumn('actions', function($row) {
-                    $url_show = route('gestion.assign.show', $row->id);
+                    $url_show = route('gestion.archive.show', $row->id);
 
                     $button_show = '<a class="btn btn-sm btn-info icon"  
                                     href="' . $url_show . '"
@@ -116,6 +94,58 @@ class TicketAssignmentsController extends Controller
         }
     }
 
+    public function archive(Request $request)
+    {
+        $status = 'success';
+        $content = 'Se han archivado correctamente las solicitudes';
+
+        $ticketIds = $request->ticket_ids;
+        try {
+            
+            CustomTicket::whereIn('id', $ticketIds)->update(['is_archived' => true]);
+
+        } catch (\Throwable $th) {
+            $status = 'error';
+            $content = 'Ha ocurrido un error al archivar las solicitudes';
+        }
+
+        return redirect()
+                ->route('gestion.archive.index')
+                ->with('process_result', [
+                    'status' => $status,
+                    'content' => $content,
+                ]);
+    }
+
+    public function archive_specific_ticket(CustomTicket $ticket)
+    {
+        $status = 'success';
+        $content = 'Se ha archivado correctamente la solicitud';
+
+        try {
+            
+            CustomTicket::whereIn('id', $ticket->id)->update(['is_archived_' => true]);
+
+        } catch (\Throwable $th) {
+            $status = 'error';
+            $content = 'Ha ocurrido un error al archivar la solicitud';
+        }
+
+        return redirect()
+                ->route('gestion.archive.index')
+                ->with('process_result', [
+                    'status' => $status,
+                    'content' => $content,
+                ]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+    }
 
     /**
      * Display the specified resource.
@@ -139,7 +169,7 @@ class TicketAssignmentsController extends Controller
 
         $document = '';
 
-        return view('gestion.assign.show', [
+        return view('gestion.archive.show', [
             'ticket' => $ticket,
             'department' => $department,
             'priority' => $priority,
@@ -161,35 +191,9 @@ class TicketAssignmentsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(string $id)
+    public function update(Request $request, string $id)
     {
         //
-    }
-
-    public function assign(Request $request)
-    {
-        $status = 'success';
-        $content = 'Se han asignado correctamente las solicitudes';
-
-        $userId = $request->user_id;
-        $ticketIds = $request->ticket_ids;
-
-        try {
-            
-            CustomTicket::whereIn('id', $ticketIds)->update(['assigned_to' => $userId]);
-
-
-        } catch (\Throwable $th) {
-            $status = 'error';
-            $content = 'Ha ocurrido un error al asignar las solicitudes';
-        }
-
-        return redirect()
-                ->route('gestion.assign.index')
-                ->with('process_result', [
-                    'status' => $status,
-                    'content' => $content,
-                ]);
     }
 
     /**
