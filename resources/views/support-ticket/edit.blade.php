@@ -147,66 +147,66 @@
                         </div>
                     </div>
 
-                <form id="ticket-edit" method="post" action="{{ route('ticket.support.update', $ticket->id) }}">
-                    @csrf
-                    @method('PATCH')
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h3 class="card-title">
-                            <i class="fa-solid fa-ticket"></i>
-                            Opciones
-                            </h3>
-                        </div>
-
-                        <div class="card-body">
-                            <ul class="todo-list">
-                                @if ($ticket->status == 'open')
-                                    <li>
-                                        <div  class="icheck-primary d-inline ml-2">
-                                            <input type="radio" name="option" id="option" value="1">
-                                            <label for="todoCheck1"></label>
-                                                <span class="text">Título: Cerrar ticket como resuelto</span>
-                                                <small class="badge badge-primary">
-                                                    a
-                                                </small>
-                                        </div>
-                                    </li>
-
-                                    <li>
-                                        <div  class="icheck-primary d-inline ml-2">
-                                            <input type="radio" name="option" id="option" value="2">
-                                            <label for="todoCheck1"></label>
-                                                <span class="text">Título: Cerrar ticket como Inconcluso</span>
-                                                <small class="badge badge-primary">
-                                                    a
-                                                </small>
-                                        </div>
-                                    </li>
-                                @endif
-
-                                @if ($ticket->status != 'open')
-                                    <li>
-                                        <div  class="icheck-primary d-inline ml-2">
-                                            <input type="radio" name="option" id="option" value="3">
-                                            <label for="todoCheck1"></label>
-                                                <span class="text">Título: Reabrir ticket</span>
-                                                <small class="badge badge-primary">
-                                                    a
-                                                </small>
-                                        </div>
-                                    </li>
-                                @endif
-
-                            </ul>
-                        </div>
+            <form id="ticket-edit" method="post" action="{{ route('ticket.support.update', $ticket->id) }}">
+                @csrf
+                @method('PATCH')
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                        <i class="fa-solid fa-ticket"></i>
+                        Opciones
+                        </h3>
                     </div>
 
-            
-                    <div class="float-right pb-3 justify-items-normal">
-                        <a href="{{ route('ticket.support.index') }}" class="btn btn-primary">Regresar</a>
+                    <div class="card-body">
+                        <ul class="todo-list">
+                            @if ($ticket->status == 'open')
+                                <li>
+                                    <div  class="icheck-primary d-inline ml-2">
+                                        <input type="radio" name="option" id="option" value="1">
+                                        <label for="todoCheck1"></label>
+                                            <span class="text">Título: Cerrar ticket como resuelto</span>
+                                            <small class="badge badge-primary">
+                                                a
+                                            </small>
+                                    </div>
+                                </li>
 
-                        <button type="submit" class="ml-2 btn btn-success">Guardar</button>
+                                <li>
+                                    <div  class="icheck-primary d-inline ml-2">
+                                        <input type="radio" name="option" id="option" value="2">
+                                        <label for="todoCheck1"></label>
+                                            <span class="text">Título: Cerrar ticket como Inconcluso</span>
+                                            <small class="badge badge-primary">
+                                                a
+                                            </small>
+                                    </div>
+                                </li>
+                            @endif
+
+                            @if ($ticket->status != 'open')
+                                <li>
+                                    <div  class="icheck-primary d-inline ml-2">
+                                        <input type="radio" name="option" id="option" value="3">
+                                        <label for="todoCheck1"></label>
+                                            <span class="text">Título: Reabrir ticket</span>
+                                            <small class="badge badge-primary">
+                                                a
+                                            </small>
+                                    </div>
+                                </li>
+                            @endif
+
+                        </ul>
                     </div>
+                </div>
+
+        
+                <div class="float-right pb-3 justify-items-normal">
+                    <a href="{{ route('ticket.support.index') }}" class="btn btn-primary">Regresar</a>
+
+                    <button type="submit" class="ml-2 btn btn-success">Guardar</button>
+                </div>
             </form>
         </div>
     </div>

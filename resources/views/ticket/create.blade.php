@@ -74,9 +74,23 @@
                         </div>
                     </div>
 
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                            <i class="fa-solid fa-file"></i>
+                            Adjuntar Documentos (Opcional)
+                            </h3>
+                        </div>
+
+                        <div class="card-body">
+                            <p class="card-text">Los archivos a subir deben estar en formato PNG, JPEG, JPG...</p>
+                        <input type="file" id="archivos" name="archivos[]" class="basic-filepond" multiple>
+                        </div>
+                    </div>
+
                     <div class="float-right pb-3">
                         <a href="{{ route('ticket.all.index') }}" class="btn btn-outline-danger">Cancelar</a>
-                        <button type="submit" class="ml-2 btn btn-success">Guardar</button>
+                        <button type="submit" class="ml-2 btn btn-success" id="save">Guardar</button>
                     </div>
             </form>
 
@@ -94,6 +108,13 @@
 @endsection
 
 @push('js')
+
+    <script>
+        $('input[type=file]').each(function(){
+            filepond.create({id : $(this).attr("id") });
+        })
+    </script>
+
     <script>
         $(function () {
             $('#ticket-create').validate({

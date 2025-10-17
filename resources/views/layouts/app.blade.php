@@ -17,6 +17,14 @@
     <!-- Toastr -->
     <link rel="stylesheet" href="{{asset('assets/plugins/toastr/toastr.min.css')}}">
 
+    <!-- dropzonejs -->
+    <link rel="stylesheet" href="{{asset('assets/plugins/dropzone/min/dropzone.min.css')}}">
+
+    <!-- FilePond styles -->
+    <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+    <!-- Plugin de previsualización -->
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
+
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('assets/dist/css/adminlte.min.css')}}">
     @stack('css')
@@ -96,6 +104,16 @@
     <!-- Toastr -->
     <script src="{{asset('assets/plugins/toastr/toastr.min.js')}}"></script>
 
+    <!-- dropzonejs -->
+    <script src="{{asset('assets/plugins/dropzone/min/dropzone.min.js')}}"></script>
+
+    <!-- Plugins -->
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+    <!-- FilePond scripts -->
+    <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
+
     <!-- AdminLTE App -->
     <script src="{{asset('assets/dist/js/adminlte.min.js')}}"></script>
     <!-- AdminLTE for demo purposes -->
@@ -108,6 +126,36 @@
             });
         </script>
     @endif
+
+    <script>
+        var filepond = {
+            create: function(field) {
+                const inputElement = document.getElementById(field.id);
+                const pond = FilePond.create(inputElement, {
+                    allowMultiple: true, 
+                    allowReorder: true,
+                    labelIdle: 'Arrastra y suelta tu foto o <span class="filepond--label-action">Explora</span>',
+                    acceptedFileTypes: ['image/png', 'image/jpg', 'image/jpeg'],
+                    server: {
+                        process: {
+                            url: '{{ url("/base/cargar_archivo_temporal") }}',
+                            method: 'POST',
+                            headers: {
+                                'x-CSRF-TOKEN': '{{ csrf_token() }}',
+                            },
+                        },
+                        revert: {
+                            url: '{{ url("/base/eliminar_archivo_temporal") }}',
+                            method: 'DELETE',
+                            headers: {
+                                'x-CSRF-TOKEN': '{{ csrf_token() }}',
+                            },
+                        }
+                    },
+                });
+            }
+        };
+    </script>
 
     @stack('js')
   </body>

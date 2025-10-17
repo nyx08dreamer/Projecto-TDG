@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 use App\Models\Entities\Tickets\Ticket as CustomTicket;
-
+use App\Traits\Controllers\UploadFilesTrait;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 
@@ -23,6 +23,7 @@ use Coderflex\LaravelTicket\Models\Label;
 
 class TicketsController extends Controller
 {
+    use UploadFilesTrait;
     /**
      * Display a listing of the resource.
      */
@@ -58,6 +59,9 @@ class TicketsController extends Controller
         $type_model = new Type;
         $types = $type_model->get_types();
 
+
+        
+
         return view('ticket.create', [
             'departments' => $departments,
             'priorities' => $priorities,
@@ -70,6 +74,10 @@ class TicketsController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all());
+        
+        dd($request->file('file'));
+
         $status = 'success';
         $content = 'El ticket se ha creado correctamente';
 

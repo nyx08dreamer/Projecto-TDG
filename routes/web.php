@@ -12,6 +12,7 @@ use App\Http\Controllers\Gestion\ArchivedTicketsController;
 use App\Http\Controllers\Gestion\TicketArchiveController;
 use App\Http\Controllers\Gestion\TicketAssignmentsController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Tickets\FileUploadController;
 use App\Http\Controllers\Tickets\SupportTicketsController;
 use App\Http\Controllers\Tickets\TicketsController;
 use App\Http\Controllers\Tickets\UserTicketsController;
@@ -40,6 +41,8 @@ Route::controller(LoginController::class)->group(function () {
     Route::middleware('auth')->group( function () {
 
         Route::get('/', HomeController::class)->name('home');
+
+        
 
     // Gestion
         Route::prefix('gestion')->name('gestion.')->group(function () {
@@ -89,6 +92,7 @@ Route::controller(LoginController::class)->group(function () {
         // tickets
             Route::controller(TicketsController::class)->group(function () {
                 Route::get('/solicitudes/listado', 'TicketsList')->name('ticket.all.get');
+                Route::post('/solicitudes/{ticket}/documentos', 'files')->name('ticket.all.files');
             });
 
             Route::resource('solicitudes', TicketsController::class)
@@ -199,6 +203,12 @@ Route::controller(LoginController::class)->group(function () {
                 ->only(['index', 'show']);
         });
     });
+
+    Route::controller(FileUploadController::class)->group(function () {
+            Route::post('/base/cargar_archivo_temporal', 'cargar_archivo_temporal')->name('cargar.archivo');
+            
+            Route::delete('/base/eliminar_archivo_temporal','eliminar_archivo_temporal')->name('eliminar.archivo');
+        });
 
 
 
