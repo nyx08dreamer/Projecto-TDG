@@ -10,10 +10,12 @@ use App\Models\Entities\Admin\User;
 use App\Models\Entities\Configure\Department;
 use App\Models\Entities\Configure\Priority;
 use App\Models\Entities\Configure\Type;
+use App\Models\Entities\Tickets\Document;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 use App\Models\Entities\Tickets\Ticket as CustomTicket;
+use App\Services\DocumentService;
 use App\Traits\Controllers\UploadFilesTrait;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
@@ -74,14 +76,12 @@ class TicketsController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
-        
-        dd($request->file('file'));
+
 
         $status = 'success';
         $content = 'El ticket se ha creado correctamente';
 
-        try {
+        // dd($request->get('archivos'));
             
             $ticket = CustomTicket::create([
                 'title' => $request->title,
@@ -94,10 +94,31 @@ class TicketsController extends Controller
                 'status' => 'open', 
             ]);
 
-        } catch (\Throwable $th) {
-            $status = 'error';
-            $content = 'Ha ocurrido un error al crear la solicitud';
-        }
+
+            foreach($request->get('archivos') as $archivo){
+
+                if ($archivo !== null && !empty($archivo)) {
+
+                    $ultimoDocumento = Document::orderby('id', 'desc')->first();
+                    $nuevoIdDocumento = $ultimoDocumento ? $ultimoDocumento->id + 1 : 1;
+
+                    $nombre_archivo = $ticket->id . 'datosSolicitud_' . ($nuevoIdDocumento) . '.' . pathinfo($archivo, PATHINFO_EXTENSION);
+
+                    DocumentService::copiar('temp/'.$archivo, 'documentos/'.$nombre_archivo);
+
+                    DocumentService::guardar([
+                            'name' => $nombre_archivo,
+                            'ticket_id' => $ticket->id,
+                            'user_id' => Auth::id(),
+                            'type' => 1,
+                            'route'  => 'storage/documentos/', 
+                        ]);
+
+                    DocumentService::eliminar('temp/'.$archivo);
+                }
+            }
+
+        
 
         return redirect()
                 ->route('ticket.all.index')
