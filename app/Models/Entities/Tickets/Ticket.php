@@ -44,7 +44,7 @@ class Ticket extends BaseTicket
 
     
 
-    public static function get_tickets($type_id, $priority_id, $department_id, $assigned, $from_date, $until_date) {
+    public static function get_tickets($status, $priority_id, $type_id, $department_id, $assigned, $from_date, $until_date) {
 
         $resultado = self::select(
                 'tickets.id',
@@ -73,7 +73,16 @@ class Ticket extends BaseTicket
         ->join('types', 'tickets.type_id', '=', 'types.id')
         ->join('departments', 'tickets.department_id', '=', 'departments.id');
 
-        
+        if($status != null){
+
+            if($status == 1){
+                $resultado->where('tickets.status', 'open');
+
+            } elseif ($status == 2) {
+                $resultado->where('tickets.status', 'closed');
+            }
+        }
+
         if($priority_id != null){
             $resultado->where('tickets.priority_id', $priority_id);
         }

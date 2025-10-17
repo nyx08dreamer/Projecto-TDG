@@ -102,8 +102,9 @@ class TicketsController extends Controller
     {
         if ($request->ajax()) {
 
-            $tickets = CustomTicket::get_tickets($request->type_id,
+            $tickets = CustomTicket::get_tickets($request->status,
                                                 $request->priority_id,
+                                                $request->type_id,
                                                 $request->department_id,
                                                 $request->assigned,
                                                 $request->from_date, 
@@ -132,8 +133,11 @@ class TicketsController extends Controller
                                 ' . $button_edit . '
                             </div>';
                 })
+                ->editColumn('uuid', function($row) {
+                    return Str::limit($row->uuid, 15, '...');
+                })
                 ->editColumn('title', function($row) {
-                    return Str::limit($row->title, 20, '...');
+                    return Str::limit($row->title, 15, '...');
                 })
                 ->addColumn('priority_name', function ($row) {
                     $td = '<span class="badge '.PriorityHelper::get_priority_color($row->priority_id).'">'.$row->priority_name.'</span>';
