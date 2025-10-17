@@ -44,7 +44,7 @@ class Ticket extends BaseTicket
 
     
 
-    public static function get_tickets($type_id, $priority_id, $department_id, $from_date, $until_date) {
+    public static function get_tickets($type_id, $priority_id, $department_id, $assigned, $from_date, $until_date) {
 
         $resultado = self::select(
                 'tickets.id',
@@ -64,6 +64,7 @@ class Ticket extends BaseTicket
 
                 
                 'creator.first_name as creator_name',
+                'creator.document_number as creator_docNum',
                 'priorities.name as priority_name',
                 'types.name as type_name',
                 'departments.name as department_name',
@@ -82,6 +83,15 @@ class Ticket extends BaseTicket
         }
         if($department_id != null){
             $resultado->where('tickets.department_id', $department_id);
+        }
+        if($assigned != null){
+
+            if($assigned == 1){
+                $resultado->whereNotNull('tickets.assigned_to');
+                
+            } elseif ($assigned == 2) {
+                $resultado->whereNull('tickets.assigned_to');
+            }
         }
         if ($from_date != null) {
             $resultado->whereBetween('tickets.created_at', [$from_date, $until_date]);

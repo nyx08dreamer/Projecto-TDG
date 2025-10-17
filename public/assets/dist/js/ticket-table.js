@@ -17,6 +17,7 @@ $(document).ready(function() {
                     d.type_id = $('#type_id').val(),
                     d.priority_id = $('#priority_id').val(),
                     d.department_id = $('#department_id').val(),
+                    d.assigned = $('#assigned').val(),
                     d.from_date = $('#from_date').val(),
                     d.until_date = $('#until_date').val()
                 },

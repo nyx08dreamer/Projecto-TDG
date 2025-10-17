@@ -20,7 +20,7 @@
         <div class="card">
             <div class="card-body pb-0">
                 <div class="row">
-                    <div class="col-md-4 col-12">
+                    <div class="col-md-3 col-12">
                         <div class="form-group">
                             <label class="form-label" for="priority_id">Prioridad</label>
                                 <select class="custom-select rounded-0" name="priority_id" id="priority_id">
@@ -31,7 +31,7 @@
                                 </select>
                         </div>
                     </div>
-                    <div class="col-md-4 col-12">
+                    <div class="col-md-3 col-12">
                         <div class="form-group">
                             <label class="form-label" for="type_id">Tipo de Solicitud</label>
                                 <select class="custom-select rounded-0" name="type_id" id="type_id">
@@ -42,7 +42,7 @@
                                 </select>
                         </div>
                     </div>
-                    <div class="col-md-4 col-12">
+                    <div class="col-md-3 col-12">
                         <div class="form-group">
                             <label class="form-label" for="department_id">Departamento</label>
                                 <select class="custom-select rounded-0" name="department_id" id="department_id">
@@ -50,6 +50,16 @@
                                     @foreach ($departments as $department)
                                         <option value="{{$department->id}}">{{$department->name}}</option>
                                     @endforeach
+                                </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-12">
+                        <div class="form-group">
+                            <label class="form-label" for="assigned">Estado de Asignación</label>
+                                <select class="custom-select rounded-0" name="assigned" id="assigned">
+                                    <option value="">Seleccionar</option>
+                                    <option value="1">Asignado</option>
+                                    <option value="2">Por Asignar</option>
                                 </select>
                         </div>
                     </div>

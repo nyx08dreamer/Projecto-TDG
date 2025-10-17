@@ -105,6 +105,7 @@ class TicketsController extends Controller
             $tickets = CustomTicket::get_tickets($request->type_id,
                                                 $request->priority_id,
                                                 $request->department_id,
+                                                $request->assigned,
                                                 $request->from_date, 
                                                 $request->until_date);
 
