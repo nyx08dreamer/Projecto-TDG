@@ -12,6 +12,7 @@ use App\Http\Controllers\Gestion\ArchivedTicketsController;
 use App\Http\Controllers\Gestion\TicketArchiveController;
 use App\Http\Controllers\Gestion\TicketAssignmentsController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Tickets\SupportTicketsController;
 use App\Http\Controllers\Tickets\TicketsController;
 use App\Http\Controllers\Tickets\UserTicketsController;
 use Illuminate\Support\Facades\Route;
@@ -103,6 +104,16 @@ Route::controller(LoginController::class)->group(function () {
             Route::resource('mis-solicitudes', UserTicketsController::class)
                 ->names('ticket.user') 
                 ->parameters(['mis-solicitudes' => 'ticket']);
+
+
+        // support - tickets
+            Route::controller(SupportTicketsController::class)->group(function () {
+                Route::get('/solicitudes-asignadas/listado', 'SupportTicketList')->name('ticket.support.get');
+            });
+
+            Route::resource('solicitudes-asignadas', SupportTicketsController::class)
+                ->names('ticket.support') 
+                ->parameters(['solicitudes-asignadas' => 'ticket']);
 
 
     // Configuracion

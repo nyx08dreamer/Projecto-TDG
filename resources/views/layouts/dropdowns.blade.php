@@ -84,6 +84,9 @@
           <p>{{ $notification->data['message'] ?? 'Sin mensaje disponible' }}</p>
           <div class="dropdown-divider"></div>
           @endforeach
+
+          {{-- https://www.blackbox.ai/chat/AIc9QfH --}}
+
           <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
         </div>
       </li>

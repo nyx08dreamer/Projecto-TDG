@@ -85,7 +85,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="" class="nav-link ">
+              <a href="{{ route('ticket.support.index') }}" class="nav-link {{isRouteActive('ticket.support.')}}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Solicitudes Asignadas</p>
               </a>
