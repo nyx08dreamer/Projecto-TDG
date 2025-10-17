@@ -84,7 +84,7 @@
             <div class="card">
                 <div class="card-header">
                     
-                    <a href="{{ route('ticket.all.create') }}" class="btn btn-success">Crear solicitud</a>
+                    <a href="{{ route('ticket.user.create') }}" class="btn btn-success">Crear solicitud</a>
                 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Colapsar">
@@ -95,7 +95,7 @@
 
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table  class="table table-hover" id="ticket-table" style="width:100%">
+                        <table  class="table table-hover" id="userTicket-table" style="width:100%">
                             <thead>
                                 <tr>
                                     <th class="text-center">Acciones</th>
@@ -120,9 +120,9 @@
 
 @push('js')
     <script>
-        var route_registros = '{{ route("ticket.all.get") }}'
+        var route_registros = '{{ route("ticket.user.get") }}'
     </script>
 
-    <script src="{{asset('assets/dist/js/ticket-table.js')}}"></script>
+    <script src="{{asset('assets/dist/js/userTicket-table.js')}}"></script>
     
 @endpush

@@ -97,7 +97,7 @@ Route::controller(LoginController::class)->group(function () {
 
         // user - tickets
             Route::controller(UserTicketsController::class)->group(function () {
-                Route::get('/mis-solicitudes/listado', 'TicketsList')->name('ticket.user.get');
+                Route::get('/mis-solicitudes/listado', 'UserTicketList')->name('ticket.user.get');
             });
 
             Route::resource('mis-solicitudes', UserTicketsController::class)
