@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Tickets;
 
 use App\Helpers\PriorityHelper;
+use App\Helpers\TicketStatusHelper;
 use App\Helpers\TypeHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Entities\Admin\User;
@@ -139,6 +140,10 @@ class TicketsController extends Controller
                 ->editColumn('title', function($row) {
                     return Str::limit($row->title, 15, '...');
                 })
+                ->addColumn('status', function ($row) {
+                    $td = '<span class="badge '.TicketStatusHelper::get_ticket_status_color($row->status).'">'.TicketStatusHelper::get_ticket_status($row->status).'</span>';
+                    return $td;
+                })
                 ->addColumn('priority_name', function ($row) {
                     $td = '<span class="badge '.PriorityHelper::get_priority_color($row->priority_id).'">'.$row->priority_name.'</span>';
                     return $td;
@@ -147,10 +152,13 @@ class TicketsController extends Controller
                     $td = '<span class="badge '.TypeHelper::get_type_color($row->type_id).'">'.$row->type_name.'</span>';
                     return $td;
                 })
-                ->editColumn('created_at', function($row) {
-                    return \Carbon\Carbon::parse($row->created_at)->tz('America/Caracas')->format('d-m-Y h:i A');
+                ->editColumn('department_name', function($row) {
+                    return Str::limit($row->department_name, 20, '...');
                 })
-                ->rawColumns(['actions', 'priority_name', 'type_name'])
+                ->editColumn('created_at', function($row) {
+                    return \Carbon\Carbon::parse($row->created_at)->tz('America/Caracas')->format('d-m-Y');
+                })
+                ->rawColumns(['actions', 'status', 'priority_name', 'type_name'])
                 ->make(true);
             return $datatables;
         }

@@ -45,21 +45,21 @@
                             <div class="form-group row">
                                 <label for="title">Estatus:</label>
                                 <div class="col-1">
-                                    <p>{{$ticket->status}}</p>
+                                    <span class="badge {{TicketStatusHelper::get_ticket_status_color($ticket->status)}}">{{TicketStatusHelper::get_ticket_status($ticket->status)}}</span>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label for="title">Creado:</label>
                                 <div class="col-6">
-                                    <p>{{\Carbon\Carbon::parse($ticket->created_at)->tz('America/Caracas')->format('d-m-Y h:i A')}}</p>
+                                    <p>{{TimeZoneCarbon::parse($ticket->created_at)->tz('America/Caracas')->format('d-m-Y h:i A')}}</p>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label for="title">Actualizado:</label>
                                 <div class="col-6">
-                                    <p>{{\Carbon\Carbon::parse($ticket->updated_at)->tz('America/Caracas')->format('d-m-Y h:i A')}}</p>
+                                    <p>{{TimeZoneCarbon::parse($ticket->updated_at)->tz('America/Caracas')->format('d-m-Y h:i A')}}</p>
                                 </div>
                             </div>
 
