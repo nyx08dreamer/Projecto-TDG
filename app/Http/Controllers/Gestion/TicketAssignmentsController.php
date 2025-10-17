@@ -11,6 +11,7 @@ use App\Models\Entities\Configure\Priority;
 use App\Models\Entities\Configure\Type;
 use Illuminate\Http\Request;
 use App\Models\Entities\Tickets\Ticket as CustomTicket;
+use App\Notifications\TicketAssignedNotification;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Str;
 
@@ -160,7 +161,17 @@ class TicketAssignmentsController extends Controller
 
         try {
             
+            $tickets = CustomTicket::whereIn('id', $ticketIds)->with('user')->get(); // Carga los tickets con su relación 'user'
+
             CustomTicket::whereIn('id', $ticketIds)->update(['assigned_to' => $userId]);
+
+            // Ahora, envía notificaciones a los usuarios propietarios de los tickets
+            $usersToNotify = $tickets->pluck('user')->unique('id'); // Obtiene los usuarios únicos
+
+            foreach ($usersToNotify as $user) {
+                // Envía la notificación al usuario, pasando los tickets relevantes
+                $user->notify(new TicketAssignedNotification($tickets->where('user_id', $user->id)));
+            }
 
 
         } catch (\Throwable $th) {

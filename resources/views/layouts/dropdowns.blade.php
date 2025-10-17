@@ -80,6 +80,10 @@
             <span class="float-right text-muted text-sm">2 days</span>
           </a>
           <div class="dropdown-divider"></div>
+          @foreach (auth()->user()->unreadNotifications as $notification) 
+          <p>{{ $notification->data['message'] ?? 'Sin mensaje disponible' }}</p>
+          <div class="dropdown-divider"></div>
+          @endforeach
           <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
         </div>
       </li>
