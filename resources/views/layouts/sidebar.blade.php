@@ -63,14 +63,36 @@
           </ul>
         </li>
 
-        <li class="nav-item">
-          <a href="{{ route('ticket.index') }}" class="nav-link {{isRouteActive('ticket.')}}">
+        <li class="nav-item {{isMenuOpen('ticket.')}}">
+          <a href="#" class="nav-link {{isRouteActive('ticket.')}}">
             <i class="nav-icon fa fa-ticket"></i>
             <p>
               Solicitudes
+              <i class="right fas fa-angle-left"></i>
             </p>
           </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{ route('ticket.all.index') }}" class="nav-link {{isRouteActive('ticket.all.')}}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Todas las Solicitudes</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('ticket.user.index') }}" class="nav-link {{isRouteActive('ticket.user.')}}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Mis Solicitudes</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="" class="nav-link ">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Solicitudes Asignadas</p>
+              </a>
+            </li>
+          </ul>
         </li>
+
 
         <li class="nav-header pt-4">CONFIGURACIÓN</li>
 

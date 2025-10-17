@@ -7,7 +7,7 @@
 @endsection
 
 @section('breadcrumbs')
-    <li class="breadcrumb-item active"><a href="{{ route('ticket.index') }}">Solicitudes</a></li>
+    <li class="breadcrumb-item active"><a href="{{ route('ticket.all.index') }}">Solicitudes</a></li>
 @endsection
 
 @push('css')
@@ -148,7 +148,7 @@
                     </div>
 
                     <div class="float-right pb-3">
-                        <a href="{{ route('ticket.index') }}" class="btn btn-primary">Regresar</a>
+                        <a href="{{ route('ticket.all.index') }}" class="btn btn-primary">Regresar</a>
                     </div>
 
         </div>

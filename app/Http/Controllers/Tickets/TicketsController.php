@@ -91,7 +91,7 @@ class TicketsController extends Controller
         }
 
         return redirect()
-                ->route('ticket.index')
+                ->route('ticket.all.index')
                 ->with('process_result', [
                     'status' => $status,
                     'content' => $content,
@@ -111,9 +111,8 @@ class TicketsController extends Controller
             $datatables = DataTables::of($tickets)
                 ->addIndexColumn()
                 ->addColumn('actions', function($row) {
-                    $url_show = route('ticket.show', $row->id);
-                    $url_edit = route('ticket.edit', $row->id);
-                    $url_delete = route('ticket.destroy', $row->id);
+                    $url_show = route('ticket.all.show', $row->id);
+                    $url_edit = route('ticket.all.edit', $row->id);
 
                     $button_show = '<a class="btn btn-sm btn-info icon"  
                                     href="' . $url_show . '"
@@ -142,6 +141,9 @@ class TicketsController extends Controller
                 ->addColumn('type_name', function ($row) {
                     $td = '<span class="badge '.TypeHelper::get_type_color($row->type_id).'">'.$row->type_name.'</span>';
                     return $td;
+                })
+                ->editColumn('created_at', function($row) {
+                    return \Carbon\Carbon::parse($row->created_at)->tz('America/Caracas')->format('d-m-Y h:i A');
                 })
                 ->rawColumns(['actions', 'priority_name', 'type_name'])
                 ->make(true);
@@ -244,7 +246,7 @@ class TicketsController extends Controller
         }
 
         return redirect()
-                ->route('ticket.index')
+                ->route('ticket.all.index')
                 ->with('process_result', [
                     'status' => $status,
                     'content' => $content,

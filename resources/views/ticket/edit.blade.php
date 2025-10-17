@@ -7,7 +7,7 @@
 @endsection
 
 @section('breadcrumbs')
-    <li class="breadcrumb-item active"><a href="{{ route('ticket.index') }}">Solicitudes</a></li>
+    <li class="breadcrumb-item active"><a href="{{ route('ticket.all.index') }}">Solicitudes</a></li>
 @endsection
 
 @push('css')
@@ -17,7 +17,7 @@
 @section('content')
     <div class="row">
         <div class="col-12">
-            <form id="ticket-edit" method="post" action="{{ route('ticket.update', $ticket->id) }}">
+            <form id="ticket-edit" method="post" action="{{ route('ticket.all.update', $ticket->id) }}">
                 @csrf
                 @method('PATCH')
                     <div class="card card-primary">
@@ -76,7 +76,7 @@
                     </div>
 
                     <div class="float-right pb-3">
-                        <a href="{{ route('ticket.index') }}" class="btn btn-outline-danger">Cancelar</a>
+                        <a href="{{ route('ticket.all.index') }}" class="btn btn-outline-danger">Cancelar</a>
                         <button type="submit" class="ml-2 btn btn-success">Guardar</button>
                     </div>
             </form>

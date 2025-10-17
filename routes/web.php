@@ -13,6 +13,7 @@ use App\Http\Controllers\Gestion\TicketArchiveController;
 use App\Http\Controllers\Gestion\TicketAssignmentsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Tickets\TicketsController;
+use App\Http\Controllers\Tickets\UserTicketsController;
 use Illuminate\Support\Facades\Route;
 use OpenSpout\Common\Entity\Row;
 
@@ -86,12 +87,22 @@ Route::controller(LoginController::class)->group(function () {
 
         // tickets
             Route::controller(TicketsController::class)->group(function () {
-                Route::get('/solicitudes/listado', 'TicketsList')->name('ticket.get');
+                Route::get('/solicitudes/listado', 'TicketsList')->name('ticket.all.get');
             });
 
             Route::resource('solicitudes', TicketsController::class)
-                ->names('ticket') 
+                ->names('ticket.all') 
                 ->parameters(['solicitudes' => 'ticket']);
+
+
+        // user - tickets
+            Route::controller(UserTicketsController::class)->group(function () {
+                Route::get('/mis-solicitudes/listado', 'TicketsList')->name('ticket.user.get');
+            });
+
+            Route::resource('mis-solicitudes', UserTicketsController::class)
+                ->names('ticket.user') 
+                ->parameters(['mis-solicitudes' => 'ticket']);
 
 
     // Configuracion

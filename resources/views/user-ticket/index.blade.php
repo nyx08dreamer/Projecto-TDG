@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('web_title', 'Listado de Solicitudes')
+@section('web_title', 'Listado de Mis Solicitudes')
 
 @section('title')
-    <i class="fa-solid fa-ticket"></i> Listado de Solicitudes
+    <i class="fa-solid fa-ticket"></i> Listado de Mis Solicitudes
 @endsection
 
 @section('breadcrumbs')
-    <li class="breadcrumb-item active"><a href="{{ route('ticket.all.index') }}">Solicitudes</a></li>
+    <li class="breadcrumb-item active"><a href="{{ route('ticket.user.index') }}">Mis Solicitudes</a></li>
 @endsection
 
 @push('css')
