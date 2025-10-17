@@ -176,7 +176,7 @@ class Ticket extends BaseTicket
         return $resultado;
     }
 
-    public static function get_support_tickets($type_id, $priority_id, $department_id, $from_date, $until_date) {
+    public static function get_support_tickets($status, $priority_id, $type_id, $department_id, $from_date, $until_date) {
         $resultado = self::select(
                 'tickets.id',
                 'tickets.uuid',
@@ -208,6 +208,15 @@ class Ticket extends BaseTicket
         ->where('tickets.is_archived', false);
 
         
+        if($status != null){
+
+            if($status == 1){
+                $resultado->where('tickets.status', 'open');
+
+            } elseif ($status == 2) {
+                $resultado->where('tickets.status', 'closed');
+            }
+        }
         if($priority_id != null){
             $resultado->where('tickets.priority_id', $priority_id);
         }

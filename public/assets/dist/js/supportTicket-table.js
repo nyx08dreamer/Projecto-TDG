@@ -14,8 +14,9 @@ $(document).ready(function() {
                 url: route_registros,
 
                 data: function (d) {
-                    d.type_id = $('#type_id').val(),
+                    d.status = $('#status').val(),
                     d.priority_id = $('#priority_id').val(),
+                    d.type_id = $('#type_id').val(),
                     d.department_id = $('#department_id').val(),
                     d.from_date = $('#from_date').val(),
                     d.until_date = $('#until_date').val()
@@ -29,7 +30,9 @@ $(document).ready(function() {
                     orderable: false, 
                     searchable: false,
                 },
+                {data: 'uuid', name: 'uuid'},
                 {data: 'title', name: 'title'},
+                {data: 'status', name: 'status'},
                 {data: 'creator_name', name: 'creator.first_name'},
                 {data: 'priority_name' , name: 'priorities.name'},
                 {data: 'type_name' , name: 'types.name'},

@@ -20,7 +20,17 @@
         <div class="card">
             <div class="card-body pb-0">
                 <div class="row">
-                    <div class="col-md-4 col-12">
+                    <div class="col-md-3 col-12">
+                        <div class="form-group">
+                            <label class="form-label" for="status">Estatus de Solicitud</label>
+                                <select class="custom-select rounded-0" name="status" id="status">
+                                    <option value="">Seleccionar</option>
+                                    <option value="1">Abierto</option>
+                                    <option value="2">Cerrado</option>
+                                </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-12">
                         <div class="form-group">
                             <label class="form-label" for="priority_id">Prioridad</label>
                                 <select class="custom-select rounded-0" name="priority_id" id="priority_id">
@@ -31,7 +41,7 @@
                                 </select>
                         </div>
                     </div>
-                    <div class="col-md-4 col-12">
+                    <div class="col-md-3 col-12">
                         <div class="form-group">
                             <label class="form-label" for="type_id">Tipo de Solicitud</label>
                                 <select class="custom-select rounded-0" name="type_id" id="type_id">
@@ -42,7 +52,7 @@
                                 </select>
                         </div>
                     </div>
-                    <div class="col-md-4 col-12">
+                    <div class="col-md-3 col-12">
                         <div class="form-group">
                             <label class="form-label" for="department_id">Departamento</label>
                                 <select class="custom-select rounded-0" name="department_id" id="department_id">
@@ -97,7 +107,9 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">Acciones</th>
+                                    <th class="text-center">Identificador</th>
                                     <th class="text-center">Título</th>
+                                    <th class="text-center">Estatus</th>
                                     <th class="text-center">Solicitante</th>
                                     <th class="text-center">Prioridad</th>
                                     <th class="text-center">Tipo</th>
