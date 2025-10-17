@@ -44,9 +44,10 @@ class UserTicketsController extends Controller
     {
         if ($request->ajax()) {
 
-            $tickets = CustomTicket::get_user_tickets($request->type_id,
+            $tickets = CustomTicket::get_user_tickets($request->status,
                                                 $request->priority_id,
-                                                $request->department_id,
+                                                $request->type_id,
+                                                $request->assigned,
                                                 $request->from_date, 
                                                 $request->until_date);
 
@@ -72,6 +73,9 @@ class UserTicketsController extends Controller
                                 ' . $button_show . '
                                 ' . $button_edit . '
                             </div>';
+                })
+                ->editColumn('uuid', function($row) {
+                    return Str::limit($row->uuid, 15, '...');
                 })
                 ->editColumn('title', function($row) {
                     return Str::limit($row->title, 20, '...');

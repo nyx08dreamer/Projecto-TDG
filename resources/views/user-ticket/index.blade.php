@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
-@section('web_title', 'Listado de Mis Solicitudes')
+@section('web_title', 'Mis Solicitudes')
 
 @section('title')
-    <i class="fa-solid fa-ticket"></i> Listado de Mis Solicitudes
+    <i class="fa-solid fa-ticket"></i> Mis Solicitudes
 @endsection
 
 @section('breadcrumbs')
@@ -20,7 +20,17 @@
         <div class="card">
             <div class="card-body pb-0">
                 <div class="row">
-                    <div class="col-md-4 col-12">
+                    <div class="col-md-3 col-12">
+                        <div class="form-group">
+                            <label class="form-label" for="status">Estatus de Solicitud</label>
+                                <select class="custom-select rounded-0" name="status" id="status">
+                                    <option value="">Seleccionar</option>
+                                    <option value="1">Abierto</option>
+                                    <option value="2">Cerrado</option>
+                                </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-12">
                         <div class="form-group">
                             <label class="form-label" for="priority_id">Prioridad</label>
                                 <select class="custom-select rounded-0" name="priority_id" id="priority_id">
@@ -31,7 +41,7 @@
                                 </select>
                         </div>
                     </div>
-                    <div class="col-md-4 col-12">
+                    <div class="col-md-3 col-12">
                         <div class="form-group">
                             <label class="form-label" for="type_id">Tipo de Solicitud</label>
                                 <select class="custom-select rounded-0" name="type_id" id="type_id">
@@ -42,14 +52,13 @@
                                 </select>
                         </div>
                     </div>
-                    <div class="col-md-4 col-12">
+                    <div class="col-md-3 col-12">
                         <div class="form-group">
-                            <label class="form-label" for="department_id">Departamento</label>
-                                <select class="custom-select rounded-0" name="department_id" id="department_id">
+                            <label class="form-label" for="assigned">Estado de Asignación</label>
+                                <select class="custom-select rounded-0" name="assigned" id="assigned">
                                     <option value="">Seleccionar</option>
-                                    @foreach ($departments as $department)
-                                        <option value="{{$department->id}}">{{$department->name}}</option>
-                                    @endforeach
+                                    <option value="1">Asignado</option>
+                                    <option value="2">Por Asignar</option>
                                 </select>
                         </div>
                     </div>
@@ -99,11 +108,11 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">Acciones</th>
+                                    <th class="text-center">Identificador</th>
                                     <th class="text-center">Título</th>
-                                    <th class="text-center">Solicitante</th>
+                                    <th class="text-center">Estatus</th>
                                     <th class="text-center">Prioridad</th>
                                     <th class="text-center">Tipo</th>
-                                    <th class="text-center">Departamento</th>
                                     <th class="text-center">Fecha de Creación</th>
                                 </tr>
                             </thead>
