@@ -29,4 +29,18 @@ class Document extends Model
         'created_at',
         'updated_at',
     ];
+
+
+    public function get_documents_by_id($id){
+        $resultado = self::select(
+                'id',
+                'name',
+                'ticket_id',
+                'user_id',
+                'type',
+                'route',
+        )->where('ticket_id', $id)->get();
+
+        return $resultado;
+    }
 }
