@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Gestion;
 use App\Helpers\PriorityHelper;
 use App\Helpers\TypeHelper;
 use App\Http\Controllers\Controller;
+use App\Mail\TicketAssignedMailable;
 use App\Mail\TicketAssignedToMailable;
 use App\Models\Entities\Admin\User;
 use App\Models\Entities\Configure\Department;
@@ -194,9 +195,11 @@ class TicketAssignmentsController extends Controller
         $status = 'success';
         $content = 'Se han asignado correctamente las solicitudes';
 
+        $id = $ticket->user_id;
         $userId = $request->user_id;
 
         $technician = User::find($userId);
+        $solicitor = User::find($id);
         
         try {
             $ticket->update([
@@ -210,6 +213,13 @@ class TicketAssignmentsController extends Controller
                 
                 Mail::to($creator->email)->send(new TicketAssignedToMailable($ticket, $technician));
             }
+
+            // if ($technician) {
+                
+            //     //$technician->notify(new TicketAssignedNotification($ticket));
+                
+            //     Mail::to($technician->email)->send(new TicketAssignedMailable($ticket, $solicitor));
+            // }
 
         } catch (\Throwable $th) {
             $status = 'error';

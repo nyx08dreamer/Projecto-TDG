@@ -56,7 +56,7 @@
                         </div>
                     </div>
 
-                    <div class="card card-primary">
+            <div class="card card-primary">
                 <div class="card-header">
                     <h3 class="card-title">Datos de la Solicitud</h3>
                 </div>
@@ -149,28 +149,6 @@
                         </div>
                     </div>
 
-                    <label for="title" class="col-12">Tecnico asignado:</label>
-
-                    @if($support)
-                        <div class="form-group row ">
-                            <label for="title">Nombre y Apellido:</label>
-                            <div class="col-2">
-                                <p>{{$support->first_name}} {{ $support->last_name }}</p>
-                            </div>
-                            
-                            <label for="title">Cedula de identidad:</label>
-                            <div class="col-1">
-                                <p>{{$support->document_number }}</p>
-                            </div>
-
-                            <label for="title">Correo Electrónico:</label>
-                            <div class="col-2">
-                                <p>{{$support->email }}</p>
-                            </div>
-                        </div>
-                    @else
-                        Tenico Por Asignar
-                    @endif
 
                     @if($document)
                         <div class="form-group row">
