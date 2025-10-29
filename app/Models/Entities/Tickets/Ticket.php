@@ -110,6 +110,40 @@ class Ticket extends BaseTicket
         return $resultado;
     }
 
+    public static function get_tickets_pdf() {
+
+        $resultado = self::select(
+                'tickets.id',
+                'tickets.uuid',
+                'tickets.user_id',
+                'tickets.title',
+                'tickets.message', 
+                'tickets.type_id',
+                'tickets.priority_id',
+                'tickets.status',
+                'tickets.is_resolved',
+                'tickets.is_locked',
+                'tickets.assigned_to',
+                'tickets.created_at',
+                'tickets.updated_at',
+                'tickets.department_id',
+
+                'creator.first_name as creator_name',
+                'creator.document_number as creator_docNum',
+                'priorities.name as priority_name',
+                'types.name as type_name',
+                'departments.name as department_name',
+
+        )->join('users as creator', 'tickets.user_id', '=', 'creator.id')  
+        ->join('priorities', 'tickets.priority_id', '=', 'priorities.id') 
+        ->join('types', 'tickets.type_id', '=', 'types.id')
+        ->join('departments', 'tickets.department_id', '=', 'departments.id')
+        ->orderBy('tickets.id', 'desc')
+        ->get();
+
+        return $resultado;
+    }
+
     public static function get_user_tickets($status, $priority_id, $type_id, $assigned, $from_date, $until_date) {
 
         $resultado = self::select(

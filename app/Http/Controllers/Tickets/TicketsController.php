@@ -17,6 +17,7 @@ use Illuminate\Support\Str;
 use App\Models\Entities\Tickets\Ticket as CustomTicket;
 use App\Services\DocumentService;
 use App\Traits\Controllers\UploadFilesTrait;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 
@@ -326,9 +327,13 @@ class TicketsController extends Controller
 
     }
 
-    
+
     public function pdfReport() {
 
+        $tickets = CustomTicket::get_tickets_pdf();
+
+        $pdf = Pdf::loadView('ticket.pdf-report', ['tickets' => $tickets]);
+        return $pdf->stream('reporte-solicitudes.pdf');
     }
 
     /**
