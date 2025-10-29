@@ -74,7 +74,19 @@
                         </div>
                     </div>
 
-                    
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                            <i class="fa-solid fa-file"></i>
+                            Adjuntar Documentos (Opcional)
+                            </h3>
+                        </div>
+
+                        <div class="card-body">
+                            <p class="card-text">Los archivos a subir deben estar en formato PNG, JPEG, JPG...</p>
+                        <input type="file" id="archivos" name="archivos[]" class="basic-filepond" multiple>
+                        </div>
+                    </div>
 
                     <div class="float-right pb-3">
                         <a href="{{ route('ticket.all.index') }}" class="btn btn-outline-danger">Cancelar</a>

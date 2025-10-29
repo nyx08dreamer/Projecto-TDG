@@ -92,6 +92,7 @@ Route::controller(LoginController::class)->group(function () {
         // tickets
             Route::controller(TicketsController::class)->group(function () {
                 Route::get('/solicitudes/listado', 'TicketsList')->name('ticket.all.get');
+                Route::get('/solicitudes/reporte', 'pdfReport')->name('ticket.all.pdf');
                 Route::post('/solicitudes/{ticket}/documentos', 'files')->name('ticket.all.files');
             });
 

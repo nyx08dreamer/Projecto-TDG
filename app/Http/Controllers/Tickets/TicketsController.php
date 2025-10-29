@@ -326,6 +326,11 @@ class TicketsController extends Controller
 
     }
 
+    
+    public function pdfReport() {
+
+    }
+
     /**
      * Remove the specified resource from storage.
      */

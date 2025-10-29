@@ -11,10 +11,11 @@ use App\Models\Entities\Admin\User;
 use App\Models\Entities\Configure\Department;
 use App\Models\Entities\Configure\Priority;
 use App\Models\Entities\Configure\Type;
+use App\Models\Entities\Tickets\Document;
 use Illuminate\Support\Str;
 
 use App\Models\Entities\Tickets\Ticket as CustomTicket;
-
+use App\Services\DocumentService;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 
@@ -144,6 +145,29 @@ class UserTicketsController extends Controller
                 'status' => 'open', 
             ]);
 
+            foreach($request->get('archivos') as $archivo){
+
+                if ($archivo !== null && !empty($archivo)) {
+
+                    $ultimoDocumento = Document::orderby('id', 'desc')->first();
+                    $nuevoIdDocumento = $ultimoDocumento ? $ultimoDocumento->id + 1 : 1;
+
+                    $nombre_archivo = $ticket->id . 'datosSolicitud_' . ($nuevoIdDocumento) . '.' . pathinfo($archivo, PATHINFO_EXTENSION);
+
+                    DocumentService::copiar('temp/'.$archivo, 'documentos/'.$nombre_archivo);
+
+                    DocumentService::guardar([
+                            'name' => $nombre_archivo,
+                            'ticket_id' => $ticket->id,
+                            'user_id' => Auth::id(),
+                            'type' => 1,
+                            'route'  => 'storage/documentos/', 
+                        ]);
+
+                    DocumentService::eliminar('temp/'.$archivo);
+                }
+            }
+
         } catch (\Throwable $th) {
             $status = 'error';
             $content = 'Ha ocurrido un error al crear la solicitud';
@@ -177,7 +201,8 @@ class UserTicketsController extends Controller
         $support_model = new User;
         $support = $support_model->get_support_by_id($ticket->assigned_to);
 
-        $document = '';
+        $document_model = new Document;
+        $documents =  $document_model->get_documents_by_id($ticket->id);
 
         return view('user-ticket.show', [
             'ticket' => $ticket,
@@ -186,7 +211,7 @@ class UserTicketsController extends Controller
             'type' => $type,
             'solicitor' => $solicitor,
             'support' => $support,
-            'document' => $document,
+            'documents' => $documents,
         ]);
     }
 
@@ -214,12 +239,16 @@ class UserTicketsController extends Controller
         $selected_type_model = new Type;
         $selected_type = $selected_type_model->get_type_by_id($ticket->type_id);
 
+        $document_model = new Document;
+        $documents =  $document_model->get_documents_by_id($ticket->id);
+
 
         return view('user-ticket.edit', [
             'ticket' => $ticket,
             'departments' => $departments,
             'priorities' => $priorities,
             'types' => $types,
+            'documents' => $documents,
 
             'selected_department' => $selected_department,
             'selected_priority' => $selected_priority,
@@ -244,6 +273,29 @@ class UserTicketsController extends Controller
                 'priority_id' => $request->priority,
                 'type_id' => $request->type,
             ]);
+
+            foreach($request->get('archivos') as $archivo){
+
+                if ($archivo !== null && !empty($archivo)) {
+
+                    $ultimoDocumento = Document::orderby('id', 'desc')->first();
+                    $nuevoIdDocumento = $ultimoDocumento ? $ultimoDocumento->id + 1 : 1;
+
+                    $nombre_archivo = $ticket->id . 'datosSolicitud_' . ($nuevoIdDocumento) . '.' . pathinfo($archivo, PATHINFO_EXTENSION);
+
+                    DocumentService::copiar('temp/'.$archivo, 'documentos/'.$nombre_archivo);
+
+                    DocumentService::guardar([
+                            'name' => $nombre_archivo,
+                            'ticket_id' => $ticket->id,
+                            'user_id' => Auth::id(),
+                            'type' => 1,
+                            'route'  => 'storage/documentos/', 
+                        ]);
+
+                    DocumentService::eliminar('temp/'.$archivo);
+                }
+            }
 
         } catch (\Throwable $th) {
             $status = 'error';

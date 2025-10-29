@@ -75,6 +75,42 @@
                         </div>
                     </div>
 
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                            <i class="fa-solid fa-file"></i>
+                            Documentos Adjuntados
+                            </h3>
+                        </div>
+
+                        <div class="card-body">
+                            @if($documents->isEmpty())
+                                <p>No hay documentos adjuntos para esta solicitud.</p>
+                            @else
+                                <ul class="mt-4">
+                                    @foreach($documents as $document)
+                                        <li>{{ $document->name}} - <a href="{{ asset($document->route.$document->name) }}" target="_blank">Ver</a></li>
+                                    @endforeach
+                                </ul>
+                            @endif
+                        </div>
+
+                    </div>
+
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                            <i class="fa-solid fa-file"></i>
+                            Adjuntar Documentos (Opcional)
+                            </h3>
+                        </div>
+
+                        <div class="card-body">
+                            <p class="card-text">Los archivos a subir deben estar en formato PNG, JPEG, JPG...</p>
+                        <input type="file" id="archivos" name="archivos[]" class="basic-filepond" multiple>
+                        </div>
+                    </div>
+
                     <div class="float-right pb-3">
                         <a href="{{ route('ticket.user.index') }}" class="btn btn-outline-danger">Cancelar</a>
                         <button type="submit" class="ml-2 btn btn-success">Guardar</button>
@@ -95,6 +131,14 @@
 @endsection
 
 @push('js')
+
+    <script>
+        $('input[type=file]').each(function(){
+            filepond.create({id : $(this).attr("id") });
+        })
+    </script>
+
+
     <script>
         $(function () {
             $('#ticket-edit').validate({

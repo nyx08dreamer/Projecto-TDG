@@ -132,19 +132,30 @@
                             @else
                                 Tenico Por Asignar
                             @endif
-
-                            @if($document)
-                                <div class="form-group row">
-                                    Documentos
-                                </div>
-                            @else
-                                <div class="form-group row">
-                                    Sin documentos adjuntos.
-                                </div>
-                            @endif
-
                         
                         </div>
+                    </div>
+
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                            <i class="fa-solid fa-file"></i>
+                            Documentos Adjuntados
+                            </h3>
+                        </div>
+
+                        <div class="card-body">
+                            @if($documents->isEmpty())
+                                <p>No hay documentos adjuntos para esta solicitud.</p>
+                            @else
+                                <ul class="mt-4">
+                                    @foreach($documents as $document)
+                                        <li>{{ $document->name}} - <a href="{{ asset($document->route.$document->name) }}" target="_blank">Ver</a></li>
+                                    @endforeach
+                                </ul>
+                            @endif
+                        </div>
+
                     </div>
 
                     <div class="float-right pb-3">
