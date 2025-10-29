@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Gestion;
 use App\Helpers\PriorityHelper;
 use App\Helpers\TypeHelper;
 use App\Http\Controllers\Controller;
+use App\Mail\TicketAssignedToMailable;
 use App\Models\Entities\Admin\User;
 use App\Models\Entities\Configure\Department;
 use App\Models\Entities\Configure\Priority;
@@ -12,6 +13,7 @@ use App\Models\Entities\Configure\Type;
 use Illuminate\Http\Request;
 use App\Models\Entities\Tickets\Ticket as CustomTicket;
 use App\Notifications\TicketAssignedNotification;
+use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Str;
 
@@ -80,15 +82,23 @@ class TicketAssignmentsController extends Controller
                 ->addIndexColumn()
                 ->addColumn('actions', function($row) {
                     $url_show = route('gestion.assign.show', $row->id);
+                    $url_edit= route('gestion.assign.edit', $row->id);
 
                     $button_show = '<a class="btn btn-sm btn-info icon"  
                                     href="' . $url_show . '"
                                     title="Clic para ver detalles">
                                         <i class="fa-solid fa-circle-info"></i>
                                     </a>';
+                    
+                    $button_edit = '<a class="btn btn-sm btn-primary icon"  
+                                    href="' . $url_edit . '"
+                                    title="Asignar">
+                                        <i class="fa-solid fa-user-pen"></i>
+                                    </a>';
 
                     return '<div role="group">
                                 ' . $button_show . '
+                                ' . $button_edit . '
                             </div>';
                 })
                 ->editColumn('title', function($row) {
@@ -112,6 +122,39 @@ class TicketAssignmentsController extends Controller
     /**
      * Display the specified resource.
      */
+    public function edit(CustomTicket $ticket)
+    {
+        $department_model = new Department;
+        $department = $department_model->get_department_by_id($ticket->department_id);
+
+        $priority_model = new Priority;
+        $priority = $priority_model->get_priority_by_id($ticket->priority_id);
+
+        $type_model = new Type;
+        $type = $type_model->get_type_by_id($ticket->type_id);
+
+        $solicitor_model = new User;
+        $solicitor = $solicitor_model->get_solicitor_by_id($ticket->user_id);
+
+        $support_model = new User;
+        $support = $support_model->get_support_by_id($ticket->assigned_to);
+
+        $document = '';
+
+        $users = User::role('ITsupport')->get(); 
+
+        return view('gestion.assign.edit', [
+            'ticket' => $ticket,
+            'department' => $department,
+            'priority' => $priority,
+            'type' => $type,
+            'solicitor' => $solicitor,
+            'support' => $support,
+            'document' => $document,
+            'users' => $users,
+        ]);
+    }
+
     public function show(CustomTicket $ticket)
     {
         $department_model = new Department;
@@ -146,10 +189,41 @@ class TicketAssignmentsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(string $id)
+    public function update(Request $request, CustomTicket $ticket)
     {
-        //
+        $status = 'success';
+        $content = 'Se han asignado correctamente las solicitudes';
+
+        $userId = $request->user_id;
+
+        $technician = User::find($userId);
+        
+        try {
+            $ticket->update([
+                'assigned_to' => $userId,
+            ]);
+        
+            $creator = $ticket->user;  
+            if ($creator) {
+                
+                $creator->notify(new TicketAssignedNotification($ticket));
+                
+                Mail::to($creator->email)->send(new TicketAssignedToMailable($ticket, $technician));
+            }
+
+        } catch (\Throwable $th) {
+            $status = 'error';
+            $content = 'Ha ocurrido un error al asignar la solicitud';
+        }
+
+        return redirect()
+                ->route('gestion.assign.index')
+                ->with('process_result', [
+                    'status' => $status,
+                    'content' => $content,
+                ]);
     }
+
 
     public function assign(Request $request)
     {
@@ -171,6 +245,7 @@ class TicketAssignmentsController extends Controller
             foreach ($usersToNotify as $user) {
                 // Envía la notificación al usuario, pasando los tickets relevantes
                 $user->notify(new TicketAssignedNotification($tickets->where('user_id', $user->id)));
+
             }
 
 

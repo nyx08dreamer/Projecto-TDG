@@ -5,7 +5,7 @@ $(document).ready(function() {
             processing: true,
             serverSide: true,
             /*ordering: false,*/
-            iDisplayLength: 25,
+            iDisplayLength: 10,
             retrieve: true,
             responsive: true,
             searching: true,

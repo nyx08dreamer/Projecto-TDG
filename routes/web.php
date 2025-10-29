@@ -58,7 +58,7 @@ Route::controller(LoginController::class)->group(function () {
             Route::resource('asignacion-de-solicitudes', TicketAssignmentsController::class)
                 ->names('assign') 
                 ->parameters(['asignacion-de-solicitudes' => 'ticket'])
-                ->except(['store', 'edit', 'update','destroy']);
+                ->except(['store','destroy']);
 
         //archivar
             Route::controller(TicketArchiveController::class)->group(function () {

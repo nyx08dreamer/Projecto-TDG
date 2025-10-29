@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Facade;
+
 return [
 
     /*
@@ -124,11 +126,12 @@ return [
     ],
 
 
-    'aliases' => [
+    'aliases' => Facade::defaultAliases()->merge([
         
         'TimeZoneCarbon' => Carbon\Carbon::class,
 
         'TicketStatusHelper' => App\Helpers\TicketStatusHelper::class,
-    ],
+
+    ])->toArray(),
 
 ];
