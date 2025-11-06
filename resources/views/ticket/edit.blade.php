@@ -31,7 +31,7 @@
                                     <label for="title">Título de la Solicitud</label>
                                     <input type="text" class="form-control" id="title" name="title" placeholder="Título de la Solicitud" value="{{$ticket->title}}">
                                 </div>
-                                <div class="form-group col-12 col-md-6">
+                                <div class="form-group col-12 col-md-4">
                                     <label for="department">Departamento</label>
                                     <select class="custom-select rounded-0" name="department" id="department">
                                         <option value="{{$selected_department->id}}">{{$selected_department->name}}</option>
@@ -40,7 +40,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group col-12 col-md-6">
+                                <div class="form-group col-12 col-md-4">
                                     <label for="priority">Prioridad</label>
                                     <select class="custom-select rounded-0" name="priority" id="priority">
                                         <option value="{{$selected_priority->id}}">{{$selected_priority->name}}</option>
@@ -49,7 +49,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group col-12 col-md-6">
+                                <div class="form-group col-12 col-md-4">
                                     <label for="type">Tipo de Solicitud</label>
                                     <select class="custom-select rounded-0" name="type" id="type">
                                         <option value="{{$selected_type->id}}">{{$selected_type->name}}</option>
@@ -58,13 +58,6 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group col-12 col-md-6">
-                                    <label for="category">Categoria</label>
-                                    <select class="custom-select rounded-0" name="category" id="category">
-                                        <option value="">Seleccionar</option>
-                                    </select>
-                                </div>
-                                
                             </div>
                             <div class="row">
                                 <div class="form-group col-12 col-md-12">
