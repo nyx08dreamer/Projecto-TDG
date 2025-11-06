@@ -19,18 +19,12 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Listado de Usuarios</h3>
+                    <a href="{{ route('admin.user.create') }}" class="btn btn-success">Crear Usuario</a>
                 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Colapsar">
                         <i class="fas fa-minus"></i>
                         </button>
-                        <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remover">
-                        <i class="fas fa-times"></i>
-                        </button>
-                        <a href="{{ route('admin.user.create') }}" class="btn btn-tool" data-card-widget="add" title="Crear Usuario">
-                        <i class="fa-solid fa-plus"></i>
-                        </a>
                     </div>
                 </div>
 

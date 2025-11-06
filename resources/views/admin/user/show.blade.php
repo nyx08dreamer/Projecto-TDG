@@ -35,7 +35,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <strong><i class="fa-solid fa-building-user"></i>{{$department->name}}</strong>
+                    <strong><i class="fa-solid fa-building-user"></i>{{$user_department->name}}</strong>
                 </div>
             </div>
         </div>

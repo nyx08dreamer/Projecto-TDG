@@ -87,9 +87,13 @@ class UsersController extends Controller implements HasMiddleware
      */
     public function create()
     {
+        $department_model = new Department;
+        $departments = $department_model->get_departments();
+
         return view('admin.user.create', [
             'roles' => Role::all(),
             'permissions' => Permission::all(),
+            'departments' => $departments,
         ]);
     }
 
@@ -121,10 +125,12 @@ class UsersController extends Controller implements HasMiddleware
             $verifiedEmail = $request->input('email');
             $user->email = trim($verifiedEmail);
 
+            $user->start_date = $request->input('start_date');
+
             $verifiedUser = $request->input('username');
             $user->username= trim($verifiedUser);
 
-            $user->start_date = $request->input('start_date');
+            $user->department_id = $request->input('department');
 
             $user->password = bcrypt($request->input('username'));
 
@@ -166,15 +172,18 @@ class UsersController extends Controller implements HasMiddleware
      */
     public function show(User $user)
     {
-
         $department_model = new Department;
-        $department = $department_model->get_department_by_id($user->department_id);
+        $departments = $department_model->get_departments();
+
+        $user_department_model = new Department;
+        $user_department = $user_department_model->get_department_by_id($user->department_id);
 
         return view('admin.user.show', [
             'user' => $user,
             'roles' => Role::all(),
             'permissions' => Permission::all(),
-            'department' => $department,
+            'departments' => $departments,
+            'user_department' => $user_department,
         ]);
     }
 
@@ -211,6 +220,8 @@ class UsersController extends Controller implements HasMiddleware
             
             $verifiedEmail = $request->input('email');
             $user->email = trim($verifiedEmail);
+
+            $user->department_id = $request->input('department');
 
             $verifiedUser = $request->input('username');
             $user->username= trim($verifiedUser);

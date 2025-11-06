@@ -43,10 +43,19 @@
                                     <input type="email" class="form-control" id="email" name="email" placeholder="Correo Electrónico">
                                 </div>
                                 <div class="form-group col-12 col-md-6">
+                                    <label for="department">Departamento</label>
+                                    <select class="custom-select rounded-0" name="department" id="department">
+                                        <option value="">Seleccionar</option>
+                                        @foreach ($departments as $department)
+                                            <option value="{{$department->id}}">{{$department->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group col-12 col-md-6">
                                     <label for="username">Nombre de Usuario</label>
                                     <input type="text" class="form-control" id="username" name="username" placeholder="Nombre de Usuario">
                                 </div>
-                                <div class="form-group col-12 col-md-6">
+                                <div class="form-group col-12">
                                     <label for="start_date">Fecha de Activación</label>
                                     <input type="date" class="form-control" id="start_date" name="start_date">
                                 </div>

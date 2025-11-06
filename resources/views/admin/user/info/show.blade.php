@@ -22,11 +22,22 @@
                 </div>
 
                 <div class="form-group col-12 col-md-6">
+                    <label for="department">Departamento</label>
+                    <select class="custom-select rounded-0" name="department" id="department">
+                        <option value="{{$user_department->id}}">{{$user_department->name}}</option>
+                        @foreach ($departments as $department)
+                            <option value="{{$department->id}}">{{$department->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group col-12 col-md-6">
                     <label for="username">Nombre de Usuario</label>
                     <input type="text" class="form-control" id="username" name="username" placeholder="Nombre de Usuario" value="{{$user->username}}">
                 </div>
 
-                <div class="form-group col-12 col-md-6">
+                <div class="form-group col-12
+                ">
                     <label for="start_date">Fecha de Activación</label>
                     <input type="date" class="form-control" id="start_date" name="start_date" value="{{ \Carbon\Carbon::parse($user->start_date)->format('Y-m-d') }}">
                 </div>
