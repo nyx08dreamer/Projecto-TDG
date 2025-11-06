@@ -50,24 +50,11 @@
             @enderror
 
             <div class="row">
-              <div class="col-7">
-                <div class="icheck-primary">
-                  <input type="checkbox" id="remember">
-                  <label for="remember">
-                    Recuerdame
-                  </label>
-                </div>
-              </div>
-
               <div class="col-5">
                 <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
               </div>
             </div>
           </form>
-
-          <p class="mt-3 mb-1">
-            <a href="forgot-password.html">¿Olvidaste tu contraseña?</a>
-          </p>
         </div>
       </div>
     </div>

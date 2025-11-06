@@ -11,7 +11,7 @@
     <!-- SidebarSearch Form -->
     <div class="form-inline mt-3 pt-3 mb-3">
       <div class="input-group" data-widget="sidebar-search">
-        <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+        <input class="form-control form-control-sidebar" type="search" placeholder="Buscar" aria-label="Search">
         <div class="input-group-append">
           <button class="btn btn-sidebar">
             <i class="fas fa-search fa-fw"></i>
@@ -134,26 +134,6 @@
             <i class="fa-regular fa-building"></i>
             <p>
               Departamentos
-            </p>
-          </a>
-        </li>
-
-        <li class="nav-header pt-4">REPORTES</li>
-
-        <li class="nav-item">
-          <a href="../calendar.html" class="nav-link">
-            <i class="fa-regular fa-square-plus"></i>
-            <p>
-              Nuevos
-            </p>
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="fa-regular fa-clock"></i>
-            <p>
-              Pendientes
             </p>
           </a>
         </li>
