@@ -127,6 +127,7 @@ class Ticket extends BaseTicket
                 'tickets.created_at',
                 'tickets.updated_at',
                 'tickets.department_id',
+                'tickets.is_archived',
 
                 'creator.first_name as creator_name',
                 'creator.document_number as creator_docNum',

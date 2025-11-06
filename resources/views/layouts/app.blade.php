@@ -107,6 +107,7 @@
     <!-- dropzonejs -->
     <script src="{{asset('assets/plugins/dropzone/min/dropzone.min.js')}}"></script>
 
+
     <!-- Plugins -->
     <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
     <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
@@ -114,10 +115,11 @@
     <!-- FilePond scripts -->
     <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <!-- AdminLTE App -->
     <script src="{{asset('assets/dist/js/adminlte.min.js')}}"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="{{asset('assets/dist/js/demo.js')}}"></script>
+
 
     @if ( session()->has('process_result'))
         <script>

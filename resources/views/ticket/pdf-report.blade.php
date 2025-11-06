@@ -82,11 +82,16 @@
                         <td>{{ \Carbon\Carbon::createFromFormat('Y-m', $month)->format('F Y') }}</td>
                         <td>{{ $count }}</td>
                     </tr>
+                    
                 @empty
                     <tr>
                         <td colspan="2">No hay datos disponibles.</td>
                     </tr>
                 @endforelse
+                    <tr>
+                        <td>Total de Solicitudes</td>
+                        <td>{{ $ticketsByMonth->sum() }}</td>
+                    </tr>
             </tbody>
         </table>
     </div>
