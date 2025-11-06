@@ -19,134 +19,126 @@
         <div class="col-12">
             
             <div class="card card-primary">
-                <div class="card-header">
-                    <h3 class="card-title">Datos de la Solicitud</h3>
-                </div>
-                
-                <div class="card-body">
-                    <div class="form-group row">
-                        <label for="title" >ID:</label>
-                        <div class="col-4">
-                            <p name="id" id="id">{{$ticket->id}}</p>
-                        </div>
-                        
-                        <label for="title">Identificador: </label>
-                        <div class="col-4">
-                            <p>{{$ticket->uuid}}</p>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="title">Título de la Solicitud:</label>
-                        <div class="col-6">
-                            <p>{{$ticket->title}}</p>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="title">Estatus:</label>
-                        <div class="col-1">
-                            <p>{{$ticket->status}}</p>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="title">Creado:</label>
-                        <div class="col-6">
-                            <p>{{\Carbon\Carbon::parse($ticket->created_at)->tz('America/Caracas')->format('d-m-Y h:i A')}}</p>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="title">Actualizado:</label>
-                        <div class="col-6">
-                            <p>{{\Carbon\Carbon::parse($ticket->updated_at)->tz('America/Caracas')->format('d-m-Y h:i A')}}</p>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="title">Departamento:</label>
-                        <div class="col-4">
-                            <p>{{$department->name}}</p>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="title">Prioridad:</label>
-                        <div class="col-1">
-                            <p>{{$priority->name}}</p>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="title">Tipo de Solicitud:</label>
-                        <div class="col-4">
-                            <p>{{$type->name}}</p>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="title">Descripción:</label>
-                        <div class="col-10">
-                            <p>{{$ticket->message}}</p>
-                        </div>
-                    </div>
-
-                    <label for="title" class="col-12">Solicitante:</label>
-
-                    <div class="form-group row ">
-                        <label for="title">Nombre y Apellido:</label>
-                        <div class="col-2">
-                            <p>{{$solicitor->first_name}} {{ $solicitor->last_name }}</p>
-                        </div>
-                        
-                        <label for="title">Cedula de identidad:</label>
-                        <div class="col-1">
-                            <p>{{$solicitor->document_number }}</p>
-                        </div>
-
-                        <label for="title">Correo Electrónico:</label>
-                        <div class="col-2">
-                            <p>{{$solicitor->email }}</p>
-                        </div>
-                    </div>
-
-                    <label for="title" class="col-12">Tecnico asignado:</label>
-
-                    @if($support)
-                        <div class="form-group row ">
-                            <label for="title">Nombre y Apellido:</label>
-                            <div class="col-2">
-                                <p>{{$support->first_name}} {{ $support->last_name }}</p>
-                            </div>
-                            
-                            <label for="title">Cedula de identidad:</label>
-                            <div class="col-1">
-                                <p>{{$support->document_number }}</p>
-                            </div>
-
-                            <label for="title">Correo Electrónico:</label>
-                            <div class="col-2">
-                                <p>{{$support->email }}</p>
-                            </div>
-                        </div>
-                    @else
-                        Tenico Por Asignar
-                    @endif
-
-                    @if($document)
-                        <div class="form-group row">
-                            Documentos
-                        </div>
-                    @else
-                        <div class="form-group row">
-                            Sin documentos adjuntos.
-                        </div>
-                    @endif
-            
-                    
-                </div>
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-info-circle"></i> Información General
+                </h3>
             </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">Identificador:</dt>
+                    <dd class="col-sm-3">{{ $ticket->uuid }}</dd>
+                </dl>
+                <dl class="row">
+                    <dt class="col-sm-3">Título:</dt>
+                    <dd class="col-sm-9">{{ $ticket->title }}</dd>
+                </dl>
+                <dl class="row">
+                    
+                    <dt class="col-sm-3">Creado:</dt>
+                    <dd class="col-sm-3">{{ TimeZoneCarbon::parse($ticket->created_at)->tz('America/Caracas')->format('d-m-Y h:i A') }}</dd>
+                    <dt class="col-sm-3">Actualizado:</dt>
+                    <dd class="col-sm-3">{{ TimeZoneCarbon::parse($ticket->updated_at)->tz('America/Caracas')->format('d-m-Y h:i A') }}</dd>
+                </dl>
+                <dl class="row">
+                    
+                
+                    <dt class="col-sm-3">Estatus:</dt>
+                    <dd class="col-sm-3">
+                        <span class="badge {{ TicketStatusHelper::get_ticket_status_color($ticket->status) }} badge-lg">
+                            {{ TicketStatusHelper::get_ticket_status($ticket->status) }}
+                        </span>
+                    </dd>
+
+                    <dt class="col-sm-3">Departamento:</dt>
+                    <dd class="col-sm-3">{{ $department->name }}</dd>
+                    
+                </dl>
+                <dl class="row">
+                    <dt class="col-sm-3">Prioridad:</dt>
+                    <dd class="col-sm-3">
+                        <span class="badge badge-secondary">{{ $priority->name }}</span>
+                    </dd>
+                    <dt class="col-sm-3">Tipo de Solicitud:</dt>
+                    <dd class="col-sm-3">
+                        <span class="badge badge-info">{{ $type->name }}</span>
+                    </dd>
+                </dl>
+                <dl class="row">
+                    <dt class="col-sm-3">Descripción:</dt>
+                    <dd class="col-sm-9">{{ $ticket->message }}</dd>
+                </dl>
+                <hr class="my-4">
+                <!-- Sección: Solicitante -->
+                <h5 class="text-primary mb-3">
+                    <i class="fas fa-user"></i> Solicitante
+                </h5>
+                <div class="bg-light p-3 rounded">
+                    <dl class="row mb-0">
+                        <dt class="col-sm-3">Nombre y Apellido:</dt>
+                        <dd class="col-sm-3">{{ $solicitor->first_name }} {{ $solicitor->last_name }}</dd>
+                        <dt class="col-sm-3">Cédula de Identidad:</dt>
+                        <dd class="col-sm-3">{{ $solicitor->document_number }}</dd>
+                    </dl>
+                    <dl class="row mb-0">
+                        <dt class="col-sm-3">Correo Electrónico:</dt>
+                        <dd class="col-sm-9">{{ $solicitor->email }}</dd>
+                    </dl>
+                </div>
+                <hr class="my-4">
+                <!-- Sección: Técnico Asignado -->
+                <h5 class="text-primary mb-3">
+                    <i class="fas fa-user-cog"></i> Técnico Asignado
+                </h5>
+
+                 @if($support)
+                    <div class="bg-light p-3 rounded">
+                        <dl class="row mb-0">
+                            <dt class="col-sm-3">Nombre y Apellido:</dt>
+                            <dd class="col-sm-3">{{ $support->first_name }} {{ $support->last_name }}</dd>
+                            <dt class="col-sm-3">Cédula de Identidad:</dt>
+                            <dd class="col-sm-3">{{ $support->document_number }}</dd>
+                        </dl>
+                        <dl class="row mb-0">
+                            <dt class="col-sm-3">Correo Electrónico:</dt>
+                            <dd class="col-sm-9">{{ $support->email }}</dd>
+                        </dl>
+                    </div>
+                @else
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle"></i> Técnico por asignar.
+                    </div>
+                @endif
+            </div>
+        </div>
+        <!-- Sección: Documentos Adjuntos -->
+        <div class="card card-secondary">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-file-alt"></i> Documentos Adjuntos
+                </h3>
+            </div>
+            <div class="card-body">
+                @if($documents->isEmpty())
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i> No hay documentos adjuntos para esta solicitud.
+                    </div>
+                @else
+                    <div class="list-group">
+                        @foreach($documents as $document)
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <i class="fas fa-file"></i> {{ $document->name }}
+                                </div>
+                                <a href="{{ asset($document->route . $document->name) }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-eye"></i> Ver
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+            </div>
+        </div>
 
             
             <form id="ticket-assign" method="post" action="{{ route('gestion.archive.update', $ticket->id) }}">

@@ -17,6 +17,7 @@ use App\Notifications\TicketAssignedNotification;
 use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Str;
+use App\Models\Entities\Tickets\Document;
 
 
 class TicketAssignmentsController extends Controller
@@ -140,7 +141,8 @@ class TicketAssignmentsController extends Controller
         $support_model = new User;
         $support = $support_model->get_support_by_id($ticket->assigned_to);
 
-        $document = '';
+        $document_model = new Document;
+        $documents =  $document_model->get_documents_by_id($ticket->id);
 
         $users = User::role('ITsupport')->get(); 
 
@@ -151,7 +153,7 @@ class TicketAssignmentsController extends Controller
             'type' => $type,
             'solicitor' => $solicitor,
             'support' => $support,
-            'document' => $document,
+            'documents' => $documents,
             'users' => $users,
         ]);
     }
@@ -173,7 +175,8 @@ class TicketAssignmentsController extends Controller
         $support_model = new User;
         $support = $support_model->get_support_by_id($ticket->assigned_to);
 
-        $document = '';
+        $document_model = new Document;
+        $documents =  $document_model->get_documents_by_id($ticket->id);
 
         return view('gestion.assign.show', [
             'ticket' => $ticket,
@@ -182,7 +185,7 @@ class TicketAssignmentsController extends Controller
             'type' => $type,
             'solicitor' => $solicitor,
             'support' => $support,
-            'document' => $document,
+            'documents' => $documents,
         ]);
     }
 

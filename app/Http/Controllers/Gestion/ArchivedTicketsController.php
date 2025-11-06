@@ -10,6 +10,7 @@ use App\Models\Entities\Configure\Department;
 use App\Models\Entities\Configure\Priority;
 use App\Models\Entities\Configure\Type;
 use App\Models\Entities\Admin\User;
+use App\Models\Entities\Tickets\Document;
 use App\Models\Entities\Tickets\Ticket as CustomTicket;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Str;
@@ -156,7 +157,8 @@ class ArchivedTicketsController extends Controller
         $support_model = new User;
         $support = $support_model->get_support_by_id($ticket->assigned_to);
 
-        $document = '';
+        $document_model = new Document;
+        $documents =  $document_model->get_documents_by_id($ticket->id);
 
         return view('gestion.archived_tickets.show', [
             'ticket' => $ticket,
@@ -165,7 +167,7 @@ class ArchivedTicketsController extends Controller
             'type' => $type,
             'solicitor' => $solicitor,
             'support' => $support,
-            'document' => $document,
+            'documents' => $documents,
         ]);
     }
 
