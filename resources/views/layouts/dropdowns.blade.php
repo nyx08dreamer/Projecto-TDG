@@ -10,7 +10,7 @@
         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
           <img src="{{asset('storage/image_profiles/'.auth()->user()->image_path)}}" class="user-image img-circle elevation-2" alt="User Image">
           @if(auth()->user())
-              <span class="d-none d-md-inline">{{ auth()->user()->first_name }}</span>
+              <span class="d-none d-md-inline">{{ auth()->user()->first_name }} {{ auth()->user()->last_name }}</span>
               @else
               <span class="d-none d-md-inline">Visitante</span>
           @endif
@@ -20,9 +20,8 @@
           <li class="user-header bg-primary">
             <img src="{{asset('storage/image_profiles/'.auth()->user()->image_path)}}" class="img-circle elevation-2" alt="User Image">
             @if(auth()->user())
-                <p>
-                  {{ auth()->user()->first_name }}
-                  <small>Cargo</small>
+                <p class="pb-1">
+                  {{ auth()->user()->first_name }} {{ auth()->user()->last_name }}
                 </p>
                 @else
                 <p>
