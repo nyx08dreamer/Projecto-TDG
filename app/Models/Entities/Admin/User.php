@@ -35,6 +35,7 @@ class User extends Authenticatable implements CanUseTickets
         'start_date',
         'end_date',
         'image_path',
+        'department_id',
 
     ];
 

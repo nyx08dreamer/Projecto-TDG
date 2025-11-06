@@ -1,4 +1,4 @@
-<div class="tab-pane" id="info">
+<div class="active tab-pane" id="info">
     <form class="form-horizontal" id="user-update" method="post" action="{{ route('admin.user.update', $user->id)}}">
         @csrf
         @method('PATCH')

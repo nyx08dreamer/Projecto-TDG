@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
-@section('web_title', 'Visualización de Usuarios')
+@section('web_title', 'Perfil de Usuario')
 
 @section('title')
-    <i class="fa-solid fa-fw fa-user"></i> Visualización de Usuarios
+    <i class="fa-solid fa-fw fa-user"></i> Perfil de Usuario
 @endsection
 
 @section('breadcrumbs')
@@ -24,29 +24,18 @@
                             src="{{asset('storage/image_profiles/'.$user->image_path)}}"
                             alt="User profile picture" id="image">
                     </div>
-                    <h3 class="profile-username text-center">{{$user->first_name}}</h3>
-                    <p class="text-muted text-center">Software Engineer</p>
+                    <h3 class="profile-username text-center">{{$user->first_name}} {{$user->last_name}}</h3>
                 </div>
             </div>
 
             <!-- About Me Box -->
             <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Sobre Mi</h3>
+                    <h3 class="card-title">Departamento</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <strong><i class="fas fa-book mr-1"></i> Education</strong>
-
-                    <p class="text-muted">
-                        B.S. in Computer Science from the University of Tennessee at Knoxville
-                    </p>
-
-                    <hr>
-
-                    <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
-
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+                    <strong><i class="fa-solid fa-building-user"></i>{{$department->name}}</strong>
                 </div>
             </div>
         </div>
@@ -55,9 +44,7 @@
             <div class="card">
                 <div class="card-header p-2">
                     <ul class="nav nav-pills">
-                        <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Actividad</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Historial</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#info" data-toggle="tab">Información</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="#info" data-toggle="tab">Información</a></li>
 
                         @can('admin-role-show')
                         <li class="nav-item"><a class="nav-link" href="#role" data-toggle="tab">Roles</a></li>
@@ -70,9 +57,6 @@
                 </div>
                 <div class="card-body">
                     <div class="tab-content">
-                        @include('admin.user.activity.show')
-
-                        @include('admin.user.timeline.show')
 
                         @include('admin.user.info.show')
 

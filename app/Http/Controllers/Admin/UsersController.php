@@ -12,6 +12,7 @@ use App\Traits\Controllers\ChangeImageTrait;
 use App\Http\Requests\Admin\StoreUserRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
 use App\Models\Entities\Admin\Permission;
+use App\Models\Entities\Configure\Department;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Spatie\Permission\Models\Role;
@@ -166,10 +167,14 @@ class UsersController extends Controller implements HasMiddleware
     public function show(User $user)
     {
 
+        $department_model = new Department;
+        $department = $department_model->get_department_by_id($user->department_id);
+
         return view('admin.user.show', [
             'user' => $user,
             'roles' => Role::all(),
             'permissions' => Permission::all(),
+            'department' => $department,
         ]);
     }
 
