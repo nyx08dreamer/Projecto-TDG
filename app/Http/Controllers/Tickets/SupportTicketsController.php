@@ -19,9 +19,26 @@ use App\Models\Entities\Tickets\Ticket as CustomTicket;
 
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class SupportTicketsController extends Controller
+class SupportTicketsController extends Controller implements HasMiddleware
 {
+    const PERMISSIONS = [
+        'show' => 'ticket-support-show',
+        'edit' => 'ticket-support-edit',
+    ];
+    
+    public static function middleware(): array
+    {
+        return [
+
+            new Middleware('permission:'.self::PERMISSIONS['show'], only: [ 'index','show']),
+            new Middleware('permission:'.self::PERMISSIONS['edit'], only: ['edit', 'update']),
+            
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -60,7 +77,7 @@ class SupportTicketsController extends Controller
                     $url_show = route('ticket.support.show', $row->id);
                     $url_edit = route('ticket.support.edit', $row->id);
 
-                    $button_show = '<a class="btn btn-sm btn-info icon"  
+                    $button_show = '<a class="btn btn-sm btn-info icon mr-1"  
                                     href="' . $url_show . '"
                                     title="Clic para ver detalles">
                                         <i class="fa-solid fa-circle-info"></i>
@@ -72,10 +89,12 @@ class SupportTicketsController extends Controller
                                         <i class="fas fa-edit"></i>
                                     </a>';
 
-                    return '<div role="group">
-                                ' . $button_show . '
-                                ' . $button_edit . '
-                            </div>';
+                    $buttons = $button_show; 
+                    if (Auth::user()->can('ticket-support-edit')) {
+                        $buttons .= $button_edit; 
+                    }
+
+                    return '<div role="group">' . $buttons . '</div>';
                 })
                 ->editColumn('uuid', function($row) {
                     return Str::limit($row->uuid, 15, '...');
@@ -102,22 +121,6 @@ class SupportTicketsController extends Controller
                 ->make(true);
             return $datatables;
         }
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**

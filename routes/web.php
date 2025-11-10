@@ -101,7 +101,8 @@ Route::controller(LoginController::class)->group(function () {
 
             Route::resource('solicitudes', TicketsController::class)
                 ->names('ticket.all') 
-                ->parameters(['solicitudes' => 'ticket']);
+                ->parameters(['solicitudes' => 'ticket'])
+                ->except(['destroy']);
 
 
         // user - tickets
@@ -111,7 +112,8 @@ Route::controller(LoginController::class)->group(function () {
 
             Route::resource('mis-solicitudes', UserTicketsController::class)
                 ->names('ticket.user') 
-                ->parameters(['mis-solicitudes' => 'ticket']);
+                ->parameters(['mis-solicitudes' => 'ticket'])
+                ->except(['destroy']);
 
 
         // support - tickets
@@ -121,7 +123,8 @@ Route::controller(LoginController::class)->group(function () {
 
             Route::resource('solicitudes-asignadas', SupportTicketsController::class)
                 ->names('ticket.support') 
-                ->parameters(['solicitudes-asignadas' => 'ticket']);
+                ->parameters(['solicitudes-asignadas' => 'ticket'])
+                ->except(['create', 'store','destroy']);
 
 
     // Configuracion

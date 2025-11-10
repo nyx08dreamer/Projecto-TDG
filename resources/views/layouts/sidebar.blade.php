@@ -63,6 +63,10 @@
           </ul>
         </li>
 
+        @if (auth()->user()->can('ticket-all-show') || 
+          auth()->user()->can('ticket-user-show') || 
+          auth()->user()->can('ticket-support-show'))
+
         <li class="nav-item {{isMenuOpen('ticket.')}}">
           <a href="#" class="nav-link {{isRouteActive('ticket.')}}">
             <i class="nav-icon fa fa-ticket"></i>
@@ -91,14 +95,17 @@
               </li>
             @endcan
 
-            <li class="nav-item">
-              <a href="{{ route('ticket.support.index') }}" class="nav-link {{isRouteActive('ticket.support.')}}">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Solicitudes Asignadas</p>
-              </a>
-            </li>
+            @can('ticket-support-show')
+              <li class="nav-item">
+                <a href="{{ route('ticket.support.index') }}" class="nav-link {{isRouteActive('ticket.support.')}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Solicitudes Asignadas</p>
+                </a>
+              </li>
+            @endcan
           </ul>
         </li>
+        @endif
 
 
         <li class="nav-header pt-4">CONFIGURACIÓN</li>

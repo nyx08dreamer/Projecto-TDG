@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Http\Controllers\Admin\PermissionsController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Tickets\SupportTicketsController;
 use App\Http\Controllers\Tickets\TicketsController;
 use App\Http\Controllers\Tickets\UserTicketsController;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -49,6 +50,16 @@ class PermissionsTableSeeder extends Seeder
 
         Permission::updateOrCreate(['name' => UserTicketsController::PERMISSIONS['edit']], [
             'description' => 'Edición de las solicitudes del usuario'
+        ]);
+
+        // Ticket Support
+
+        Permission::updateOrCreate(['name' => SupportTicketsController::PERMISSIONS['show']], [
+            'description' => 'Listado y detalles de las solicitudes del tecnico de soporte'
+        ]);
+
+        Permission::updateOrCreate(['name' => SupportTicketsController::PERMISSIONS['edit']], [
+            'description' => 'Edición de las solicitudes del tecnico de soporte'
         ]);
 
 
