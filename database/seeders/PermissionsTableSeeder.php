@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Http\Controllers\Admin\PermissionsController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Configure\DepartmentsController;
 use App\Http\Controllers\Configure\PrioritiesController;
 use App\Http\Controllers\Configure\TypesController;
 use App\Http\Controllers\Tickets\SupportTicketsController;
@@ -100,6 +101,25 @@ class PermissionsTableSeeder extends Seeder
 
         Permission::updateOrCreate(['name' => PrioritiesController::PERMISSIONS['delete']], [
             'description' => 'Eliminación de prioridad'
+        ]);
+
+
+        // Configuration Department
+
+        Permission::updateOrCreate(['name' => DepartmentsController::PERMISSIONS['create']], [
+            'description' => 'Creación de departamentos'
+        ]);
+
+        Permission::updateOrCreate(['name' => DepartmentsController::PERMISSIONS['show']], [
+            'description' => 'Listado de los departamentos'
+        ]);
+
+        Permission::updateOrCreate(['name' => DepartmentsController::PERMISSIONS['edit']], [
+            'description' => 'Edición de departamento'
+        ]);
+
+        Permission::updateOrCreate(['name' => DepartmentsController::PERMISSIONS['delete']], [
+            'description' => 'Eliminación de departamento'
         ]);
 
 

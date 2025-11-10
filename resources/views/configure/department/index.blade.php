@@ -20,7 +20,9 @@
             <div class="card">
                 <div class="card-header">
                     
-                    <a href="{{ route('config.department.create') }}" class="btn btn-success">Crear Departamento</a>
+                    @can('configure-department-create')
+                        <a href="{{ route('config.department.create') }}" class="btn btn-success">Crear Departamento</a>
+                    @endcan
                 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Colapsar">

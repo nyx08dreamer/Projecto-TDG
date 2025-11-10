@@ -166,7 +166,8 @@ Route::controller(LoginController::class)->group(function () {
 
             Route::resource('departamentos', DepartmentsController::class)
                 ->names('department') 
-                ->parameters(['departamentos' => 'department']);
+                ->parameters(['departamentos' => 'department'])
+                ->except(['show']);
 
         });
 

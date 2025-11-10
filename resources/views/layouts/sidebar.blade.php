@@ -108,47 +108,54 @@
         @endif
 
 
-        <li class="nav-header pt-4">CONFIGURACIÓN</li>
+        @if (auth()->user()->can('configure-type-show') || 
+          auth()->user()->can('configure-priority-show') || 
+          auth()->user()->can('configure-department-show'))
 
-        @can('configure-type-show')
-          <li class="nav-item {{isMenuOpen('config.incidents.')}}">
-            <a href="#" class="nav-link {{isRouteActive('config.incidents.')}}">
-              <i class="fa-solid fa-signs-post"></i>
-              <p>
-                Incidencias
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{ route('config.incidents.type.index') }}" class="nav-link {{isRouteActive('config.incidents.type.')}}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Tipos</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-        @endcan
+          <li class="nav-header pt-4">CONFIGURACIÓN</li>
 
-        @can('configure-priority-show')
-          <li class="nav-item">
-            <a href="{{ route('config.priority.index') }}" class="nav-link {{isRouteActive('config.priority.')}}">
-              <i class="fa-solid fa-temperature-half"></i>
-              <p>
-                Prioridades
-              </p>
-            </a>
-          </li>
-        @endcan
+          @can('configure-type-show')
+            <li class="nav-item {{isMenuOpen('config.incidents.')}}">
+              <a href="#" class="nav-link {{isRouteActive('config.incidents.')}}">
+                <i class="fa-solid fa-signs-post"></i>
+                <p>
+                  Incidencias
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{ route('config.incidents.type.index') }}" class="nav-link {{isRouteActive('config.incidents.type.')}}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Tipos</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          @endcan
 
-        <li class="nav-item">
-          <a href="{{ route('config.department.index') }}" class="nav-link {{isRouteActive('config.department.')}}">
-            <i class="fa-regular fa-building"></i>
-            <p>
-              Departamentos
-            </p>
-          </a>
-        </li>
+          @can('configure-priority-show')
+            <li class="nav-item">
+              <a href="{{ route('config.priority.index') }}" class="nav-link {{isRouteActive('config.priority.')}}">
+                <i class="fa-solid fa-temperature-half"></i>
+                <p>
+                  Prioridades
+                </p>
+              </a>
+            </li>
+          @endcan
+
+          @can('configure-department-show')
+            <li class="nav-item">
+              <a href="{{ route('config.department.index') }}" class="nav-link {{isRouteActive('config.department.')}}">
+                <i class="fa-regular fa-building"></i>
+                <p>
+                  Departamentos
+                </p>
+              </a>
+            </li>
+          @endcan
+        @endif
 
         @if (auth()->user()->can('admin-user-show') || 
           auth()->user()->can('admin-role-show') || 
