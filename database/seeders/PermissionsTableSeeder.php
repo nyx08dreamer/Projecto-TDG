@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Http\Controllers\Admin\PermissionsController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Configure\PrioritiesController;
 use App\Http\Controllers\Configure\TypesController;
 use App\Http\Controllers\Tickets\SupportTicketsController;
 use App\Http\Controllers\Tickets\TicketsController;
@@ -79,7 +80,26 @@ class PermissionsTableSeeder extends Seeder
         ]);
 
         Permission::updateOrCreate(['name' => TypesController::PERMISSIONS['delete']], [
-            'description' => 'Eliminación de de tipo de incidencia'
+            'description' => 'Eliminación de tipo de incidencia'
+        ]);
+
+
+        // Configuration Priorities
+
+        Permission::updateOrCreate(['name' => PrioritiesController::PERMISSIONS['create']], [
+            'description' => 'Creación de prioridades'
+        ]);
+
+        Permission::updateOrCreate(['name' => PrioritiesController::PERMISSIONS['show']], [
+            'description' => 'Listado de las prioridades'
+        ]);
+
+        Permission::updateOrCreate(['name' => PrioritiesController::PERMISSIONS['edit']], [
+            'description' => 'Edición de prioridad'
+        ]);
+
+        Permission::updateOrCreate(['name' => PrioritiesController::PERMISSIONS['delete']], [
+            'description' => 'Eliminación de prioridad'
         ]);
 
 

@@ -20,7 +20,9 @@
             <div class="card">
                 <div class="card-header">
                     
-                    <a href="{{ route('config.priority.create') }}" class="btn btn-success">Crear prioridad</a>
+                    @can('configure-priority-create')
+                        <a href="{{ route('config.priority.create') }}" class="btn btn-success">Crear prioridad</a>
+                    @endcan
                 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Colapsar">

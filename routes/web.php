@@ -155,7 +155,8 @@ Route::controller(LoginController::class)->group(function () {
 
             Route::resource('prioridades', PrioritiesController::class)
                 ->names('priority') 
-                ->parameters(['prioridades' => 'priority']);
+                ->parameters(['prioridades' => 'priority'])
+                ->except(['show']);
 
 
             // departamentos

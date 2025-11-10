@@ -8,9 +8,30 @@ use App\Models\Entities\Configure\Priority;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class PrioritiesController extends Controller
+class PrioritiesController extends Controller implements HasMiddleware
 {
+    const PERMISSIONS = [
+        'create' => 'configure-priority-create',
+        'show' => 'configure-priority-show',
+        'edit' => 'configure-priority-edit',
+        'delete' => 'configure-priority-delete',
+
+    ];
+    
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:'.self::PERMISSIONS['create'], only: [ 'create','store']),
+            new Middleware('permission:'.self::PERMISSIONS['show'], only: [ 'index']),
+            new Middleware('permission:'.self::PERMISSIONS['edit'], only: ['edit', 'update']),
+            new Middleware('permission:'.self::PERMISSIONS['delete'], only: ['destroy']),
+            
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -57,14 +78,6 @@ class PrioritiesController extends Controller
                 ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
     public function PriorityList (Request $request)
     {
     
@@ -93,10 +106,15 @@ class PrioritiesController extends Controller
                                         </button>
                                       </form>';
 
-                    return '<div role="group">
-                                ' . $button_edit . '
-                                ' . $button_delete . '
-                            </div>';
+                    $buttons = ''; 
+                    if (Auth::user()->can('configure-priority-edit')) {
+                        $buttons .= $button_edit; 
+                    }
+                    if (Auth::user()->can('configure-priority-delete')) {
+                        $buttons .= $button_delete; 
+                    }
+
+                    return '<div role="group">' . $buttons . '</div>';
                 })
                 ->addColumn('flag_status', function ($row) {
                     $td = '<span class="badge '.FlagStatusHelper::get_flag_status_color($row->flag_status).'">'.FlagStatusHelper::get_flag_status($row->flag_status).'</span>';

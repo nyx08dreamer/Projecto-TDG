@@ -130,14 +130,16 @@
           </li>
         @endcan
 
-        <li class="nav-item">
-          <a href="{{ route('config.priority.index') }}" class="nav-link {{isRouteActive('config.priority.')}}">
-            <i class="fa-solid fa-temperature-half"></i>
-            <p>
-              Prioridades
-            </p>
-          </a>
-        </li>
+        @can('configure-priority-show')
+          <li class="nav-item">
+            <a href="{{ route('config.priority.index') }}" class="nav-link {{isRouteActive('config.priority.')}}">
+              <i class="fa-solid fa-temperature-half"></i>
+              <p>
+                Prioridades
+              </p>
+            </a>
+          </li>
+        @endcan
 
         <li class="nav-item">
           <a href="{{ route('config.department.index') }}" class="nav-link {{isRouteActive('config.department.')}}">
