@@ -82,12 +82,15 @@
               </li>
             @endcan
 
-            <li class="nav-item">
-              <a href="{{ route('ticket.user.index') }}" class="nav-link {{isRouteActive('ticket.user.')}}">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Mis Solicitudes</p>
-              </a>
-            </li>
+            @can('ticket-user-show')
+              <li class="nav-item">
+                <a href="{{ route('ticket.user.index') }}" class="nav-link {{isRouteActive('ticket.user.')}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Mis Solicitudes</p>
+                </a>
+              </li>
+            @endcan
+
             <li class="nav-item">
               <a href="{{ route('ticket.support.index') }}" class="nav-link {{isRouteActive('ticket.support.')}}">
                 <i class="far fa-circle nav-icon"></i>

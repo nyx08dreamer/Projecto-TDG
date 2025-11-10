@@ -18,9 +18,28 @@ use App\Models\Entities\Tickets\Ticket as CustomTicket;
 use App\Services\DocumentService;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class UserTicketsController extends Controller
+class UserTicketsController extends Controller implements HasMiddleware
 {
+    const PERMISSIONS = [
+        'create' => 'ticket-user-create',
+        'show' => 'ticket-user-show',
+        'edit' => 'ticket-user-edit',
+    ];
+    
+    public static function middleware(): array
+    {
+        return [
+
+            new Middleware('permission:'.self::PERMISSIONS['create'], only: ['create', 'store']),
+            new Middleware('permission:'.self::PERMISSIONS['show'], only: [ 'index','show']),
+            new Middleware('permission:'.self::PERMISSIONS['edit'], only: ['edit', 'update']),
+            
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -65,16 +84,18 @@ class UserTicketsController extends Controller
                                         <i class="fa-solid fa-circle-info"></i>
                                     </a>';
 
-                    $button_edit = '<a class="btn btn-sm btn-primary icon"  
+                    $button_edit = '<a class="btn btn-sm btn-primary icon ml-1"  
                                     href="' . $url_edit . '"
                                     title="Clic para editar">
                                         <i class="fas fa-edit"></i>
                                     </a>';
 
-                    return '<div role="group">
-                                ' . $button_show . '
-                                ' . $button_edit . '
-                            </div>';
+                    $buttons = $button_show; 
+                    if (Auth::user()->can('ticket-user-edit')) {
+                        $buttons .= $button_edit; 
+                    }
+
+                    return '<div role="group">' . $buttons . '</div>';
                 })
                 ->editColumn('uuid', function($row) {
                     return Str::limit($row->uuid, 15, '...');

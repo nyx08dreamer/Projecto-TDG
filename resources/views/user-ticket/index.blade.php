@@ -93,7 +93,9 @@
             <div class="card">
                 <div class="card-header">
                     
-                    <a href="{{ route('ticket.user.create') }}" class="btn btn-success">Crear solicitud</a>
+                    @can('ticket-user-create')
+                        <a href="{{ route('ticket.user.create') }}" class="btn btn-success">Crear solicitud</a>
+                    @endcan
                 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Colapsar">
