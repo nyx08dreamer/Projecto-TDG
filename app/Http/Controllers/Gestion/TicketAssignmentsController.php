@@ -18,10 +18,30 @@ use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Str;
 use App\Models\Entities\Tickets\Document;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
 
-class TicketAssignmentsController extends Controller
+class TicketAssignmentsController extends Controller implements HasMiddleware
 {
+    const PERMISSIONS = [
+        'create' => 'gestion-assign-create',
+        'show' => 'gestion-assign-show',
+        'edit' => 'gestion-assign-edit',
+
+    ];
+    
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:'.self::PERMISSIONS['create'], only: [ 'create','assign']),
+            new Middleware('permission:'.self::PERMISSIONS['show'], only: [ 'index', 'show']),
+            new Middleware('permission:'.self::PERMISSIONS['edit'], only: ['edit', 'update']),
+            
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -53,8 +73,6 @@ class TicketAssignmentsController extends Controller
         $tickets = $ticket_model->get_unassigned_tickets_list();
 
         $users = User::role('ITsupport')->get(); 
-
-        //dd($tickets);
 
         return view('gestion.assign.create', [
             'users' => $users,
@@ -92,16 +110,18 @@ class TicketAssignmentsController extends Controller
                                         <i class="fa-solid fa-circle-info"></i>
                                     </a>';
                     
-                    $button_edit = '<a class="btn btn-sm btn-primary icon"  
+                    $button_edit = '<a class="btn btn-sm btn-primary icon ml-1"  
                                     href="' . $url_edit . '"
                                     title="Asignar">
                                         <i class="fa-solid fa-user-pen"></i>
                                     </a>';
 
-                    return '<div role="group">
-                                ' . $button_show . '
-                                ' . $button_edit . '
-                            </div>';
+                    $buttons = $button_show; 
+                    if (Auth::user()->can('gestion-assign-edit')) {
+                        $buttons .= $button_edit; 
+                    }
+
+                    return '<div role="group">' . $buttons . '</div>';
                 })
                 ->editColumn('title', function($row) {
                     return Str::limit($row->title, 20, '...');

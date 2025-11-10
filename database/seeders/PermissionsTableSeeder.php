@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Configure\DepartmentsController;
 use App\Http\Controllers\Configure\PrioritiesController;
 use App\Http\Controllers\Configure\TypesController;
+use App\Http\Controllers\Gestion\TicketAssignmentsController;
 use App\Http\Controllers\Tickets\SupportTicketsController;
 use App\Http\Controllers\Tickets\TicketsController;
 use App\Http\Controllers\Tickets\UserTicketsController;
@@ -22,6 +23,23 @@ class PermissionsTableSeeder extends Seeder
      */
     public function run(): void
     {
+        // Gestion Assigment
+
+        Permission::updateOrCreate(['name' => TicketAssignmentsController::PERMISSIONS['create']], [
+            'description' => 'Asignación multiple de solicitudes'
+        ]);
+
+        Permission::updateOrCreate(['name' => TicketAssignmentsController::PERMISSIONS['show']], [
+            'description' => 'Listado y detalles de las solicitudes por asignar'
+        ]);
+
+        Permission::updateOrCreate(['name' => TicketAssignmentsController::PERMISSIONS['edit']], [
+            'description' => 'Asignación de una solicitud en particular'
+        ]);
+
+
+
+
         // Ticket All
 
         Permission::updateOrCreate(['name' => TicketsController::PERMISSIONS['create']], [

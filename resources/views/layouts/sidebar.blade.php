@@ -42,12 +42,15 @@
             </p>
           </a>
           <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="{{ route('gestion.assign.index') }}" class="nav-link {{isRouteActive('gestion.assign.')}}">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Asignar Solicitudes</p>
-              </a>
-            </li>
+            @can('gestion-assign-show')
+              <li class="nav-item">
+                <a href="{{ route('gestion.assign.index') }}" class="nav-link {{isRouteActive('gestion.assign.')}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Asignar Solicitudes</p>
+                </a>
+              </li>
+            @endcan
+
             <li class="nav-item">
               <a href="{{ route('gestion.archive.index') }}" class="nav-link {{isRouteActive('gestion.archive.')}}">
                 <i class="far fa-circle nav-icon"></i>
@@ -67,44 +70,44 @@
           auth()->user()->can('ticket-user-show') || 
           auth()->user()->can('ticket-support-show'))
 
-        <li class="nav-item {{isMenuOpen('ticket.')}}">
-          <a href="#" class="nav-link {{isRouteActive('ticket.')}}">
-            <i class="nav-icon fa fa-ticket"></i>
-            <p>
-              Solicitudes
-              <i class="right fas fa-angle-left"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
+          <li class="nav-item {{isMenuOpen('ticket.')}}">
+            <a href="#" class="nav-link {{isRouteActive('ticket.')}}">
+              <i class="nav-icon fa fa-ticket"></i>
+              <p>
+                Solicitudes
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
 
-            @can('ticket-all-show')
-              <li class="nav-item">
-                <a href="{{ route('ticket.all.index') }}" class="nav-link {{isRouteActive('ticket.all.')}}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Todas las Solicitudes</p>
-                </a>
-              </li>
-            @endcan
+              @can('ticket-all-show')
+                <li class="nav-item">
+                  <a href="{{ route('ticket.all.index') }}" class="nav-link {{isRouteActive('ticket.all.')}}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Todas las Solicitudes</p>
+                  </a>
+                </li>
+              @endcan
 
-            @can('ticket-user-show')
-              <li class="nav-item">
-                <a href="{{ route('ticket.user.index') }}" class="nav-link {{isRouteActive('ticket.user.')}}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Mis Solicitudes</p>
-                </a>
-              </li>
-            @endcan
+              @can('ticket-user-show')
+                <li class="nav-item">
+                  <a href="{{ route('ticket.user.index') }}" class="nav-link {{isRouteActive('ticket.user.')}}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Mis Solicitudes</p>
+                  </a>
+                </li>
+              @endcan
 
-            @can('ticket-support-show')
-              <li class="nav-item">
-                <a href="{{ route('ticket.support.index') }}" class="nav-link {{isRouteActive('ticket.support.')}}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Solicitudes Asignadas</p>
-                </a>
-              </li>
-            @endcan
-          </ul>
-        </li>
+              @can('ticket-support-show')
+                <li class="nav-item">
+                  <a href="{{ route('ticket.support.index') }}" class="nav-link {{isRouteActive('ticket.support.')}}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Solicitudes Asignadas</p>
+                  </a>
+                </li>
+              @endcan
+            </ul>
+          </li>
         @endif
 
 

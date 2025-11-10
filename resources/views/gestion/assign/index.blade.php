@@ -84,8 +84,9 @@
             <div class="card">
                 <div class="card-header">
 
-                    <a href="{{ route('gestion.assign.create') }}" class="btn btn-success">Asignar solicitudes</a>
-
+                    @can('gestion-assign-create')
+                        <a href="{{ route('gestion.assign.create') }}" class="btn btn-success">Asignar solicitudes</a>
+                    @endcan
 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Colapsar">
