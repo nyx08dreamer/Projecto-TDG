@@ -73,7 +73,7 @@ Route::controller(LoginController::class)->group(function () {
             Route::resource('archivar-solicitudes', TicketArchiveController::class)
                 ->names('archive') 
                 ->parameters(['archivar-solicitudes' => 'ticket'])
-                ->except(['store', 'edit','destroy']);
+                ->except(['store','edit','destroy']);
 
         //archivados
             Route::controller(ArchivedTicketsController::class)->group(function () {

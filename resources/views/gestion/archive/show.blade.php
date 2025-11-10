@@ -147,7 +147,9 @@
 
                 <div class="float-right pb-3">
                     <a href="{{ route('gestion.archive.index') }}" class="btn btn-primary">Regresar</a>
-                    <button type="submit" class="ml-2 btn btn-success">Archivar</button>
+                    @can('gestion-archive-edit')
+                        <button type="submit" class="ml-2 btn btn-success">Archivar</button>
+                    @endcan
                 </div>
             </form>
         </div>

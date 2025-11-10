@@ -51,12 +51,15 @@
               </li>
             @endcan
 
-            <li class="nav-item">
-              <a href="{{ route('gestion.archive.index') }}" class="nav-link {{isRouteActive('gestion.archive.')}}">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Archivar Solicitudes</p>
-              </a>
-            </li>
+            @can('gestion-archive-show')
+              <li class="nav-item">
+                <a href="{{ route('gestion.archive.index') }}" class="nav-link {{isRouteActive('gestion.archive.')}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Archivar Solicitudes</p>
+                </a>
+              </li>
+            @endcan
+
             <li class="nav-item">
               <a href="{{ route('gestion.archived-tickets.index') }}" class="nav-link {{isRouteActive('gestion.archived-tickets.')}}">
                 <i class="far fa-circle nav-icon"></i>

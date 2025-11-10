@@ -14,9 +14,29 @@ use App\Models\Entities\Tickets\Document;
 use App\Models\Entities\Tickets\Ticket as CustomTicket;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class TicketArchiveController extends Controller
+class TicketArchiveController extends Controller implements HasMiddleware
 {
+    const PERMISSIONS = [
+        'create' => 'gestion-archive-create',
+        'show' => 'gestion-archive-show',
+        'edit' => 'gestion-archive-edit',
+
+    ];
+    
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:'.self::PERMISSIONS['create'], only: [ 'create','archive']),
+            new Middleware('permission:'.self::PERMISSIONS['show'], only: [ 'index', 'show']),
+            new Middleware('permission:'.self::PERMISSIONS['edit'], only: ['update']),
+            
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */

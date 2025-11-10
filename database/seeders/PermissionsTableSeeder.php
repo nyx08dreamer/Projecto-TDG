@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Configure\DepartmentsController;
 use App\Http\Controllers\Configure\PrioritiesController;
 use App\Http\Controllers\Configure\TypesController;
+use App\Http\Controllers\Gestion\TicketArchiveController;
 use App\Http\Controllers\Gestion\TicketAssignmentsController;
 use App\Http\Controllers\Tickets\SupportTicketsController;
 use App\Http\Controllers\Tickets\TicketsController;
@@ -35,6 +36,21 @@ class PermissionsTableSeeder extends Seeder
 
         Permission::updateOrCreate(['name' => TicketAssignmentsController::PERMISSIONS['edit']], [
             'description' => 'Asignación de una solicitud en particular'
+        ]);
+
+
+        // Gestion Archive
+
+        Permission::updateOrCreate(['name' => TicketArchiveController::PERMISSIONS['create']], [
+            'description' => 'Archivar multiple solicitudes'
+        ]);
+
+        Permission::updateOrCreate(['name' => TicketArchiveController::PERMISSIONS['show']], [
+            'description' => 'Listado y detalles de las solicitudes para archivar'
+        ]);
+
+        Permission::updateOrCreate(['name' => TicketArchiveController::PERMISSIONS['edit']], [
+            'description' => 'Archivar una solicitud en particular'
         ]);
 
 
