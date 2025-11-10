@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Http\Controllers\Admin\PermissionsController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Configure\TypesController;
 use App\Http\Controllers\Tickets\SupportTicketsController;
 use App\Http\Controllers\Tickets\TicketsController;
 use App\Http\Controllers\Tickets\UserTicketsController;
@@ -61,6 +62,26 @@ class PermissionsTableSeeder extends Seeder
         Permission::updateOrCreate(['name' => SupportTicketsController::PERMISSIONS['edit']], [
             'description' => 'Edición de las solicitudes del tecnico de soporte'
         ]);
+
+
+        // Configuration Types
+
+        Permission::updateOrCreate(['name' => TypesController::PERMISSIONS['create']], [
+            'description' => 'Creación de tipo de incidencia'
+        ]);
+
+        Permission::updateOrCreate(['name' => TypesController::PERMISSIONS['show']], [
+            'description' => 'Listado de los tipos de incidencias'
+        ]);
+
+        Permission::updateOrCreate(['name' => TypesController::PERMISSIONS['edit']], [
+            'description' => 'Edición de tipo de incidencia'
+        ]);
+
+        Permission::updateOrCreate(['name' => TypesController::PERMISSIONS['delete']], [
+            'description' => 'Eliminación de de tipo de incidencia'
+        ]);
+
 
 
         // Admin User

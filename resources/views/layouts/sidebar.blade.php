@@ -110,23 +110,25 @@
 
         <li class="nav-header pt-4">CONFIGURACIÓN</li>
 
-        <li class="nav-item {{isMenuOpen('config.incidents.')}}">
-          <a href="#" class="nav-link {{isRouteActive('config.incidents.')}}">
-            <i class="fa-solid fa-signs-post"></i>
-            <p>
-              Incidencias
-              <i class="right fas fa-angle-left"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="{{ route('config.incidents.type.index') }}" class="nav-link {{isRouteActive('config.incidents.type.')}}">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Tipos</p>
-              </a>
-            </li>
-          </ul>
-        </li>
+        @can('configure-type-show')
+          <li class="nav-item {{isMenuOpen('config.incidents.')}}">
+            <a href="#" class="nav-link {{isRouteActive('config.incidents.')}}">
+              <i class="fa-solid fa-signs-post"></i>
+              <p>
+                Incidencias
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('config.incidents.type.index') }}" class="nav-link {{isRouteActive('config.incidents.type.')}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Tipos</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+        @endcan
 
         <li class="nav-item">
           <a href="{{ route('config.priority.index') }}" class="nav-link {{isRouteActive('config.priority.')}}">

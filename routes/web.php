@@ -140,7 +140,8 @@ Route::controller(LoginController::class)->group(function () {
 
             Route::resource('tipos', TypesController::class)
                 ->names('type') 
-                ->parameters(['tipos' => 'type']);
+                ->parameters(['tipos' => 'type'])
+                ->except(['show']);
 
 
         });

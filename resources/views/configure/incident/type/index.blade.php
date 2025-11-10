@@ -20,7 +20,9 @@
             <div class="card">
                 <div class="card-header">
                     
-                    <a href="{{ route('config.incidents.type.create') }}" class="btn btn-success">Crear tipo</a>
+                    @can('configure-type-create')
+                        <a href="{{ route('config.incidents.type.create') }}" class="btn btn-success">Crear tipo</a>
+                    @endcan
                 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Colapsar">
