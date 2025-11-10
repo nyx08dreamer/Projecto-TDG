@@ -104,9 +104,13 @@
             <div class="card">
                 <div class="card-header">
                     
-                    <a href="{{ route('ticket.all.create') }}" class="btn btn-success">Crear solicitud</a>
+                    @can('ticket-all-create')
+                        <a href="{{ route('ticket.all.create') }}" class="btn btn-success">Crear solicitud</a>
+                    @endcan
 
-                    <a href="{{ route('ticket.all.pdf') }}" target="_blank" class="btn btn-info">Generar reporte</a>
+                    @can('ticket-all-report')
+                        <a href="{{ route('ticket.all.pdf') }}" target="_blank" class="btn btn-info">Generar reporte</a>
+                    @endcan
                 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Colapsar">

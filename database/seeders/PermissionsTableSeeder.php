@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Http\Controllers\Admin\PermissionsController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Tickets\TicketsController;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
@@ -16,6 +17,25 @@ class PermissionsTableSeeder extends Seeder
      */
     public function run(): void
     {
+        // Ticket All
+
+        Permission::updateOrCreate(['name' => TicketsController::PERMISSIONS['create']], [
+            'description' => 'Creación de solicitudes del sistema'
+        ]);
+
+        Permission::updateOrCreate(['name' => TicketsController::PERMISSIONS['show']], [
+            'description' => 'Listado y detalles de las solicitudes del sistema'
+        ]);
+
+        Permission::updateOrCreate(['name' => TicketsController::PERMISSIONS['edit']], [
+            'description' => 'Edición de las solicitudes del sistema'
+        ]);
+
+        Permission::updateOrCreate(['name' => TicketsController::PERMISSIONS['report']], [
+            'description' => 'Creación de Reportes'
+        ]);
+
+
         // Admin User
 
         Permission::updateOrCreate(['name' => UsersController::PERMISSIONS['create']], [

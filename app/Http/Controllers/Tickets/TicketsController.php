@@ -20,16 +20,37 @@ use App\Traits\Controllers\UploadFilesTrait;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-use Coderflex\LaravelTicket\Models\Category;
-use Coderflex\LaravelTicket\Models\Label;
 
-class TicketsController extends Controller
+class TicketsController extends Controller implements HasMiddleware
 {
     use UploadFilesTrait;
     /**
      * Display a listing of the resource.
      */
+
+    const PERMISSIONS = [
+        'create' => 'ticket-all-create',
+        'show' => 'ticket-all-show',
+        'edit' => 'ticket-all-edit',
+        'report' => 'ticket-all-report',
+
+    ];
+    
+    public static function middleware(): array
+    {
+        return [
+
+            new Middleware('permission:'.self::PERMISSIONS['create'], only: ['create', 'store']),
+            new Middleware('permission:'.self::PERMISSIONS['show'], only: [ 'index','show']),
+            new Middleware('permission:'.self::PERMISSIONS['edit'], only: ['edit', 'update']),
+            new Middleware('permission:'.self::PERMISSIONS['report'], only: ['pdfReport']),
+            
+        ];
+    }
+
     public function index()
     {
         $department_model = new Department;
@@ -62,9 +83,6 @@ class TicketsController extends Controller
         $type_model = new Type;
         $types = $type_model->get_types();
 
-
-        
-
         return view('ticket.create', [
             'departments' => $departments,
             'priorities' => $priorities,
@@ -77,12 +95,9 @@ class TicketsController extends Controller
      */
     public function store(Request $request)
     {
-
-
         $status = 'success';
         $content = 'El ticket se ha creado correctamente';
 
-        // dd($request->get('archivos'));
             
             $ticket = CustomTicket::create([
                 'title' => $request->title,
@@ -153,16 +168,18 @@ class TicketsController extends Controller
                                         <i class="fa-solid fa-circle-info"></i>
                                     </a>';
 
-                    $button_edit = '<a class="btn btn-sm btn-primary icon"  
+                    $button_edit = '<a class="btn btn-sm btn-primary icon ml-1"  
                                     href="' . $url_edit . '"
                                     title="Clic para editar">
                                         <i class="fas fa-edit"></i>
                                     </a>';
+                    
+                    $buttons = $button_show; 
+                    if (Auth::user()->can('ticket-all-edit')) {
+                        $buttons .= $button_edit; 
+                    }
 
-                    return '<div role="group">
-                                ' . $button_show . '
-                                ' . $button_edit . '
-                            </div>';
+                    return '<div role="group">' . $buttons . '</div>';
                 })
                 ->editColumn('uuid', function($row) {
                     return Str::limit($row->uuid, 15, '...');

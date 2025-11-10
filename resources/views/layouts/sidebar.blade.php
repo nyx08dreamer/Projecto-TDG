@@ -72,12 +72,16 @@
             </p>
           </a>
           <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="{{ route('ticket.all.index') }}" class="nav-link {{isRouteActive('ticket.all.')}}">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Todas las Solicitudes</p>
-              </a>
-            </li>
+
+            @can('ticket-all-show')
+              <li class="nav-item">
+                <a href="{{ route('ticket.all.index') }}" class="nav-link {{isRouteActive('ticket.all.')}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Todas las Solicitudes</p>
+                </a>
+              </li>
+            @endcan
+
             <li class="nav-item">
               <a href="{{ route('ticket.user.index') }}" class="nav-link {{isRouteActive('ticket.user.')}}">
                 <i class="far fa-circle nav-icon"></i>

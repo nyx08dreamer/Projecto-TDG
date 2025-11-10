@@ -141,7 +141,7 @@
         <!-- Botón de Regreso -->
         <div class="float-right pb-3">
             <a href="{{ route('ticket.all.index') }}" class="btn btn-primary">
-                <i class="fas fa-arrow-left"></i> Regresar
+                Regresar
             </a>
         </div>
     </div>
