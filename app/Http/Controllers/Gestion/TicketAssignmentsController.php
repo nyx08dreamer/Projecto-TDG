@@ -196,7 +196,7 @@ class TicketAssignmentsController extends Controller
     public function update(Request $request, CustomTicket $ticket)
     {
         $status = 'success';
-        $content = 'Se han asignado correctamente las solicitudes';
+        $content = 'Se ha asignado correctamente la solicitud';
 
         $id = $ticket->user_id;
         $userId = $request->user_id;

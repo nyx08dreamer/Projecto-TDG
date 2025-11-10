@@ -19,6 +19,9 @@ use App\Http\Controllers\Tickets\UserTicketsController;
 use Illuminate\Support\Facades\Route;
 use OpenSpout\Common\Entity\Row;
 
+Route::get('/403', function () { return view('errors.403'); });
+Route::get('/404', function () { return view('errors.404'); });
+Route::get('/500', function () { return view('errors.500'); });
 
 
 Route::controller(LoginController::class)->group(function () {

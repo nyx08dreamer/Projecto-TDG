@@ -130,7 +130,7 @@ class UserTicketsController extends Controller
     public function store(Request $request)
     {
         $status = 'success';
-        $content = 'El ticket se ha creado correctamente';
+        $content = 'La solicitud se ha creado correctamente';
 
         try {
             

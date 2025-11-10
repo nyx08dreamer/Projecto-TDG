@@ -46,7 +46,7 @@
             </div>
 
             @error('username')
-                <div class="error-message">{{ $message }}</div>
+                <div class="error-message text-red-500">{{ $message }}</div>
             @enderror
 
             <div class="row">

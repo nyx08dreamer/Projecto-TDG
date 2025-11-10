@@ -68,26 +68,33 @@
                         </div>
                     </div>
 
-                    <div class="card card-primary">
+                    <!-- Sección: Documentos Adjuntos -->
+                    <div class="card card-secondary">
                         <div class="card-header">
                             <h3 class="card-title">
-                            <i class="fa-solid fa-file"></i>
-                            Documentos Adjuntados
+                                <i class="fas fa-file-alt"></i> Documentos Adjuntos
                             </h3>
                         </div>
-
                         <div class="card-body">
                             @if($documents->isEmpty())
-                                <p>No hay documentos adjuntos para esta solicitud.</p>
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle"></i> No hay documentos adjuntos para esta solicitud.
+                                </div>
                             @else
-                                <ul class="mt-4">
+                                <div class="list-group">
                                     @foreach($documents as $document)
-                                        <li>{{ $document->name}} - <a href="{{ asset($document->route.$document->name) }}" target="_blank">Ver</a></li>
+                                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <i class="fas fa-file"></i> {{ $document->name }}
+                                            </div>
+                                            <a href="{{ asset($document->route . $document->name) }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                                <i class="fas fa-eye"></i> Ver
+                                            </a>
+                                        </div>
                                     @endforeach
-                                </ul>
+                                </div>
                             @endif
                         </div>
-
                     </div>
 
                     <div class="card card-primary">

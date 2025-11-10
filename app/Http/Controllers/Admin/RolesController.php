@@ -91,19 +91,27 @@ class RolesController extends Controller implements HasMiddleware
             $status = 'success';
             $content = 'El rol se ha creado correctamente';
 
-        } catch (\Throwable $th) {
-            
-            $status = 'error';
-            $content = 'Ha ocurrido un error al crear el rol';
-        }
-
-
-        return redirect()
+            return redirect()
                 ->route('admin.role.show', ['role' => $role->id])
                 ->with('process_result', [
                     'status' => $status,
                     'content' => $content,
                 ]);;
+
+        } catch (\Throwable $th) {
+            
+            $status = 'error';
+            $content = 'Ha ocurrido un error al crear el rol';
+
+
+            return redirect()
+                ->route('admin.role.create')
+                ->with('process_result', [
+                    'status' => $status,
+                    'content' => $content,
+                ]);;
+        }
+
     }
 
     public function RolePermissionsAndUsersList (Role $role, Request $request)
