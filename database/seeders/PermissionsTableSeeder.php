@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Configure\DepartmentsController;
 use App\Http\Controllers\Configure\PrioritiesController;
 use App\Http\Controllers\Configure\TypesController;
+use App\Http\Controllers\Gestion\ArchivedTicketsController;
 use App\Http\Controllers\Gestion\TicketArchiveController;
 use App\Http\Controllers\Gestion\TicketAssignmentsController;
 use App\Http\Controllers\Tickets\SupportTicketsController;
@@ -42,7 +43,7 @@ class PermissionsTableSeeder extends Seeder
         // Gestion Archive
 
         Permission::updateOrCreate(['name' => TicketArchiveController::PERMISSIONS['create']], [
-            'description' => 'Archivar multiple solicitudes'
+            'description' => 'Archivar multiples solicitudes'
         ]);
 
         Permission::updateOrCreate(['name' => TicketArchiveController::PERMISSIONS['show']], [
@@ -51,6 +52,25 @@ class PermissionsTableSeeder extends Seeder
 
         Permission::updateOrCreate(['name' => TicketArchiveController::PERMISSIONS['edit']], [
             'description' => 'Archivar una solicitud en particular'
+        ]);
+
+
+        // Gestion Archived
+
+        Permission::updateOrCreate(['name' => ArchivedTicketsController::PERMISSIONS['create']], [
+            'description' => 'Desarchivar multiples solicitudes'
+        ]);
+
+        Permission::updateOrCreate(['name' => ArchivedTicketsController::PERMISSIONS['show']], [
+            'description' => 'Listado y detalles de las solicitudes archivadas'
+        ]);
+
+        Permission::updateOrCreate(['name' => ArchivedTicketsController::PERMISSIONS['edit']], [
+            'description' => 'Desarchivar una solicitud en particular'
+        ]);
+
+        Permission::updateOrCreate(['name' => ArchivedTicketsController::PERMISSIONS['delete']], [
+            'description' => 'Eliminar una solicitud archivada'
         ]);
 
 

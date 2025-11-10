@@ -14,9 +14,31 @@ use App\Models\Entities\Tickets\Document;
 use App\Models\Entities\Tickets\Ticket as CustomTicket;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class ArchivedTicketsController extends Controller
+class ArchivedTicketsController extends Controller implements HasMiddleware
 {
+    const PERMISSIONS = [
+        'create' => 'gestion-archived-create',
+        'show' => 'gestion-archived-show',
+        'edit' => 'gestion-archived-edit',
+        'delete' => 'gestion-archived-delete',
+
+    ];
+    
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:'.self::PERMISSIONS['create'], only: [ 'create','unarchive']),
+            new Middleware('permission:'.self::PERMISSIONS['show'], only: [ 'index', 'show']),
+            new Middleware('permission:'.self::PERMISSIONS['edit'], only: ['update']),
+            new Middleware('permission:'.self::PERMISSIONS['delete'], only: ['destroy']),
+            
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -84,10 +106,12 @@ class ArchivedTicketsController extends Controller
                                         </button>
                                       </form>';
 
-                    return '<div role="group">
-                                ' . $button_show . '
-                                ' . $button_delete . '
-                            </div>';
+                    $buttons = $button_show; 
+                    if (Auth::user()->can('gestion-archived-delete')) {
+                        $buttons .= $button_delete; 
+                    }
+
+                    return '<div role="group">' . $buttons . '</div>';
                 })
                 ->editColumn('title', function($row) {
                     return Str::limit($row->title, 20, '...');
@@ -130,14 +154,6 @@ class ArchivedTicketsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      */
     public function show(CustomTicket $ticket)
@@ -171,13 +187,6 @@ class ArchivedTicketsController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.

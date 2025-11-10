@@ -147,7 +147,9 @@
 
                 <div class="float-right pb-3">
                     <a href="{{ route('gestion.archived-tickets.index') }}" class="btn btn-primary">Regresar</a>
-                    <button type="submit" class="ml-2 btn btn-success">Desarchivar</button>
+                    @can('gestion-archived-edit')
+                        <button type="submit" class="ml-2 btn btn-success">Desarchivar</button>
+                    @endcan
                 </div>
             </form>
         </div>

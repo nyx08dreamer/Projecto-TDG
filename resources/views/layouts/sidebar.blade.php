@@ -33,41 +33,48 @@
           </a>
         </li>
 
-        <li class="nav-item {{isMenuOpen('gestion.')}}">
-          <a href="#" class="nav-link {{isRouteActive('gestion.')}}">
-            <i class="nav-icon fa fa-bolt"></i>
-            <p>
-              Gestión
-              <i class="right fas fa-angle-left"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            @can('gestion-assign-show')
-              <li class="nav-item">
-                <a href="{{ route('gestion.assign.index') }}" class="nav-link {{isRouteActive('gestion.assign.')}}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Asignar Solicitudes</p>
-                </a>
-              </li>
-            @endcan
+        @if (auth()->user()->can('gestion-assign-show') || 
+          auth()->user()->can('gestion-archive-show') || 
+          auth()->user()->can('gestion-archived-show'))
 
-            @can('gestion-archive-show')
-              <li class="nav-item">
-                <a href="{{ route('gestion.archive.index') }}" class="nav-link {{isRouteActive('gestion.archive.')}}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Archivar Solicitudes</p>
-                </a>
-              </li>
-            @endcan
+          <li class="nav-item {{isMenuOpen('gestion.')}}">
+            <a href="#" class="nav-link {{isRouteActive('gestion.')}}">
+              <i class="nav-icon fa fa-bolt"></i>
+              <p>
+                Gestión
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              @can('gestion-assign-show')
+                <li class="nav-item">
+                  <a href="{{ route('gestion.assign.index') }}" class="nav-link {{isRouteActive('gestion.assign.')}}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Asignar Solicitudes</p>
+                  </a>
+                </li>
+              @endcan
 
-            <li class="nav-item">
-              <a href="{{ route('gestion.archived-tickets.index') }}" class="nav-link {{isRouteActive('gestion.archived-tickets.')}}">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Solicitudes Archivadas</p>
-              </a>
-            </li>
-          </ul>
-        </li>
+              @can('gestion-archive-show')
+                <li class="nav-item">
+                  <a href="{{ route('gestion.archive.index') }}" class="nav-link {{isRouteActive('gestion.archive.')}}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Archivar Solicitudes</p>
+                  </a>
+                </li>
+              @endcan
+
+              @can('gestion-archived-show')
+                <li class="nav-item">
+                  <a href="{{ route('gestion.archived-tickets.index') }}" class="nav-link {{isRouteActive('gestion.archived-tickets.')}}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Solicitudes Archivadas</p>
+                  </a>
+                </li>
+              @endcan
+            </ul>
+          </li>
+        @endif
 
         @if (auth()->user()->can('ticket-all-show') || 
           auth()->user()->can('ticket-user-show') || 

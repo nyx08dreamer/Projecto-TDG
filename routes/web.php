@@ -84,7 +84,8 @@ Route::controller(LoginController::class)->group(function () {
 
             Route::resource('solicitudes-archivadas', ArchivedTicketsController::class)
                 ->names('archived-tickets') 
-                ->parameters(['solicitudes-archivadas' => 'ticket']);
+                ->parameters(['solicitudes-archivadas' => 'ticket'])
+                ->except(['store','edit']);
 
 
 

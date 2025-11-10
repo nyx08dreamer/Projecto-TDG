@@ -14,7 +14,6 @@ use App\Models\Entities\Tickets\Document;
 use App\Models\Entities\Tickets\Ticket as CustomTicket;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
 

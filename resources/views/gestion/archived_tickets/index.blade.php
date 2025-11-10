@@ -84,7 +84,9 @@
             <div class="card">
                 <div class="card-header">
 
-                    <a href="{{ route('gestion.archived-tickets.create') }}" class="btn btn-success">Desarchivar</a>
+                    @can('gestion-archived-create')
+                        <a href="{{ route('gestion.archived-tickets.create') }}" class="btn btn-success">Desarchivar</a>
+                    @endcan
                     
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Colapsar">
