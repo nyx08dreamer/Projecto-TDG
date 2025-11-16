@@ -3,62 +3,26 @@
 @section('web_title', 'Página No Encontrada')
 
 @section('title')
-    <i class="fa fa-home"></i> Dashboard
+    <i class="fas fa-search"></i> Página No Encontrada
 @endsection
 
 
 @section('content')
-
-    <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>404 Error Page</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">404 Error Page</li>
-            </ol>
-          </div>
-        </div>
-      </div><!-- /.container-fluid -->
-    </section>
-
-    <!-- Main content -->
-    <section class="content">
-      <div class="error-page">
-        <h2 class="headline text-warning"> 404</h2>
-
-        <div class="error-content">
-          <h3><i class="fas fa-exclamation-triangle text-warning"></i> Oops! Page not found.</h3>
-
-          <p>
-            We could not find the page you were looking for.
-            Meanwhile, you may <a href="../../index.html">return to dashboard</a> or try using the search form.
-          </p>
-
-          <form class="search-form">
-            <div class="input-group">
-              <input type="text" name="search" class="form-control" placeholder="Search">
-
-              <div class="input-group-append">
-                <button type="submit" name="submit" class="btn btn-warning"><i class="fas fa-search"></i>
-                </button>
-              </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card card-outline card-danger">
+                    <div class="card-body text-center">
+                        <i class="fas fa-search fa-4x text-danger mb-3"></i>
+                        <p class="card-text">Lo sentimos, la página que buscas no existe o ha sido movida.</p>
+                        <a href="{{ route('home') }}" class="btn btn-primary">
+                            <i class="fas fa-home"></i> Volver al Inicio
+                        </a>
+                    </div>
+                </div>
             </div>
-            <!-- /.input-group -->
-          </form>
         </div>
-        <!-- /.error-content -->
-      </div>
-      <!-- /.error-page -->
-    </section>
-    <!-- /.content -->
-  </div>
-
+    </div>
 @endsection
 
 @push('js')
